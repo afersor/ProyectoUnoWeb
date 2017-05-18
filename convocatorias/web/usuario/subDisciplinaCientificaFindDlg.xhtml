@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <p:dialog id="dFindSubDisciplinaCientifica" 
+              widgetVar="dlgFindSubDisciplinaCientifica"
+              modal="true"
+              width="600"
+              height="400"
+              position="top"
+              style="margin-top: 30px;"
+              resizable="false">
+        <f:facet name="header">
+            <h:outputText value="Area Temática - Disciplina Científica - Subdisciplinas Científicas" styleClass="subTitulo"/>
+        </f:facet>
+        <p:panel id="pDialogSubDisciplinaCientifica">
+
+            <p:focus context="pDialogSubDisciplinaCientifica"/> 
+
+            <h:inputHidden id="ihTipoSDCSD"
+                           value="#{subDisciplinaCientificaFindDlgBean.tipo}"/>
+
+            <div>
+                <h:outputText value="Area temática: "/>
+            </div>
+            <div class="separador">
+                <p:selectOneMenu id="somAreaTematica"
+                                 valueChangeListener="#{areaTematicaBean.handleChange}"
+                                 panelStyle="width:150px"
+                                 converter="ConversorGenerico">
+                    <f:selectItem itemValue="Seleccionar" itemLabel="Seleccionar" noSelectionOption="true"/>
+                    <f:selectItems value="#{areaTematicaLstBean.lstSIAreaTematica}"/>
+                    <p:ajax update="somDisciplinaCientifica" />  
+                </p:selectOneMenu>
+            </div>
+
+            <div >
+                <h:outputText value="Disciplina Científica: "/>
+            </div>
+            <div class="separador">
+                <p:selectOneMenu id="somDisciplinaCientifica"
+                                 valueChangeListener="#{disciplinaCientificaBean.handleChange}"
+                                 panelStyle="width:150px"
+                                 converter="ConversorGenerico">
+                    <f:selectItem itemValue="Seleccionar" itemLabel="Seleccionar" noSelectionOption="true"/>
+                    <f:selectItems value="#{disciplinaCientificaLstBean.lstSIDisciplinaCientifica}"/>
+                    <p:ajax update="somSubDisciplinaCientifica" /> 
+                </p:selectOneMenu>
+            </div>
+
+            <div>
+                <h:outputText value="Subdisciplina Científica: "/>
+            </div>
+            <div class="separador">
+                <p:selectOneMenu id="somSubDisciplinaCientifica"
+                                 value="#{subDisciplinaCientificaFindDlgBean.subDisciplinaCientificaSelect}"
+                                 panelStyle="width:150px"
+                                 converter="ConversorGenerico">
+                    <f:selectItem itemLabel="Seleccionar" noSelectionOption="true"/>
+                    <f:selectItems value="#{subDisciplinaCientificaLstBean.lstSISubDisciplinaCientifica}"/>
+
+                </p:selectOneMenu>
+            </div>
+           
+            <div style="text-align: center;">
+                <p:commandButton id="cbSelectFindSubDisciplinaCientifica"
+                                 value="Seleccionar" 
+                                 icon="ui-icon-check"  
+                                 actionListener="#{subDisciplinaCientificaFindDlgBean.definirComponentesActualizar()}"
+                                 process="somSubDisciplinaCientifica, ihTipoSDCSD,@this"
+                                 style="margin-right: 10px;" oncomplete="dlgFindSubDisciplinaCientifica.hide();"/>  
+
+                <p:commandButton id="cbSalirSDC"
+                                 value="Salir" 
+                                 icon="ui-icon-cancel"  
+                                 process="@this"
+                                 oncomplete="dlgFindSubDisciplinaCientifica.hide();"/>
+            </div>
+
+
+        </p:panel>
+
+    </p:dialog>
+</html>

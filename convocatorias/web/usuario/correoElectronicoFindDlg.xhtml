@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <p:dialog id="dFindCorreoElectronico" 
+              widgetVar="dlgFindCorreoElectronico"
+              modal="true"
+              width="600"
+              height="200"
+              position="top"
+              style="margin-top: 30px;"
+              resizable="false">
+        <f:facet name="header">
+            <h:outputText value=" Correo electrónico" styleClass="subTitulo"/>
+        </f:facet>
+        <p:panel id="pDialogCorreoElectronico">
+
+            <p:focus context="pDialogCorreoElectronico"/> 
+            
+            <h:inputHidden id="ihTipoCEFD"
+                           value="#{palabraClaveFindDlgBean.tipo}"/>
+            
+            
+            <div>
+                
+                <h:outputText value="Dirección: "/>
+                <p:inputText id="itCorreoElectronico"
+                             value="#{correoElectronicoFindDlgBean.correoElectronico.direccion}"/>
+                
+                
+            </div>
+            <div align="center">
+                
+                <p:commandButton icon="ui-icon-search"
+                                 value="Agregar"
+                                 actionListener="#{correoElectronicoFindDlgBean.definirComponentesActualizar()}"
+                                 process="dFindCorreoElectronico, @this"
+                                 style="margin: 30px 20px 30px 20px;"/>
+                
+                <p:commandButton icon="ui-icon-search"
+                                 value="Salir"
+                                 oncomplete="dlgFindCorreoElectronico.hide()"
+                                 process="@this"/>
+            </div>
+            
+
+        </p:panel>
+
+    </p:dialog>
+</html>

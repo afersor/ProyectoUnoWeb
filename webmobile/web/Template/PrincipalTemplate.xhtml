@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pm="http://primefaces.org/mobile"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Secretaría de Ciencia y Tecnología - UNCa</title>
+        <script type="text/javascript" src="./resources/js/inputMask.js"/>
+        <script type="text/javascript" src="./resources/js/personalizado.js"/>
+
+    </h:head>
+
+    <h:body>
+        <p:ajaxStatus />  
+
+        <p:dialog modal="true" widgetVar="statusDialog"  
+                  draggable="false" closable="true" position="top" >  
+            <p:graphicImage value="./resources/imagenes/load.gif" />  
+        </p:dialog> 
+        <pm:page title="SECyT">
+
+            <f:view id="main" renderKitId="PRIMEFACES_MOBILE">
+
+                <h:form id="frmPrincipal">
+                    <pm:header title="SECyT UNCa" swatch="b" />
+                    <pm:content>
+
+
+                        <ui:insert name="content">Content</ui:insert>
+
+                    </pm:content> </h:form></f:view></pm:page>
+    </h:body>
+
+</html>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <p:dialog id="dFindArchivo" 
+              widgetVar="dlgFindArchivo"
+              modal="true"
+              width="600"
+              height="200"
+              position="top"
+              style="margin-top: 30px;"
+              resizable="false">
+        <f:facet name="header">
+            <h:outputText value=" Archivos " styleClass="subTitulo"/>
+        </f:facet>
+        <p:panel id="pArchivo">
+
+            <p:focus context="pArchivo"/> 
+            
+            <h:inputHidden id="ihTipoAFD"
+                           value="#{archivoFindDlgBean.tipo}"/>
+            
+            <div class="separador">
+                
+                <h:outputText value="Archivo*: "/>
+                <p:fileUpload id="fuArchivo"
+                               
+                               fileUploadListener="#{archivoFindDlgBean.handleFileUpload}"
+                               auto="true"
+                               />
+                
+                
+            </div>
+            
+            <div align="center">
+                                
+                <p:commandButton icon="ui-icon-cancel"
+                                 value="Salir"
+                                 oncomplete="dlgFindArchivo.hide()"
+                                 process="@this"/>
+                
+            </div>
+            
+
+        </p:panel>
+
+    </p:dialog>
+</html>

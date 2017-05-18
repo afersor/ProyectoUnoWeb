@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/UserTemplateMenu.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="left">
+
+    </ui:define>
+
+    <ui:define name="content">
+        <p:menu styleClass="ui-listview-inset ui-corner-all ui-group-theme-b" >
+
+
+
+
+            <p:submenu label="Datos personales"
+                       styleClass="menu">
+
+                <p:menuitem value="Datos personales"
+                            action="#{navegarUser.pInvestigadorDatosPersonales()}"
+                            styleClass="menuContenido"
+                            process="@this"
+                            />
+
+                <p:menuitem value="Especialización"
+                            action="#{navegarUser.pInvestigadorEspecializacion()}"
+                            styleClass="menuContenido"
+                            ajax="false"/>
+
+                <p:menuitem value="Formación Académica"
+                            action="#{navegarUser.pInvestigadorFormacionAcademica()}"
+                            styleClass="menuContenido"
+                            ajax="false"/>
+            </p:submenu>
+
+            <p:submenu label="Universidad"
+                       styleClass="menu">
+
+                <p:menuitem value="Asignaturas"
+                            action="#{navegarUser.pInvestigadorCursos()}"
+                            styleClass="menuContenido"
+                            ajax="false"/>
+
+                <p:menuitem value="Becas"
+                            action="#{navegarUser.pInvestigadorPostulacionBecas()}"
+                            styleClass="menuContenido"
+                            ajax="false"/>
+
+
+
+
+
+                <p:menuitem value="Categorización"
+                            action="#{navegarUser.pInvestigadorCateforizacion()}"
+                            styleClass="menuContenido"
+                            ajax="false"/>
+
+                <p:menuitem value="Conducción"
+                            action="#{navegarUser.pInvestigadorConduccion()}"
+                            styleClass="menuContenido"
+                            ajax="false"/>
+
+                <p:menuitem value="Docencia"
+                            action="#{navegarUser.pInvestigadorDocencia()}"
+                            styleClass="menuContenido"
+                            ajax="false"/>
+
+
+            </p:submenu>
+
+
+
+
+
+
+
+
+
+
+            <p:submenu label="Proyectos"
+                       styleClass="menu">
+                <p:menuitem value="Proyectos de investigación"
+                            action="#{navegarUser.pInvestigadorParticipacionesProyectos()}"
+                            styleClass="menuContenido"
+                            ajax="false"/>
+
+                <p:menuitem value="Proyectos de vinculación"
+                            action="#{navegarUser.pInvestigadorParticipacionVinculacion()}"
+                            styleClass="menuContenido"
+                            ajax="false"/>
+            </p:submenu>
+
+            <p:submenu label="Varios"
+                       styleClass="menu">
+                <p:menuitem value="Cambiar contraseña"
+                            action="#{navegarUser.pInvestigadorCambiarContrasena()}"
+                            styleClass="menuContenido"
+                            ajax="false"/>
+
+                <p:menuitem value="Archivos Adjuntos"
+                            action="#{navegarUser.pInvestigadorArchivo()}"
+                            styleClass="menuContenido"
+                            ajax="false"/>
+            </p:submenu>
+        </p:menu>
+    </ui:define>
+
+</ui:composition>

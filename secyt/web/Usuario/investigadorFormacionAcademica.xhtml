@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/UserTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="left">
+       
+    </ui:define>
+
+    <ui:define name="content">
+        
+ 
+ 
+<!--Grado-->  
+
+        <div class="encabezado">
+            <h:outputText value="Grado "/>
+            <h:outputText value="(Titulo - Universidad - Año de egreso -Estado)"
+                          style="font-size: 0.7em;"/>
+        </div>
+
+
+        <div class="divGeneral">
+            <h:outputText value="No registra Grados Académicos" 
+                      rendered="#{empty investigadorLoginBean.investigador.formacionesAcademicasGrado}"
+                      styleClass="textoValue"/>
+        </div>
+
+        <div class="divGeneral"> 
+            <ui:repeat value="#{investigadorLoginBean.investigador.formacionesAcademicasGrado}"
+                       var="fag">
+                <h:outputText value="#{fag.tituloGrado}"
+                              styleClass="textoValue"/>
+                
+                <h:outputText value=" - #{fag.universidad.descripcion}"
+                              styleClass="textoValue"/>
+                
+                <h:outputText value=" - Egresado en #{fag.anoEgreso}" 
+                              rendered="#{fag.anoEgreso>0}"
+                              styleClass="textoValue"/>
+                <h:outputText value=" - Sin dato" 
+                              rendered="#{fag.anoEgreso==0}"
+                              styleClass="textoValue"/>
+                
+                <h:outputText value=" - Cursando" 
+                              rendered="#{fag.anoEgreso==0}"
+                              styleClass="textoValue"/>
+                
+                <h:outputText value=" - Terminado" 
+                              rendered="#{fag.anoEgreso>0}"
+                              styleClass="textoValue"/>
+                <br/>
+            </ui:repeat>
+        </div>
+        
+<!--POSGRADO-->
+        <div class="encabezado">
+            <h:outputText value="Posgrado "/>
+            <h:outputText value="(Titulo - Universidad - Año de egreso -Estado)"
+                          style="font-size: 0.7em;"/>
+        </div>
+
+
+        <div class="divGeneral">
+            <h:outputText value="No registra Posgrado" 
+                      rendered="#{empty investigadorLoginBean.investigador.formacionesAcademicasPosgrado}"
+                      styleClass="textoValue"/>
+        </div>
+
+        <div class="divGeneral"> 
+            <ui:repeat value="#{investigadorLoginBean.investigador.formacionesAcademicasPosgrado}"
+                       var="fap">
+                
+                <h:outputText value="#{fap.tituloPosgrado}"
+                              styleClass="textoValue"/>
+                
+                <h:outputText value=" - #{fap.universidad.descripcion}"
+                              styleClass="textoValue"/>
+                
+                <h:outputText value=" - #{fap.anoEgreso}" 
+                              rendered="#{fap.anoEgreso>0}"
+                              styleClass="textoValue"/>
+                
+                <h:outputText value=" - Sin dato" 
+                              rendered="#{fap.anoEgreso==0}"
+                              styleClass="textoValue"/>
+                
+                <h:outputText value=" - Cursando" 
+                              rendered="#{fap.anoEgreso==0}"
+                              styleClass="textoValue"/>
+                
+                <h:outputText value=" - Terminado" 
+                              rendered="#{fap.anoEgreso>0}"
+                              styleClass="textoValue"/>
+                <br/>
+            </ui:repeat>
+        </div>
+        
+<!--OTRAS-->
+        <div class="encabezado">
+            <h:outputText value="Otras "/>
+            <h:outputText value="(Titulo - Universidad - Año de egreso -Estado)"
+                          style="font-size: 0.7em;"/>
+        </div>
+
+
+        <div class="divGeneral">
+
+            <h:outputText value="No registra otras Formaciones Académicas" 
+                      rendered="#{empty investigadorLoginBean.investigador.formacionesAcademicasOtras}"
+                      styleClass="textoValue"/>
+        </div>
+
+        <div class="divGeneral"> 
+            <ui:repeat value="#{investigadorLoginBean.investigador.formacionesAcademicasOtras}"
+                       var="fao">
+                <h:outputText value="#{fao.tituloOtro}"
+                              styleClass="textoValue"/>
+                
+                <h:outputText value=" - #{fao.institucion.descripcion}"
+                              styleClass="textoValue"/>
+                
+                <h:outputText value=" - #{fao.anoEgreso}" 
+                              rendered="#{fao.anoEgreso>0}"
+                              styleClass="textoValue"/>
+                
+                <h:outputText value=" - Sin dato" 
+                              rendered="#{fao.anoEgreso==0}"
+                              styleClass="textoValue"/>
+                
+                <h:outputText value=" - Cursando" 
+                              rendered="#{fao.anoEgreso==0}"
+                              styleClass="textoValue"/>
+                
+                <h:outputText value=" - Terminado" 
+                              rendered="#{fao.anoEgreso>0}"
+                              styleClass="textoValue"/>
+                <br/>
+            </ui:repeat>
+        </div>
+    </ui:define>
+
+</ui:composition>

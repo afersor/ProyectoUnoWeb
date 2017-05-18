@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/UserTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="left">
+
+    </ui:define>
+
+    <ui:define name="content">
+
+        <!--DATOS PERSONALES-->   
+
+        <h3>
+
+            <h:outputText value="Datos Personales"/>
+        </h3>
+
+
+        <p:panel header="Apellido: "
+                 >
+            <h:outputText value="#{investigadorDatosPersonalesPagBean.investigador.persona.apellido}"
+                          /></p:panel>
+
+
+        <p:panel header="Nombre: "
+                 >
+            <h:outputText value="#{investigadorDatosPersonalesPagBean.investigador.persona.nombre}"
+                          /></p:panel>
+
+
+
+        <p:panel header="Tipo de documento: "
+                 >
+            <h:outputText value="#{investigadorDatosPersonalesPagBean.investigador.persona.documentoIdentidad.tipoDocumento.descripcion}"
+                          /></p:panel>
+
+
+
+        <p:panel header="Número de documento: "
+                 >
+            <h:outputText value="#{investigadorDatosPersonalesPagBean.investigador.persona.documentoIdentidad.numero}"
+                          /></p:panel>
+
+
+
+        <p:panel header="Fecha de Nacimiento: "
+                 >
+            <h:outputText value="#{investigadorDatosPersonalesPagBean.investigador.persona.fechaNacimiento}"
+                          >
+                <f:convertDateTime pattern="dd/MM/yyyy"  timeZone="GMT-03:00"/>
+            </h:outputText>
+        </p:panel>
+
+
+
+        <p:panel header="Sexo: "
+                 >
+            <h:outputText value="#{investigadorDatosPersonalesPagBean.investigador.persona.sexo}"
+                          /></p:panel>
+
+
+
+        <!--DOMICILIO-->
+
+        <h4>
+            <h:outputText value="Domicilio"/>
+
+        </h4>
+
+
+        <p:panel header="Calle: "
+                 >
+            <h:outputText value="#{investigadorDatosPersonalesPagBean.investigador.persona.domicilio.calle}"
+                          /></p:panel>
+
+
+        <p:panel header="Número: "
+                 >
+            <h:outputText value="#{investigadorDatosPersonalesPagBean.investigador.persona.domicilio.numero}"
+                          /></p:panel>
+
+
+        <p:panel header="Piso: "
+                 >
+            <h:outputText value="#{investigadorDatosPersonalesPagBean.investigador.persona.domicilio.piso}"
+                          /></p:panel>
+
+
+
+        <p:panel header="Departamento: "
+                 >
+            <h:outputText value="#{investigadorDatosPersonalesPagBean.investigador.persona.domicilio.dpto}"
+                          /></p:panel>
+
+
+
+        <p:panel header="Entre Calles: "
+                 >
+            <h:outputText value="#{investigadorDatosPersonalesPagBean.investigador.persona.domicilio.entreCalles}"
+                          /></p:panel>
+
+
+
+        <p:panel header="Referencia: "
+                 >
+            <h:outputText value="#{investigadorDatosPersonalesPagBean.investigador.persona.domicilio.referencia}"
+                          /></p:panel>
+
+
+
+        <p:panel header="Barrio: "
+                 >
+            <h:outputText value="#{investigadorDatosPersonalesPagBean.investigador.persona.domicilio.barrio}"
+                          /></p:panel>
+
+
+
+        <p:panel header="Provincia: "
+                 >
+            <h:outputText value="#{investigadorDatosPersonalesPagBean.investigador.persona.domicilio.localidad.departamento.provincia.descripcion}"
+                          /></p:panel>
+
+
+
+
+        <p:panel header="Departamento: "
+                 >
+            <h:outputText value="#{investigadorDatosPersonalesPagBean.investigador.persona.domicilio.localidad.departamento.descripcion}"
+                          /></p:panel>
+
+
+
+        <p:panel header="Localidad: "
+                 >
+            <h:outputText value="#{investigadorDatosPersonalesPagBean.investigador.persona.domicilio.localidad.descripcion}"
+                          /></p:panel>
+
+
+
+        <p:panel header="Codigo Postal: "
+                 >
+            <h:outputText value="#{investigadorDatosPersonalesPagBean.investigador.persona.domicilio.codigoPostal}"
+                          /></p:panel>
+
+
+        <br />
+        <!--TELEFONOS-->  
+
+        <p:panel header="Teléfonos">
+
+
+
+
+            <h:outputText value="No registra Teléfonos" 
+                          rendered="#{empty investigadorDatosPersonalesPagBean.investigador.persona.telefonos}"
+                          />
+
+
+
+            <ui:repeat value="#{investigadorDatosPersonalesPagBean.investigador.persona.telefonos}"
+                       var="tel">
+                <h:outputText value="#{tel.numero} - (#{tel.tipoTelefono.descripcion})"/><br/>
+            </ui:repeat>
+        </p:panel>
+
+
+        <!--CORREOS ELECTRONICOS-->  
+
+        <p:panel header="Correos Electrónicos" >
+
+
+
+            <h:outputText value="No registra Correos Electronicos" 
+                          rendered="#{empty investigadorDatosPersonalesPagBean.investigador.persona.correosElectronicos}"
+                          />
+
+
+
+            <ui:repeat value="#{investigadorDatosPersonalesPagBean.investigador.persona.correosElectronicos}"
+                       var="ce">
+                <h:outputText value="#{ce.direccion}"/><br/>
+            </ui:repeat></p:panel>
+
+    </ui:define>
+
+</ui:composition>

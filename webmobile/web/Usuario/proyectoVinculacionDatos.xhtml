@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/UserTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="left">
+
+    </ui:define>
+
+    <ui:define name="content">
+        <h3>
+            <h:outputText value="Datos del Proyecto: "/>
+        </h3>
+        <p:panel header="Titulo:" rendered="#{proyectoVinculacionBean.proyecto.titulo != null}">
+            <h:outputText id="titulo" value="#{proyectoVinculacionBean.proyecto.titulo}" title="Titulo" rendered="#{proyectoVinculacionBean.proyecto.titulo != null}" />
+        </p:panel>
+        <p:panel header="Codigo:" rendered="#{proyectoVinculacionBean.proyecto.codigo != null}"  >
+            <h:outputText id="codigo" value="#{proyectoVinculacionBean.proyecto.codigo}" title="Codigo" rendered="#{proyectoVinculacionBean.proyecto.codigo != null}" />
+        </p:panel>              
+        <p:panel header="Unidad Académica:" rendered="#{proyectoVinculacionBean.proyecto.unidadAcademica != null}" >
+            <h:outputText id="unidadAcademica" value="#{proyectoVinculacionBean.proyecto.unidadAcademica.descripcion}" title="UnidadAcademica" rendered="#{proyectoVinculacionBean.proyecto.unidadAcademica != null}"/>
+        </p:panel>                
+        <p:panel header="Unidad Ejecutora:" rendered="#{proyectoVinculacionBean.proyecto.unidadEjecutora != null}" >
+            <h:outputText id="unidadEjecutora" value="#{proyectoVinculacionBean.proyecto.unidadEjecutora.descripcion}" title="UnidadEjecutora" rendered="#{proyectoVinculacionBean.proyecto.unidadEjecutora != null}"/>
+        </p:panel>                 
+        <p:panel header="Entidad Evaluadora:" rendered="#{proyectoVinculacionBean.proyecto.entidadEvaluadora != null}">
+            <h:outputText id="entidadEvaluadora" value="#{proyectoVinculacionBean.proyecto.entidadEvaluadora.descripcion}" title="EntidadEvaluadora" rendered="#{proyectoVinculacionBean.proyecto.entidadEvaluadora != null}"/> 
+        </p:panel>               
+        <p:panel header="Duracion Teórica:"  rendered="#{proyectoVinculacionBean.proyecto.duracionTeorica != null}" >
+            <h:outputText id="duracionTeorica" value="#{proyectoVinculacionBean.proyecto.duracionTeorica}" title="DuracionTeorica" rendered="#{proyectoVinculacionBean.proyecto.duracionTeorica != null}"/>
+        </p:panel>           
+        <p:panel header="Fecha de Inicio:"  rendered="#{proyectoVinculacionBean.proyecto.fechaInicio != null}" >
+            <h:outputText id="fechaInicio" value="#{proyectoVinculacionBean.proyecto.fechaInicio}" title="FechaInicio" rendered="#{proyectoVinculacionBean.proyecto.fechaInicio != null}">
+                <f:convertDateTime pattern="MM/dd/yyyy" />
+            </h:outputText>
+        </p:panel>               
+        <p:panel header="Fecha de Finalizacion:" rendered="#{proyectoVinculacionBean.proyecto.fechaFinalizacion != null}"> 
+            <h:outputText id="fechaFinalizacion" value="#{proyectoVinculacionBean.proyecto.fechaFinalizacion}" title="FechaFinalizacion" rendered="#{proyectoVinculacionBean.proyecto.fechaFinalizacion != null}" >
+                <f:convertDateTime pattern="MM/dd/yyyy" />
+            </h:outputText>
+        </p:panel>                  
+        <p:panel header="Linea de Investigacion:"  rendered="#{proyectoVinculacionBean.proyecto.lineaInvestigacion != null}">
+            <h:outputText id="lineaInvestigacion" value="#{proyectoVinculacionBean.proyecto.lineaInvestigacion.descripcion}" title="LineaInvestigacion" rendered="#{proyectoVinculacionBean.proyecto.lineaInvestigacion != null}"/>
+        </p:panel>                   
+        <p:panel header="Nro. de Convenio:"  rendered="#{proyectoVinculacionBean.proyecto.nroConvenio != null}">
+            <h:outputText id="nroConvenio" value="#{proyectoVinculacionBean.proyecto.nroConvenio}" title="NroConvenio"  rendered="#{proyectoVinculacionBean.proyecto.nroConvenio != null}"/>
+        </p:panel>                    
+        <p:panel header="Observaciones:"  rendered="#{proyectoVinculacionBean.proyecto.observaciones != null}">
+            <h:outputText id="observaciones" value="#{proyectoVinculacionBean.proyecto.observaciones}" title="Observaciones" rendered="#{proyectoVinculacionBean.proyecto.observaciones != null}"/>
+        </p:panel>                    
+        <p:panel header="Palabras Claves:"  rendered="#{proyectoVinculacionBean.proyecto.palabrasClaves != null}">
+            <h:outputText id="palabrasClaves" value="#{proyectoVinculacionBean.proyecto.palabrasClaves}" title="PalabrasClaves" rendered="#{proyectoVinculacionBean.proyecto.palabrasClaves != null}"/>
+        </p:panel>                    
+        <p:panel header="Resumen:"  rendered="#{proyectoVinculacionBean.proyecto.resumen != null}" >
+            <h:outputText  id="resumen" value="#{proyectoVinculacionBean.proyecto.resumen}" title="Resumen" rendered="#{proyectoVinculacionBean.proyecto.resumen != null}" />
+        </p:panel>                    
+        <p:panel header="Programa:"  rendered="#{proyectoVinculacionBean.proyecto.programa != null}">
+            <h:outputText id="programa" value="#{proyectoVinculacionBean.proyecto.programa.descripcion}" title="PalabrasClaves" rendered="#{proyectoVinculacionBean.proyecto.programa != null}"/>
+        </p:panel> 
+        <p:panel header="Transferencia de Conocimiento:"  rendered="#{proyectoVinculacionBean.proyecto.transferenciaConocimiento != null}" >
+            <h:outputText id="transferenciaConocimiento" value="#{proyectoVinculacionBean.proyecto.transferenciaConocimiento}" title="TransferenciaConocimiento" rendered="#{proyectoVinculacionBean.proyecto.transferenciaConocimiento != null}"  />
+        </p:panel>
+
+        <h3>
+            <h:outputText value="Integrantes del Proyecto: "/>
+        </h3>
+        <div class="divGeneral">
+
+            <h:outputText value="No registra Participaciones en Proyectos" 
+                          rendered="#{empty proyectoVinculacionBean.proyecto.participaciones}"
+                          styleClass="textoValue"/>
+        </div>
+        <div style="clear: both"/>
+
+        <div style="overflow-x: scroll;">
+            <p:dataTable value="#{proyectoVinculacionBean.proyecto.participaciones}"
+                         var="pp"
+                         rendered="#{not empty proyectoVinculacionBean.proyecto.participaciones}"
+                         >
+
+
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Investigador"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <h:outputText value="#{pp.investigador.persona} (#{pp.rol.descripcion})"
+                                  styleClass="textoValue"/>
+                </p:column>
+
+
+            </p:dataTable>
+        </div>
+
+
+    </ui:define>
+
+</ui:composition>

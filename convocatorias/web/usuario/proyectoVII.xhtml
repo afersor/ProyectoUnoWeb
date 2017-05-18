@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../templates/userTemplate.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        
+        <ui:include src="/recursos/mensajesDlg.xhtml"/>
+        
+        <ui:include src="archivoFindDlg.xhtml"/>
+
+
+        <div style="margin-left: auto;
+            margin-right: auto;
+            padding: 0px; width: 1004px;">
+            
+          
+            <div align="left">
+                 <h:commandLink id="clMenuPrincipal"
+                                value="Menu Proyecto"
+                                action="#{navegarBean.entrarPagProyecto(0)}"
+                                style="margin-left: 20px;"
+                                rendered="#{proyectoWebBean.proyectoWeb.id != null}"/>
+             </div>
+            
+            <div align="center">
+                <div>
+                    <h:outputText value="Postulación: #{proyectoWebBean.proyectoWeb.convocatoria.nombre} " 
+                                  styleClass="titulo"/>
+                    <h:outputText value="#{proyectoWebBean.proyectoWeb.convocatoria.fechaIni}" 
+                                  styleClass="titulo">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                    </h:outputText>
+                    <h:outputText value=" a " 
+                                  styleClass="titulo"/>
+                    <h:outputText value="#{proyectoWebBean.proyectoWeb.convocatoria.fechaFin}"
+                                  styleClass="titulo">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                    </h:outputText>
+                </div>
+
+                <div>
+                    <h:outputText value="VII. Archivos adjuntos." 
+                                  styleClass="titulo"/>
+                    <h:outputText value="(Debe adjuntar los curriculum de todos los integrantes en formato CVAr)"
+                              styleClass="aclaraciones"/><br />
+                    <h:outputText value="(Aquí puede adjuntar imágenes y tablas de su proyecto)"
+                              styleClass="aclaraciones"/>
+                </div>
+            </div>
+
+            <div style="padding: 10px 10px 10px 10px;">
+
+
+                <div class="separador">
+                    
+                 <p:commandButton id="cbBuscarArchivos" 
+                                  icon="ui-icon-search"
+                                  actionListener="#{archivoFindDlgBean.setTipo(0)}"
+                                  oncomplete="dlgFindArchivo.show();"
+                                  process="@this"
+                                  update=":frmUser:ihTipoAFD"
+                                  title="Agregar"/>
+
+                             <p:dataTable id="dtArchivoWeb"
+                                          value="#{proyectoWebBean.proyectoWeb.lstArchivoWeb}"
+                                          var="arch"
+                                          style="width: 900px; overflow: auto;">
+                                 <p:column style="word-wrap:break-word;">
+                                     <f:facet name="header">
+                                         <h:outputText value="Archivo"/>
+                                     </f:facet>
+
+                                     <h:outputText value="#{arch.nombre}"/>
+                                 </p:column>
+
+                                 <p:column style="word-wrap:break-word;">
+                                     <f:facet name="header">
+                                         <h:outputText value="Quitar"/>
+                                     </f:facet>
+
+                                     <p:commandButton icon="ui-icon-circle-close"
+                                                      actionListener="#{archivoFindDlgBean.quitarArchivo(arch)}"
+                                                      update="dtArchivoWeb"
+                                                      />
+                                 </p:column>
+                             </p:dataTable>
+                         </div>
+                
+                
+                <div align="center" >
+             <p:commandButton value="Anterior"
+                              icon="ui-icon-arrowthick-1-w"
+                              style="margin: 20px 100px 20px 100px "
+                              action="#{navegarBean.entrarPagProyecto(6)}"
+                              ajax="false"
+                              rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+             
+             <p:commandButton value="Siguiente"
+                              icon="ui-icon-arrowthick-1-e"
+                              ajax="false"
+                              rendered="#{not proyectoWebBean.proyectoWeb.finalizado}"
+                              action="#{navegarBean.entrarPagProyecto(8)}"/>
+             
+             <p:commandButton value="Guardar"
+                              icon="ui-icon-disk"
+                              style="margin: 20px 100px 20px 100px "
+                              action="#{proyectoWebBean.guardar(7)}"
+                              update="dMensaje, clMenuPrincipal"
+                              rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+             
+         </div>
+            </div>
+
+        </div>
+        
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formularioEvaluacion" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="57f5dca3-2318-4767-b780-6a4c58c03d2d">
+	<property name="ireport.zoom" value="1.2100000000000093"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="230"/>
+	<subDataset name="dataset1" uuid="260fdac1-3f6a-4620-8d46-785c407ff2dd">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="detallesEvaluados" class="java.util.List">
+			<fieldDescription><![CDATA[detallesEvaluados]]></fieldDescription>
+		</field>
+		<field name="bloque" class="entidades.proyecto.evaluacion.Bloque">
+			<fieldDescription><![CDATA[bloque]]></fieldDescription>
+		</field>
+		<field name="calificacion" class="entidades.proyecto.evaluacion.CalificacionWeb">
+			<fieldDescription><![CDATA[calificacion]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="dataset2" uuid="400cf03c-81ae-471a-9d0b-780e381a7e9e">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="calificacion" class="entidades.proyecto.evaluacion.CalificacionWeb">
+			<fieldDescription><![CDATA[calificacion]]></fieldDescription>
+		</field>
+		<field name="contenidoBloque" class="entidades.proyecto.evaluacion.ContenidoBloque">
+			<fieldDescription><![CDATA[contenidoBloque]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="dataset3" uuid="46d104af-80c2-4060-b855-aa709acf7ee8">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="investigador" class="entidades.persona.investigador.Investigador">
+			<fieldDescription><![CDATA[investigador]]></fieldDescription>
+		</field>
+		<field name="rol" class="entidades.proyecto.Rol">
+			<fieldDescription><![CDATA[rol]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="IMAGEN" class="java.lang.String"/>
+	<parameter name="idEvaluacionWeb" class="java.lang.Long"/>
+	<queryString language="ejbql">
+		<![CDATA[SELECT e FROM EvaluacionWeb e where e.id = $P{idEvaluacionWeb}]]>
+	</queryString>
+	<field name="bloquesEvaluados" class="java.util.List"/>
+	<field name="calificacionGlobal" class="entidades.proyecto.evaluacion.CalificacionGlobal"/>
+	<field name="class" class="java.lang.Class"/>
+	<field name="comentariosFinales" class="java.lang.String"/>
+	<field name="evaluador" class="entidades.persona.Evaluador"/>
+	<field name="finalizado" class="java.lang.Boolean"/>
+	<field name="id" class="java.lang.Long"/>
+	<field name="proyecto" class="entidades.proyecto.Proyecto"/>
+	<field name="tipoEvaluacion" class="entidades.proyecto.evaluacion.TipoEvaluacion"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="206" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="8a52a7dc-3b65-439f-9d5b-705121f54450" x="122" y="30" width="304" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SECRETARÍA DE CIENCIA Y TECNOLOGÍA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6ce84ac6-55b0-4997-952e-891881421ae6" x="122" y="50" width="315" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[CONSEJO DE INVESTIGACIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="18336abd-f433-438c-bb19-b35960c26436" x="11" y="75" width="537" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROGRAMA DE DESARROLLO CIENTÍFICO Y TECNOLÓGICO 2014]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8cb09b4f-dd9b-44a1-9624-2c267b6d280a" x="110" y="10" width="373" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIVERSIDAD NACIONAL DE CATAMARCA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="17b1cd7c-94fd-4091-88b0-dd753558bc84" x="10" y="105" width="555" height="20"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[FORMULARIO DE EVALUACIÓN]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="668ee9de-3632-4759-959e-77bf481cefd9" x="11" y="125" width="554" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["TITULO: " + $F{proyecto}.getTitulo()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="668ee9de-3632-4759-959e-77bf481cefd9" x="11" y="165" width="554" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Código de Identificación del Proyecto: " + $F{proyecto}.getCodigoIncentivos()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement uuid="d6b6131e-378f-4cc2-8502-d6d41b8696b3" x="10" y="10" width="72" height="67"/>
+				<imageExpression><![CDATA[$P{IMAGEN}]]></imageExpression>
+			</image>
+			<componentElement>
+				<reportElement uuid="c342b6fc-bef4-444a-9679-b770779304de" x="11" y="145" width="554" height="20"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataset3" uuid="2ef8056a-47a4-4e73-b47d-f9e8b44d6ec7">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{proyecto}.getParticipaciones())]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="554">
+						<textField isStretchWithOverflow="true">
+							<reportElement uuid="1e4ddcd0-413b-43c2-8b5a-1e566258fbab" x="0" y="0" width="554" height="20">
+								<printWhenExpression><![CDATA[$F{rol}.getDescripcion().equals("Director")]]></printWhenExpression>
+							</reportElement>
+							<textElement/>
+							<textFieldExpression><![CDATA["DIRECTOR: "+ $F{investigador}.getPersona().getApellido() + ", " + $F{investigador}.getPersona().getNombre()]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="522" splitType="Stretch">
+			<componentElement>
+				<reportElement uuid="8102b73f-e3e9-4824-84d0-a150fc1916c6" positionType="Float" x="0" y="12" width="572" height="101"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="dataset1" uuid="8c3370da-e844-4856-b17e-e3e18979f558">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{bloquesEvaluados})]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="101" width="572">
+						<textField>
+							<reportElement uuid="05ad6cf9-8dec-45c5-9a36-3cb4a0476247" positionType="Float" x="0" y="0" width="572" height="20"/>
+							<box leftPadding="10">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement>
+								<font size="12" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{bloque}.getDescripcion()]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement uuid="83f4d43b-b49a-468d-8c5a-0bac6b853875" positionType="Float" x="522" y="20" width="50" height="20"/>
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center">
+								<font isBold="true"/>
+							</textElement>
+							<text><![CDATA[NA]]></text>
+						</staticText>
+						<staticText>
+							<reportElement uuid="83f4d43b-b49a-468d-8c5a-0bac6b853875" positionType="Float" x="472" y="20" width="50" height="20"/>
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center">
+								<font isBold="true"/>
+							</textElement>
+							<text><![CDATA[R]]></text>
+						</staticText>
+						<staticText>
+							<reportElement uuid="83f4d43b-b49a-468d-8c5a-0bac6b853875" positionType="Float" x="322" y="20" width="50" height="20"/>
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center">
+								<font isBold="true"/>
+							</textElement>
+							<text><![CDATA[EX]]></text>
+						</staticText>
+						<staticText>
+							<reportElement uuid="1790b9e6-a132-41cf-a3a0-ac07b295a37a" positionType="Float" x="0" y="20" width="322" height="20"/>
+							<box rightPadding="10">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font isBold="true"/>
+							</textElement>
+							<text><![CDATA[Calificación]]></text>
+						</staticText>
+						<staticText>
+							<reportElement uuid="83f4d43b-b49a-468d-8c5a-0bac6b853875" positionType="Float" x="422" y="20" width="50" height="20"/>
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center">
+								<font isBold="true"/>
+							</textElement>
+							<text><![CDATA[B]]></text>
+						</staticText>
+						<staticText>
+							<reportElement uuid="83f4d43b-b49a-468d-8c5a-0bac6b853875" positionType="Float" x="372" y="20" width="50" height="20"/>
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center">
+								<font isBold="true"/>
+							</textElement>
+							<text><![CDATA[MB]]></text>
+						</staticText>
+						<staticText>
+							<reportElement uuid="00b24270-7ff5-485f-a46c-52323a33fc5e" positionType="Float" x="0" y="80" width="322" height="20"/>
+							<box leftPadding="10">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement>
+								<font isBold="true"/>
+							</textElement>
+							<text><![CDATA[Calificación GLobal del bloque]]></text>
+						</staticText>
+						<textField>
+							<reportElement uuid="c7ed355e-d3f0-48e0-ae9e-74f8ce360ee0" positionType="Float" x="322" y="80" width="50" height="20"/>
+							<box leftPadding="0">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center"/>
+							<textFieldExpression><![CDATA[( $F{calificacion}.getNombre().equals("EX") ? "X" : "")]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement uuid="c7ed355e-d3f0-48e0-ae9e-74f8ce360ee0" positionType="Float" x="372" y="80" width="50" height="20"/>
+							<box leftPadding="0">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center"/>
+							<textFieldExpression><![CDATA[( $F{calificacion}.getNombre().equals("MB") ? "X" : "")]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement uuid="c7ed355e-d3f0-48e0-ae9e-74f8ce360ee0" positionType="Float" x="422" y="80" width="50" height="20"/>
+							<box leftPadding="0">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center"/>
+							<textFieldExpression><![CDATA[( $F{calificacion}.getNombre().equals("B") ? "X" : "")]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement uuid="c7ed355e-d3f0-48e0-ae9e-74f8ce360ee0" positionType="Float" x="472" y="80" width="50" height="20"/>
+							<box leftPadding="0">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center"/>
+							<textFieldExpression><![CDATA[( $F{calificacion}.getNombre().equals("R") ? "X" : "")]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement uuid="c7ed355e-d3f0-48e0-ae9e-74f8ce360ee0" positionType="Float" x="522" y="80" width="50" height="20"/>
+							<box leftPadding="0">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center"/>
+							<textFieldExpression><![CDATA[( $F{calificacion}.getNombre().equals("NA") ? "X" : "")]]></textFieldExpression>
+						</textField>
+						<componentElement>
+							<reportElement uuid="e4083b4f-1d2a-4269-b53e-f7a4e6ddd391" positionType="Float" x="0" y="40" width="572" height="40"/>
+							<jr:list printOrder="Vertical">
+								<datasetRun subDataset="dataset2" uuid="a6c2fdff-5918-4c23-9f01-c976bff65b85">
+									<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{detallesEvaluados})]]></dataSourceExpression>
+								</datasetRun>
+								<jr:listContents height="40" width="572">
+									<textField isStretchWithOverflow="true">
+										<reportElement uuid="67c0216d-f6b1-428a-8f0b-0cef717a0d41" x="322" y="0" width="50" height="40"/>
+										<box>
+											<topPen lineWidth="0.5"/>
+											<leftPen lineWidth="0.5"/>
+											<bottomPen lineWidth="0.5"/>
+											<rightPen lineWidth="0.5"/>
+										</box>
+										<textElement textAlignment="Center"/>
+										<textFieldExpression><![CDATA[( $F{calificacion}.getNombre().equals("EX") ? "X" : "")]]></textFieldExpression>
+									</textField>
+									<textField isStretchWithOverflow="true">
+										<reportElement uuid="e377c92f-ec3a-464d-a130-628e993df174" x="0" y="0" width="322" height="40"/>
+										<box leftPadding="10">
+											<topPen lineWidth="0.5"/>
+											<leftPen lineWidth="0.5"/>
+											<bottomPen lineWidth="0.5"/>
+											<rightPen lineWidth="0.5"/>
+										</box>
+										<textElement/>
+										<textFieldExpression><![CDATA[""+$F{contenidoBloque}]]></textFieldExpression>
+									</textField>
+									<textField isStretchWithOverflow="true">
+										<reportElement uuid="67c0216d-f6b1-428a-8f0b-0cef717a0d41" x="372" y="0" width="50" height="40"/>
+										<box>
+											<topPen lineWidth="0.5"/>
+											<leftPen lineWidth="0.5"/>
+											<bottomPen lineWidth="0.5"/>
+											<rightPen lineWidth="0.5"/>
+										</box>
+										<textElement textAlignment="Center"/>
+										<textFieldExpression><![CDATA[( $F{calificacion}.getNombre().equals("MB") ? "X" : "")]]></textFieldExpression>
+									</textField>
+									<textField isStretchWithOverflow="true">
+										<reportElement uuid="67c0216d-f6b1-428a-8f0b-0cef717a0d41" x="422" y="0" width="50" height="40"/>
+										<box>
+											<topPen lineWidth="0.5"/>
+											<leftPen lineWidth="0.5"/>
+											<bottomPen lineWidth="0.5"/>
+											<rightPen lineWidth="0.5"/>
+										</box>
+										<textElement textAlignment="Center"/>
+										<textFieldExpression><![CDATA[( $F{calificacion}.getNombre().equals("B") ? "X" : "")]]></textFieldExpression>
+									</textField>
+									<textField isStretchWithOverflow="true">
+										<reportElement uuid="67c0216d-f6b1-428a-8f0b-0cef717a0d41" x="472" y="0" width="50" height="40"/>
+										<box>
+											<topPen lineWidth="0.5"/>
+											<leftPen lineWidth="0.5"/>
+											<bottomPen lineWidth="0.5"/>
+											<rightPen lineWidth="0.5"/>
+										</box>
+										<textElement textAlignment="Center"/>
+										<textFieldExpression><![CDATA[( $F{calificacion}.getNombre().equals("R") ? "X" : "")]]></textFieldExpression>
+									</textField>
+									<textField isStretchWithOverflow="true">
+										<reportElement uuid="67c0216d-f6b1-428a-8f0b-0cef717a0d41" x="522" y="0" width="50" height="40"/>
+										<box>
+											<topPen lineWidth="0.5"/>
+											<leftPen lineWidth="0.5"/>
+											<bottomPen lineWidth="0.5"/>
+											<rightPen lineWidth="0.5"/>
+										</box>
+										<textElement textAlignment="Center"/>
+										<textFieldExpression><![CDATA[( $F{calificacion}.getNombre().equals("NA") ? "X" : "")]]></textFieldExpression>
+									</textField>
+								</jr:listContents>
+							</jr:list>
+						</componentElement>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement uuid="d0e54a2f-2902-4518-ab54-718d7fcd40b7" positionType="Float" x="0" y="122" width="322" height="60"/>
+				<box leftPadding="10">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CALIFICACION GLOTAL TOTAL DEL PROYECTO]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="08c84d1f-6d95-4f99-b052-1d7ab29108bc" positionType="Float" x="323" y="162" width="79" height="20"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[($F{calificacionGlobal}.getName().equals("Aprobado") ? "X" : "")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="6321cce7-9c36-4420-bcc4-e7bfd49346be" positionType="Float" x="323" y="122" width="80" height="40"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[APROBADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6321cce7-9c36-4420-bcc4-e7bfd49346be" positionType="Float" x="402" y="122" width="91" height="40"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[APROBADO CON MODIFICACIONES (*)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6321cce7-9c36-4420-bcc4-e7bfd49346be" positionType="Float" x="493" y="122" width="79" height="40"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[DESAPROBADO]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="08c84d1f-6d95-4f99-b052-1d7ab29108bc" positionType="Float" x="403" y="162" width="90" height="20"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[($F{calificacionGlobal}.getName().equals("Aprobado con Modificaciones") ? "X" : "")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="08c84d1f-6d95-4f99-b052-1d7ab29108bc" positionType="Float" x="493" y="162" width="79" height="20"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[($F{calificacionGlobal}.getName().equals("Desaprobado") ? "X" : "")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="da7cc69f-0e58-4cf3-9c6f-bcb080215d45" positionType="Float" x="0" y="182" width="572" height="20"/>
+				<textElement>
+					<font isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[(Marcar la opción elegida con la letra X)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1bff7c0c-29a2-4149-b28f-ce439e18d46a" positionType="Float" x="0" y="220" width="572" height="56"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[(*)Se considera un proyecto Aprobado con Modificaciones, cuando según criterio de los evaluadores, se deba realizar modificaciones de forma en su formulación, para poder adquirir la condición de aprobado.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="03f30e03-9988-49c9-943c-3d79606d3d30" positionType="Float" x="0" y="296" width="572" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMENTARIOS FINALES]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="127d858e-00a0-43f9-91cd-9326e9a1d1eb" positionType="Float" x="0" y="327" width="572" height="70"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{comentariosFinales}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="00cda03e-cf0c-4e67-bd25-03cb80c7eaf3" positionType="Float" x="0" y="415" width="572" height="20"/>
+				<textElement/>
+				<text><![CDATA[Firma del Evaluador:_________________________]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="e2cbacd5-f6c7-4a96-803a-5efdff0d5693" positionType="Float" x="110" y="457" width="462" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{evaluador}.getInvestigador().getPersona().getApellido() + ", " + $F{evaluador}.getInvestigador().getPersona().getNombre()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="d9b436a0-eae5-40fa-949a-8eedede19fab" positionType="Float" x="0" y="457" width="110" height="20"/>
+				<textElement/>
+				<text><![CDATA[Apellido y Nombre: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d9b436a0-eae5-40fa-949a-8eedede19fab" positionType="Float" x="0" y="480" width="110" height="20"/>
+				<textElement/>
+				<text><![CDATA[Institución: ]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="e2cbacd5-f6c7-4a96-803a-5efdff0d5693" positionType="Float" x="110" y="480" width="462" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{evaluador}.getInvestigador().getUniversidad().getDescripcion()]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement uuid="b216df0f-229d-4ae1-873b-ba06e4b78d15" x="520" y="0" width="52" height="20" forecolor="#666666"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d09cb683-23d9-4058-86c6-6a1a94e0dadc" x="0" y="0" width="520" height="20" forecolor="#666666"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

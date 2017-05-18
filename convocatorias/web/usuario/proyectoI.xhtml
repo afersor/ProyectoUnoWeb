@@ -1,0 +1,611 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../templates/userTemplate.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+
+
+
+        <!--<ui:include src="investigadorFindDlg.xhtml" />
+
+        <ui:include src="investigadorEditDlg.xhtml" />-->
+
+        <ui:include src="investigadorFindDlg.xhtml" />
+
+        <ui:include src="campoAplicacionFindDlg.xhtml" />
+
+        <ui:include src="unidadInvestigacionFindDlg.xhtml" />
+
+        <ui:include src="subDisciplinaCientificaFindDlg.xhtml" />
+
+        <ui:include src="participacionWebFindDlg.xhtml"/>
+
+        <ui:include src="/recursos/mensajesDlg.xhtml"/>
+        
+        <ui:include src="ubicacionEditDlg.xhtml"/>
+
+        <!-- <ui:include src="telefonoFindDlg.xhtml" />
+
+        <ui:include src="correoElectronicoFindDlg.xhtml" />-->
+
+        <div style="margin-left: auto;
+             margin-right: auto;
+             width: 1004px;
+             padding: 10px 10px 10px 10px;">
+
+            <div align="left">
+                <h:commandLink id="clMenuPrincipal"
+                               value="Menu Proyecto"
+                               action="#{navegarBean.entrarPagProyecto(0)}"
+                               style="margin-left: 20px;"
+                               rendered="#{proyectoWebBean.proyectoWeb.id != null}"
+                               immediate="true"/>
+            </div>
+
+            <div align="center">
+                <div >
+                    <h:outputText value="Postulación: #{proyectoWebBean.proyectoWeb.convocatoria.nombre} " 
+                                  styleClass="titulo"/>
+                    <h:outputText value="#{proyectoWebBean.proyectoWeb.convocatoria.fechaIni}" 
+                                  styleClass="titulo">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                    </h:outputText>
+                    <h:outputText value=" a " 
+                                  styleClass="titulo"/>
+                    <h:outputText value="#{proyectoWebBean.proyectoWeb.convocatoria.fechaFin}"
+                                  styleClass="titulo">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                    </h:outputText>
+
+                </div>
+
+                <div>
+                    <h:outputText value="I. Identificación del proyecto" 
+                                  styleClass="subtitulo"/>
+                </div>
+            </div>
+
+            <div style="padding: 10px 10px 10px 10px;">
+                <ol>
+                    <li class="listaTitulo">
+                        <div>
+                            <h:outputText value="Nombre del proyecto: "/>
+                        </div>
+                    </li>
+                    <div>
+                        <p:inputTextarea rows="2" cols="100"
+                                         value="#{proyectoWebBean.proyectoWeb.titulo}"/>
+                    </div>
+
+
+                    <li class="listaTitulo">
+                        <div>
+                            <h:outputText value="Duración del proyecto: "/>
+                        </div>
+                    </li>
+                    <!--<div>
+                        <p:inputText value="{proyectoWebBean.prodel proyectoyectoWeb.duracionTeorica}"/>
+                    </div>-->
+
+                    <div>
+                        <h:outputText value="Fecha inicial: "/>
+                        <p:calendar id="cProyectoFechaIni"
+                                    value="#{proyectoWebBean.proyectoWeb.fechaInicio}" 
+                                    locale="es"
+                                    pattern="dd/MM/yyyy"
+                                    timeZone="GMT-03:00"
+                                    style="padding-right: 5px;"/>  
+
+                        <h:outputText value="Fecha final: "/>
+                        <p:calendar id="cProyectoFechaFin"
+                                    value="#{proyectoWebBean.proyectoWeb.fechaFinalizacion}" 
+                                    locale="es"
+                                    pattern="dd/MM/yyyy"
+                                    timeZone="GMT-03:00"/> <br />
+                        <h:outputText value="La duración debe ser de dos o cuatro años 
+                                      (Ej.: 01/01/2017 al 31/12/2018 ó 01/01/2017 al 31/12/2020) "/>
+
+                    </div>
+
+                    <li class="listaTitulo">
+                        <h:outputText value="Financiamiento: "/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio id="sorFinanciamiento" 
+                                          value="#{proyectoWebBean.proyectoWeb.tipoFinanciamiento}">
+                            <f:selectItems value="#{tipoFinanciamientoLstBean.lstSITipoFinanciamiento}"/>
+                        </p:selectOneRadio>
+                    </div>
+
+                    <li class="listaTitulo">
+                        <h:outputText value="Participa en Programa: "/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio id="sorParticipaPrograma" value="#{proyectoWebBean.proyectoWeb.participaEnPrograma}">
+                            <f:selectItem itemValue="True" itemLabel="Si" />
+                            <f:selectItem itemValue="False" itemLabel="No"/>
+                        </p:selectOneRadio>
+                    </div>
+
+
+                    <li class="listaTitulo">
+                        <h:outputText value="Director: "/>
+                    </li>
+                    <div>
+                        <h:outputText value="Director: "/>
+                        <!-- <p:commandButton id="cbBuscarDirector" 
+                              icon="ui-icon-search"
+                              actionListener="{investigadorFindDlgBean.setTipo(0)}"
+                              oncomplete="dlgFindInvestigador.show();"
+                              process="@this"
+                              update=":frmUser:ihTipoIFD"/>-->
+                    </div>
+                    <div class="separador">
+                        <h:outputText id="otDirector" 
+                                      value="#{proyectoWebBean.proyectoWeb.participacionesWeb.get(0).investigador.persona.apellido} 
+                                      #{proyectoWebBean.proyectoWeb.participacionesWeb.get(0).investigador.persona.nombre} 
+                                      #{proyectoWebBean.proyectoWeb.participacionesWeb.get(0).investigador.persona.cuil}"/>
+                    </div>
+                    <div>
+                        <h:outputText value="Dedicación semanal: "/>
+                    </div>
+
+                    <div class="separador">
+                        <h:inputText id="itDedicacionSemanalDirector"
+                                     value="#{proyectoWebBean.proyectoWeb.participacionesWeb.get(0).dedicacionSemanal}"/> 
+                        <h:outputText value="Horas (Ej.: 20) "/>
+                    </div>
+
+                    <div>
+                        <h:outputText value="Categoria investigador: "/>
+                        <ul>
+                            <ui:repeat value="#{proyectoWebBean.proyectoWeb.participacionesWeb.get(0).investigador.categorizaciones}"
+                                       var="cat">
+                                <li type="circle">
+                                    <h:outputText value="#{cat}"/>
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </div>
+
+
+
+                    <li class="listaTitulo">
+                        <h:outputText value="Sub-Director: "/>
+                    </li>
+                    <div>
+                        <h:outputText value="Presione el boton buscar para seleccionar el Sub-Director"/>
+                    </div>
+                    <div>
+                        <h:outputText value="Sub-Director: "/>
+
+                        <p:commandButton id="cbBuscarPersonal" 
+                                         icon="ui-icon-search"
+                                         actionListener="#{participacionWebFindDlgBean.setTipo(1)}"
+                                         oncomplete="dlgFindParticipacionWeb.show();"
+                                         process="@this"
+                                         update=":frmUser:ihTipoPWFD"
+                                         style="margin-right: 5px;"/>
+
+                    </div>
+
+                    <div class="separador">
+
+
+
+
+                        <h:outputText id="otCoDirector" 
+                                      value="#{proyectoWebBean.proyectoWeb.participacionesWeb.get(1).investigador.persona.apellido} 
+                                      #{proyectoWebBean.proyectoWeb.participacionesWeb.get(1).investigador.persona.nombre} 
+                                      #{proyectoWebBean.proyectoWeb.participacionesWeb.get(1).investigador.persona.cuil}"
+                                      />
+                    </div>
+
+                    <div>
+                        <h:outputText id="otDedicacionSemanalCoDirector" 
+                                      value="Dedicación semanal: 
+                                      #{proyectoWebBean.proyectoWeb.participacionesWeb.get(1).dedicacionSemanal}"/>
+                    </div>
+                    
+                    <div>
+                        <h:outputText value="Categoria investigador: "/>
+                        <ul>
+                            <h:panelGroup id="pgCategorizacion">
+                            <ui:repeat id="rCategorizacion" value="#{proyectoWebBean.proyectoWeb.participacionesWeb.get(1).investigador.categorizaciones}"
+                                       var="cat">
+                                <li type="circle">
+                                    <h:outputText value="#{cat}"/>
+                                </li>
+                            </ui:repeat>
+                            </h:panelGroup>
+                        </ul>
+                    </div>
+
+
+
+                    <li class="listaTitulo">
+                        <h:outputText value="Facultad a la que pertenece el proyecto: "/>
+                    </li>
+
+                    <div>
+                        <h:outputText value="Unidad Académica: "/>
+                    </div>
+                    <div class="separador">
+                        <p:selectOneMenu id="somUnidadAcademica"
+                                         value="#{proyectoWebBean.proyectoWeb.unidadAcademica}"
+                                         converter="ConversorGenerico"
+                                         style="width:400px;">
+                            <f:selectItems value="#{unidadAcademicaLstBean.lstSIUnidadAcademica}"/>
+                        </p:selectOneMenu>
+                    </div>
+
+                    <div>
+                        <h:outputText value="Unidad Ejecutora: "/>
+                    </div>
+                    <div class="separador">
+                        <p:selectOneMenu id="somUnidadEjecutora"
+                                         value="#{proyectoWebBean.proyectoWeb.unidadEjecutora}"
+                                         converter="ConversorGenerico"
+                                         style="width:400px;">
+                            <f:selectItem itemLabel="Seleccionar" noSelectionOption="true"/>
+                            <f:selectItems value="#{unidadEjecutoraLstBean.lstSIUnidadEjecutora}"/>
+                        </p:selectOneMenu> <h:outputText value="Otra: "/><p:inputText size="40" value="#{proyectoWebBean.proyectoWeb.unidadEjecutoraOtra}"  /><!-- Agregar ala entidad cuando no seleccione nada -->
+                    </div> 
+
+                    <div>
+                        <h:outputText value="Localización Fisica del Proyecto: "/><br/>
+                        <h:outputText value="(Una vez localizada la ubicación debe colocar 
+                                      la misma en mapa y de alli colocar las coordenadas)" 
+                                      styleClass="aclaraciones"/>
+                    </div>
+                    <div style="margin-bottom: 5px;">
+                        <p:commandButton id="cbBuscarUnidadInvestigacion" 
+                                         icon="ui-icon-search"
+                                         action="#{unidadInvestigacionFindDlgBean.setTipo(0)}"
+
+                                         actionListener="#{unidadInvestigacionFindDlgBean.abrirDialog()}"
+                                         process="@this"
+                                         update="dMensaje, :frmUser:ihTipoUIFD"
+                                         title="Agregar"
+                                         /> 
+
+                        <!-- Agregar ala entidad cuando no seleccione nada -->
+                        <!-- hay q seleccionar uno nomas -->
+                        <p:dataTable id="dtUnidadInvestigacion"
+                                     value="#{proyectoWebBean.proyectoWeb.localizaciones}"
+                                     var="ui"
+                                     style="width: 900px;">
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Localización"/>
+                                </f:facet>
+
+                                <h:outputText value="#{ui.descripcion}"/>
+                            </p:column>
+
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Quitar"/>
+                                </f:facet>
+
+                                <p:commandButton icon="ui-icon-circle-close"
+                                                 actionListener="#{proyectoWebBean.quitarUnidadInvestigacion(ui)}"
+                                                 update="dtUnidadInvestigacion"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                    
+                    <div>
+                        <h:outputText value="Otra: "/>
+                    </div>
+                    
+                    <div style="margin-bottom: 5px;">
+                        <p:inputText size="40" value="#{proyectoWebBean.proyectoWeb.localizacionOtra}"  />
+                    </div>
+                        
+
+                    <div>
+                        <h:outputText value="Coordenadas: "/>
+                    </div>
+                    <div  style="margin-bottom: 5px;">
+                        <h:inputText id="itLatitud"
+                                     value="#{proyectoWebBean.proyectoWeb.latitud}"/>
+                        <h:inputText id="itLongitud"
+                                     value="#{proyectoWebBean.proyectoWeb.longitud}"/>
+                        <h:outputText value="(Haga click o corra la marcar hasta la ubicación deseada)"
+                                      styleClass="aclaraciones"/>
+<!--center="-28.46890823359409,-65.77899905009463"-->
+                        <p:gmap id="gmap" 
+                                
+                                center="-28.46890823359409,-65.77899905009463"
+                                zoom="13"  
+                                model="#{posicionMapaBean.draggableModel}" 
+                                style="width:90%;height:400px"
+                                type="ROADMAP">
+                            <p:ajax event="markerDrag" listener="#{posicionMapaBean.onMarkerDrag}" update="itLatitud, itLongitud" />
+                            <p:ajax event="pointSelect" listener="#{posicionMapaBean.onPointSelect}" update="itLatitud, itLongitud, gmap" />
+                            
+                        </p:gmap>
+                    </div>
+                    
+                    <div>
+                        <h:outputText value="Cargar otras localizaciones: "/><br/>
+                        <h:outputText value="(Una vez localizada la ubicación debe colocar 
+                                      la misma en mapa y de alli colocar las coordenadas)" 
+                                      styleClass="aclaraciones"/>
+                    </div>
+                    
+                    <div style="margin-bottom: 5px;">
+                        <p:commandButton id="cbUbicacionCreate" 
+                                     value="Cargar ubicación"
+                                     actionListener="#{ubicacionDlgBean.entrar(1)}"
+                                     styleClass="botonAgregar"
+                                     
+                                     process="@this, dtUbicacion"/>
+                        
+                        <p:dataTable id="dtUbicacion"
+                                     value="#{ubicacionLstBean.lstUbicacion}"
+                                     var="ui"
+                                     style="width: 900px;">
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Localidad"/>
+                                </f:facet>
+
+                                <h:outputText value="#{ui.localidad}"/>
+                            </p:column>
+                            
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Latitud"/>
+                                </f:facet>
+
+                                <h:outputText value="#{ui.latitud}"/>
+                            </p:column>
+                            
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Longitud"/>
+                                </f:facet>
+
+                                <h:outputText value="#{ui.longitud}"/>
+                            </p:column>
+
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Quitar"/>
+                                </f:facet>
+
+                                <p:commandButton icon="ui-icon-circle-close"
+                                                 actionListener="#{ubicacionDlgBean.quitarUbicacion(ui)}"
+                                                 update="dtUbicacion"
+                                                 process="@this,dtUbicacion"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+
+
+                    <li class="listaTitulo">
+                        <div>
+                            <h:outputText value="Linea prioritaria del proyecto: "/>
+                        </div>
+                    </li>
+                    <div>
+                        <p:selectOneMenu id="somLineaInvestigacion"
+                                         value="#{proyectoWebBean.proyectoWeb.lineaInvestigacion}"
+                                         converter="ConversorGenerico"
+                                         style="width:400px !important;">
+                            <f:selectItems value="#{lineaInvestigacionLstBean.lstSILineaInvestigacion}"/>
+                        </p:selectOneMenu>
+                    </div>
+                    
+                    <div style="margin-top: 5px;">
+                    <h:outputText value="Sector prioritario: "
+                                  />
+                    </div>
+                    
+
+                    <div>
+                        <p:selectOneRadio id="sorSectorPrioritario" value="#{proyectoWebBean.proyectoWeb.sectorPrioritario}">
+                            <f:selectItems value="#{sectorPrioritarioLstBean.lstSISectorPrioritario}"/>
+                        </p:selectOneRadio>
+                    </div>
+                    
+                    <div>
+                        <h:outputText value="Otra: "/>
+                    </div>
+                    
+                    <div style="margin-bottom: 5px;">
+                        <p:inputText size="40" value="#{proyectoWebBean.proyectoWeb.sectorPrioritarioOtro}"/>
+                    </div>
+
+
+                    <li class="listaTitulo">
+                        <h:outputText value="Caracteristicas: "/>
+                    </li>
+
+                    <div>
+                        <h:outputText value="Area Temática - Disciplina Científica - Subdisciplinas Científicas: "/>
+                    </div>
+                    <div class="separador">
+                        <p:commandButton id="cbBuscarSubDisciplinaCientifica" 
+                                         icon="ui-icon-search"
+                                         action="#{subDisciplinaCientificaFindDlgBean.setTipo(0)}"
+                                         actionListener="#{subDisciplinaCientificaFindDlgBean.abrirDialog()}"
+                                         process="@this"
+                                         update="@this, :frmUser:ihTipoSDCSD"
+                                         title="Agregar"/>
+
+                        <h:outputText value="Otra: "/><p:inputText value="#{proyectoWebBean.proyectoWeb.subDisciplinaCientificaOtra}" rendered="#{subDisciplinaCientificaFindDlgBean.subDisciplinaCientificaSelect.descripcion!='Otras(especificar)'}" id="otraSubdisciplina"/><!-- <h:inputText  /><!- esta hay que agregar a la entidad, y sale cuando se selecciona alguna de las subdisciplinas que dicen 'Otras(especificar)'
+                        -->
+                        <!-- hay q seleccionar uno nomas -->
+
+                        <p:dataTable id="dtSubDisciplinaCientifica"
+                                     value="#{proyectoWebBean.proyectoWeb.subDisciplinasCientificas}"
+                                     var="sdc"
+                                     style="width: 900px; overflow: auto;">
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Area Temática"/>
+                                </f:facet>
+
+                                <h:outputText value="#{sdc.disciplinaCientifica.areaTematica.descripcion}"/>
+                            </p:column>
+
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Disciplina Científica"/>
+                                </f:facet>
+
+                                <h:outputText value="#{sdc.disciplinaCientifica.descripcion}"/>
+                            </p:column>
+
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Subdisciplina Científica"/>
+                                </f:facet>
+
+                                <h:outputText value="#{sdc.descripcion}"/>
+                            </p:column>
+
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Quitar"/>
+                                </f:facet>
+
+                                <p:commandButton icon="ui-icon-circle-close"
+                                                 actionListener="#{proyectoIPagBean.quitarSubDisciplinaCientifica(sdc)}"
+                                                 update="dtSubDisciplinaCientifica"/>
+                            </p:column>
+                        </p:dataTable>
+
+                    </div>
+
+
+                    <div>
+                        <h:outputText value="Campo de Aplicación: "/>
+                    </div>
+                    <div class="separador">
+                        <p:commandButton id="cbBuscarCampoAplicacion" 
+                                         icon="ui-icon-search"
+                                         actionListener="#{campoAplicacionFindDlgBean.setTipo(0)}"
+                                         oncomplete="dlgFindCampoAplicacion.show();"
+                                         process="@this"
+                                         update=":frmUser:ihTipoCADF"
+                                         title="Agregar"/>
+
+                        <p:dataTable id="dtCampoAplicacion"
+                                     value="#{proyectoWebBean.proyectoWeb.camposAplicacion}"
+                                     var="ca"
+                                     style="width: 900px; overflow: auto;">
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Campo"/>
+                                </f:facet>
+
+                                <h:outputText value="#{ca.descripcion}"/>
+                            </p:column>
+
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Quitar"/>
+                                </f:facet>
+
+                                <p:commandButton icon="ui-icon-circle-close"
+                                                 actionListener="#{proyectoIPagBean.quitarCampoAplicacion(ca)}"
+                                                 update="dtCampoAplicacion"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+
+                    <div>
+                        <h:outputText value="Objetivo Socioeconómico: "/>
+                    </div>
+                    <div class="separador">
+                        <p:selectOneMenu id="somObjetivoSocioEconomico"
+                                         value="#{proyectoWebBean.proyectoWeb.objetivoSocioeconomico}"
+                                         converter="ConversorGenerico"
+                                         style="width:400px;">
+                            <f:selectItems value="#{objetivoSocioEconomicoLstBean.lstSIObjetivoSocioEconomico}"/>
+                        </p:selectOneMenu>
+                    </div>
+
+
+
+                    <li class="listaTitulo">
+                        <h:outputText value="Categoría: "/>
+                    </li>
+                    <div>
+                        <h:outputText value="Proyecto Orientado: "/>
+                    </div>
+                    <div>
+                        <p:selectBooleanCheckbox 
+                            value="#{proyectoWebBean.proyectoWeb.proyectoOrientado}"/>
+                    </div>
+                    <div>
+                        <h:outputText value="Proyecto de Iniciación: "/>
+                    </div>
+                    <div>
+                        <p:selectBooleanCheckbox 
+                            value="#{proyectoWebBean.proyectoWeb.proyectoIniciacion}"/>
+                    </div>
+
+                    <li class="listaTitulo">
+                        <div>
+                            <h:outputText value="Tipo de Actividades: "/>
+                        </div>
+                    </li>
+                    <div>
+                        <p:selectOneMenu id="somTipoActividad"
+                                         value="#{proyectoWebBean.proyectoWeb.tipoProyecto}"
+                                         converter="ConversorGenerico"
+                                         style="width:400px;">
+                            <f:selectItems value="#{tipoProyectoLstBean.lstSITipoProyecto}"/>
+                        </p:selectOneMenu>
+                    </div>
+
+                </ol>
+
+            </div>
+
+
+
+
+
+        </div>
+
+            <div align="center">
+                <p:commandButton value="Anterior"
+                                 icon="ui-icon-arrowthick-1-w"
+                                 style="margin: 20px 100px 20px 100px "
+                                 disabled="true"
+                                 rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+
+                <p:commandButton value="Siguiente"
+                                 icon="ui-icon-arrowthick-1-e"
+                                 action="#{navegarBean.entrarPagProyecto(2)}"
+                                 style="margin: 20px 100px 20px 100px "
+                                 rendered="#{proyectoWebBean.mostrarBotonASG()}"
+                                 />
+
+                <p:commandButton value="Guardar"
+                                 icon="ui-icon-disk"
+                                 style="margin: 20px 100px 20px 100px "
+                                 action="#{proyectoWebBean.guardar(1)}"
+                                 update="dMensaje, clMenuPrincipal"
+                                 rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+
+            </div>
+
+
+
+    </ui:define>
+
+</ui:composition>

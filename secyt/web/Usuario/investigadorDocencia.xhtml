@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/UserTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="left">
+       
+    </ui:define>
+
+    <ui:define name="content">
+        
+ <!--DATOS PERSONALES-->   
+ <ui:repeat value="#{investigadorLoginBean.investigador.docencias}"
+            var="inv"                       >     <div style="float: left;
+border: 1px solid #a8a8a8; padding:5px; margin: 5px">    <div style="float: left;
+width: 100%;">
+         <h1><h:outputText value="Año: "/><h:outputText value="#{inv.año}"/></h1></div> <div class="encabezado">
+         <h:outputText value="Docencia"/>
+         </div>
+                <div class="divGeneral">
+            <h:outputText value="Universidad: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{inv.universidad.descripcion}"
+                          styleClass="textoValue"/>
+        </div>
+        <div class="divHorizontal">
+            <h:outputText value="Unidad Academica: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{inv.unidadAcademica.descripcion}"
+                          styleClass="textoValue"/>
+        </div>
+        
+        <div class="divGeneral">
+            <h:outputText value="Departamento Docente: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{inv.departamentoDocente.descripcion}"
+                          styleClass="textoValue"/>
+        </div>
+        
+        <div class="divHorizontal">
+            <h:outputText value="Categoría Docente: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{inv.categoriaDocente.descripcion}"
+                          styleClass="textoValue"/>
+        </div>
+        
+        <div class="divGeneral">
+            <h:outputText value="Dedicación Docente: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{inv.dedicacionDocente.descripcion}"
+                          styleClass="textoValue">
+                <f:convertDateTime pattern="dd/MM/yyyy"  timeZone="GMT-03:00"/>
+            </h:outputText>
+        </div>
+        
+<!--MOD Y FECHA DE OBTENCION DE CARGO DOCENTE-->
+
+        <div class="encabezado">
+            <h:outputText value="Modo y Fecha de Obtención de Cargo Docente"/>
+        </div>
+         
+        
+        <div class="divHorizontal">
+            <h:outputText value="Modo: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{inv.modoObtencionCargo.descripcion}"
+                          styleClass="textoValue"/>
+        </div>
+
+        <div class="divGeneral">
+            <h:outputText value="Fecha: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{inv.fechaObtencionCargo}"
+                          styleClass="textoValue">
+                <f:convertDateTime pattern="dd/MM/yyyy"  timeZone="GMT-03:00"/>
+            </h:outputText>
+        </div>
+
+       
+
+<!--HORAS Y SEMANDAS DEDICADAS A LA DOCENCIA-->  
+  
+        <div class="encabezado">
+            <h:outputText value="Horas y Semanas Dedicadas a la Docencia"/>
+        </div>
+         <table  width="100%" 
+                style="background-color:#014317;
+                    -moz-box-shadow:inset 0 10px 20px #ffffff;
+                    -webkit-box-shadow:inset 0 10px 20px #ffffff;
+                    box-shadow:inset 0 10px 20px #ffffff; font-size: 20px; color: #ffffff;">
+            <tr>
+                <td>
+                    
+                </td>
+            </tr>
+         </table>
+        
+        <div class="divHorizontal">
+            <h:outputText value="Horas 1er Cuat.: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{inv.horasDedicadasDocenciaPrimerCuatrimestre}"
+                          styleClass="textoValue"/>
+        </div>
+
+        <div class="divGeneral">
+            <h:outputText value="Semanas 1er Cuat.: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{inv.semanasDedicadasDocenciaPrimerCuatrimestre}"
+                          styleClass="textoValue"/>
+        </div>
+
+        <div class="divHorizontal">
+            <h:outputText value="Horas 2er Cuat.: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{inv.horasDedicadasDocenciaSegundoCuatrimestre}"
+                          styleClass="textoValue"/>
+        </div>
+
+        <div class="divGeneral">
+            <h:outputText value="Semanas 1er Cuat.: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{inv.semanasDedicadasDocenciaSegundoCuatrimestre}"
+                          styleClass="textoValue"/>
+        </div>
+     </div><!-- cuadrito con borde-->    </ui:repeat> 
+       
+ 
+ 
+       
+
+        
+        
+    </ui:define>
+
+</ui:composition>

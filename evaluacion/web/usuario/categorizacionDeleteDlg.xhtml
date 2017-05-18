@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <p:dialog id="dDeleteCategorizacion" 
+              widgetVar="dlgDeleteCategorizacion"
+              modal="true"
+              width="600"
+              height="400"
+              position="top"
+              style="margin-top: 30px;"
+              resizable="false">
+        
+        <f:facet name="header">
+            <h:outputText value="Eliminar categorización" styleClass="subTitulo"/>
+        </f:facet>
+        
+        <p:panel id="pDlgDeleteCategorizacion">
+
+            <p:focus context="pDlgDeleteCategorizacion"/> 
+            <h:inputHidden id="ihIdEspecializacion"
+                           value="#{categorizacionBean.categorizacion.id}"/>
+            
+            <div class="separador">
+                <h:outputText value="Unidad Académica*: "/>
+                <h:outputText value="#{categorizacionBean.categorizacion.unidadAcademica}"/>
+
+            </div>
+            
+            <div style="clear: both;"/>
+            
+            <div class="separador"> 
+               <h:outputText value="Disciplina*: "/>
+               <h:outputText value="#{categorizacionBean.categorizacion.comision}"/>
+
+               
+             </div>   
+            
+            <div style="clear: both;"/>
+            
+            <div class="separador"> 
+               <h:outputText value="Llamado*: "/>
+               <h:outputText value="#{categorizacionBean.categorizacion.llamado}"/>
+
+               
+            </div>
+            
+            <div style="clear: both;"/>
+            
+            <div class="separador"> 
+               <h:outputText value="Condición*: "/>
+               <h:outputText 
+                            value="#{categorizacionBean.categorizacion.condicion}"/>
+               
+            </div>
+            
+            <div style="clear: both;"/>
+            
+            <div class="separador"> 
+                <p:panel header="Categoría asignada">
+                    <h:panelGrid columns="5" cellspacing="5">
+                        <h:outputText value="Categoría*: "/>
+                        <h:outputText value="#{categorizacionBean.categorizacion.categoriaAsignada.valorCategoria}"/>
+
+                        
+                        <h:outputText value="Fecha*: "/>
+                        <h:outputText value="#{categorizacionBean.categorizacion.categoriaAsignada.fechaCategoria}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                        </h:outputText>
+ 
+                    </h:panelGrid>
+                </p:panel>
+               
+               
+            </div>
+            
+            <div style="clear: both;"/>
+            
+            <div class="separador"> 
+                <p:panel header="Documentos">
+
+                    
+                             <p:dataTable id="dtDocumentoD"
+                                          value="#{categorizacionBean.categorizacion.resoluciones}"
+                                          var="doc"
+                                          style="width: 500px; overflow: auto;"
+                                          >
+                                 <p:column style="word-wrap:break-word;">
+                                     <f:facet name="header">
+                                         <h:outputText value="Documento"/>
+                                     </f:facet>
+
+                                     <h:outputText value="#{doc.nombreArchivo}"/>
+                                 </p:column>
+
+                             </p:dataTable>
+                    
+
+                </p:panel>
+            </div>
+            
+            
+           <div style="clear: both;"/>
+                    
+
+                    <div style="text-align: center;">
+                        
+                        
+                            <p:commandButton id="cbDeleteCD"
+                                         value="Eliminar"
+                                         actionListener="#{categorizacionDlgBean.delete()}"
+                                         icon="ui-icon-disk"
+                                         style="margin-right: 10px;"
+                                         process="@this, ihIdEspecializacion"
+                                         update=":frmUser:dMensaje"/>
+                       
+                        
+                        
+                        <p:commandButton id="cbSalirCD"
+                                         value="Salir"
+                                         icon="ui-icon-cancel"
+                                         oncomplete="dlgDeleteCategorizacion.hide()"
+                                         process="@this"/>
+                    </div>
+            
+            
+
+        </p:panel>
+
+    </p:dialog>
+</html>

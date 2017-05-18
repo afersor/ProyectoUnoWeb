@@ -1,0 +1,211 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../templates/userTemplate.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <ui:define name="content">
+
+        <ui:include src="/recursos/mensajesDlg.xhtml"/>
+
+        <ui:include src="palabraClaveFindDlg.xhtml" />
+
+
+        <div style="margin-left: auto;
+             margin-right: auto;
+             width: 1004px;
+             padding: 10px 10px 10px 10px;">
+
+            <div align="left">
+                <h:commandLink id="clMenuPrincipal"
+                               value="Menu Proyecto"
+                               action="#{navegarBean.entrarPagProyecto(0)}"
+                               style="margin-left: 20px;"
+                               rendered="#{proyectoWebBean.proyectoWeb.id != null}"
+                               immediate="true"/>
+            </div>
+
+            <div align="center">
+                <div>
+                    <h:outputText value="Postulación: #{proyectoWebBean.proyectoWeb.convocatoria.nombre} " 
+                                  styleClass="titulo"/>
+                    <h:outputText value="#{proyectoWebBean.proyectoWeb.convocatoria.fechaIni}" 
+                                  styleClass="titulo">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                    </h:outputText>
+                    <h:outputText value=" a " 
+                                  styleClass="titulo"/>
+                    <h:outputText value="#{proyectoWebBean.proyectoWeb.convocatoria.fechaFin}"
+                                  styleClass="titulo">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                    </h:outputText>
+                </div>
+
+                <div>
+                    <h:outputText value="III. Formulación General del Proyecto" 
+                                  styleClass="titulo"/>
+                </div>
+            </div>
+
+            <div style="padding: 10px 10px 10px 10px;">
+                <ol>
+                    <li class="listaTitulo">
+                        <div>
+                            <h:outputText value="Antecedentes: "/>
+                        </div>
+                    </li>
+                    <div>
+                        <p:inputTextarea rows="10" cols="100"
+                                         autoResize="false"
+                                         value="#{proyectoWebBean.proyectoWeb.proyectoWebFGP.antecedentes}"
+                                         maxlength="6000"  counter="counter3"    
+                                         counterTemplate="{0} caracteres restantes (6000 máx)"/><br /><h:outputText id="counter3" /> 
+                    </div>
+
+
+                    <li class="listaTitulo">
+                        <div>
+                            <h:outputText value="Objetivo General: "/>
+                        </div>
+                    </li>
+                    <div>
+                        <p:inputTextarea rows="10" cols="100"
+                                         autoResize="false"
+                                         value="#{proyectoWebBean.proyectoWeb.proyectoWebFGP.objetivoGral}"
+                                         maxlength="2000"  counter="counter4"    
+                                         counterTemplate="{0} caracteres restantes (2000 máx)"/><br /><h:outputText id="counter4" /> 
+                    </div>
+
+
+                    <li class="listaTitulo">
+                        <div>
+                            <h:outputText value="Objetivos específicos e hipótesis de trabajo: "/>
+                        </div>
+                    </li>
+                    <div>
+                        <p:inputTextarea rows="10" cols="100"
+                                         autoResize="false"
+                                         value="#{proyectoWebBean.proyectoWeb.proyectoWebFGP.objetivoEspecificoHipotesis}"
+                                         maxlength="2000"  counter="counter5"    
+                                         counterTemplate="{0} caracteres restantes (2000 máx)"/><br /><h:outputText id="counter5" /> 
+                    </div>
+
+
+                    <li class="listaTitulo">
+                        <div>
+                            <h:outputText value="Relevancia del problema: "/>
+                        </div>
+                    </li>
+                    <div>
+                        <p:inputTextarea rows="10" cols="100"
+                                         autoResize="false"
+                                         value="#{proyectoWebBean.proyectoWeb.proyectoWebFGP.relevanciaProblema}"
+                                         maxlength="6000"   counter="counter6"    
+                                         counterTemplate="{0} caracteres restantes (6000 máx)"/><br /><h:outputText id="counter6" /> 
+                    </div>
+
+                    <li class="listaTitulo">
+                        <div>
+                            <h:outputText value="Resultados preliminares y Aportes del grupo al estudio del problema : "/>
+                        </div>
+                    </li>
+                    <div>
+                        <p:inputTextarea rows="10" cols="100"
+                                         autoResize="false"
+                                         value="#{proyectoWebBean.proyectoWeb.proyectoWebFGP.resultadosPreliminares}"
+                                         maxlength="4000"  counter="counter8"    
+                                         counterTemplate="{0} caracteres restantes (4000 máx)"/><br /><h:outputText id="counter8" /> 
+                    </div>
+
+                    <li class="listaTitulo">
+                        <div>
+                            <h:outputText value="Metodología, diseño experimental y métodico : "/>
+                        </div>
+                    </li>
+                    <div>
+                        <p:inputTextarea rows="8" cols="100"
+                                         value="#{proyectoWebBean.proyectoWeb.proyectoWebFGP.metodologia}"
+                                         maxlength="8000"  counter="counter7"  
+                                         autoResize="false"
+                                         
+                                         counterTemplate="{0} caracteres restantes (8000 máx)"/><br /><h:outputText id="counter7" /> 
+                    </div>
+
+
+                    <li class="listaTitulo">
+                        <div>
+                            <h:outputText value="Plan y cronograma de trabajo: "/>
+                        </div>
+                    </li>
+                    <div>
+                        <h:outputText value="Plan de Ejecución de Proyecto: "/>
+                    </div>
+                    <div>
+                        <p:inputTextarea rows="8" cols="100"
+                         value="#{proyectoWebBean.proyectoWeb.proyectoWebFGP.cronogramaTrabajo}" 
+                                  id="textEditor"
+                                  maxlength="4000"  counter="counter10"  
+                                         autoResize="false"
+                                         
+                                         counterTemplate="{0} caracteres restantes (4000 máx)"
+                                  /><br /> <h:outputText id="counter10" />  
+
+
+                    </div><br />
+                    <div>
+                        <h:outputText value="Cronograma de Trabajo: "/>
+                    </div>
+                    <div>
+                        <h:outputText value="Deberá adjuntar la tabla del cronograma de trabajo como Archivo Adjunto en la sección VII. Archivos adjuntos."/>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <div>
+                            <h:outputText value="Justificación del Impacto del Proyecto : "/>
+                        </div>
+                    </li>
+                    <div>
+                        <p:inputTextarea rows="10" cols="100"
+                                         autoResize="false"
+                                         value="#{proyectoWebBean.proyectoWeb.proyectoWebFGP.justificacionImpactoProyecto}"
+                                         maxlength="4000"  counter="counter9"    
+                                         counterTemplate="{0} caracteres restantes (4000 máx)"/><br /><h:outputText id="counter9" /> 
+                    </div>
+
+
+                </ol>
+
+            </div>
+
+            <div align="center">
+
+                <p:commandButton value="Anterior"
+                                 icon="ui-icon-arrowthick-1-w"
+                                 style="margin: 20px 100px 20px 100px "
+                                 action="#{navegarBean.entrarPagProyecto(2)}"
+                                 ajax="false"
+                                 rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+
+                <p:commandButton value="Siguiente"
+                                 icon="ui-icon-arrowthick-1-e"
+                                 action="#{navegarBean.entrarPagProyecto(4)}"
+                                 ajax="false"
+                                 rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+
+                <p:commandButton value="Guardar"
+                                 icon="ui-icon-disk"
+                                 style="margin: 20px 100px 20px 100px "
+                                 action="#{proyectoWebBean.guardar(3)}"
+                                 update="dMensaje,clMenuPrincipal"
+                                 rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+
+            </div>
+
+        </div>
+    </ui:define>
+
+</ui:composition>

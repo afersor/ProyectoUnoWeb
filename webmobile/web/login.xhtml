@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/PrincipalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <p>  <h:outputText value="Ingrese el CUIL del investigador y presione el boton ENTRAR para consultar sus datos" />
+        </p>
+        <p:inputText id='cuil' value="#{loginBean.cuil}"
+                     label="CUIL"
+                     required="true" placeholder="Ingrese su CUIL" />
+
+        <p:password value="#{loginBean.contrasena}"
+                    label="Contraseña" placeholder="Ingrese su Contraseña"
+                    required="true"/>
+
+
+
+        <p:messages autoUpdate="true"/>
+
+        <p:commandButton value="Entrar" 
+                         action="#{loginBean.loginInvestigador()}"
+                         style="padding: 10px 20px;"
+                         ajax="false">
+
+        </p:commandButton>
+    </ui:define>
+
+</ui:composition>

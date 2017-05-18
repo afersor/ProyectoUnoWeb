@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <p:dialog id="dFindUnidadInvestigacion" 
+              widgetVar="dlgFindUnidadInvestigacion"
+              modal="true"
+              width="600"
+              height="400"
+              position="top"
+              style="margin-top: 30px;"
+              resizable="false">
+        <f:facet name="header">
+            <h:outputText value="Localización del proyecto" styleClass="subTitulo"/>
+        </f:facet>
+        <p:panel id="pDialogUnidadInvestigacion">
+
+            <p:focus context="pDialogUnidadInvestigacion"/> 
+            
+            <h:inputHidden id="ihTipoUIFD"
+                           value="#{unidadInvestigacionFindDlgBean.tipo}"/>
+            
+            <div>
+                <h:outputText value="(Ingrese parte del nombre y presione el botón. Ej catamarca)"
+                              styleClass="aclaraciones"/>
+            </div>
+            
+            <div>
+                <h:outputText value="Ingrese parte del nombre: "/>
+                <p:inputText id="itDescripcionUI"
+                             value="#{unidadInvestigacionFindDlgBean.descripcion}"/>
+                <p:commandButton icon="ui-icon-search"
+                                 actionListener="#{unidadInvestigacionFindDlgBean.findLikeDescripcion()}"
+                                 update="dtFindUnidadInvestigacion"
+                                 process="itDescripcionUI, @this"
+                                 title="Buscar"/>
+            </div>
+            
+            <div style="clear: both;"/>
+            
+            <div>
+                <p:dataTable id="dtFindUnidadInvestigacion"
+                             value="#{unidadInvestigacionLstBean.lstUnidadInvestigacion}"
+                             var="ui"
+                             paginator="true"
+                             rows="8"
+                             rowKey="#{ui.id}"
+                             selection="#{unidadInvestigacionFindDlgBean.lstUnidadInvestigacionSelect}"
+                             selectionMode="multiple">
+                    
+                    <!--<p:ajax event="rowSelect" 
+                            update=":frmLog:otUnidadInvestigacion"
+                            >
+                        <f:setPropertyActionListener value="{per}" target="{personaFindDlgBean.personaSelect}"/>
+                    </p:ajax>-->
+                    
+                     
+                    <p:column style="word-wrap:break-word;">
+                        <f:facet name="header">
+                            <h:outputText value="Campo"/>
+                        </f:facet>
+                        
+                        <h:outputText value="#{ui.descripcion}"/>
+                    </p:column>
+                
+                    
+                    <f:facet name="footer">  
+                        <p:commandButton id="cbSelectFindUnidadInvestigacion"
+                                         value="Seleccionar" 
+                                         icon="ui-icon-check"  
+                                         actionListener="#{unidadInvestigacionFindDlgBean.definirComponentesActualizar()}"
+                                         process="dtFindUnidadInvestigacion,
+                                            :frmUser:ihTipoUIFD,
+                                            @this"
+                                         oncomplete="dlgFindUnidadInvestigacion.hide();"/>  
+                    </f:facet>
+                    
+                    
+               </p:dataTable>
+            </div>
+
+        </p:panel>
+
+    </p:dialog>
+</html>

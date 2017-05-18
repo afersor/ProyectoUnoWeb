@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <p:dialog id="dFindEspecialidadActividadAcademica" 
+              widgetVar="dlgFindEspecialidadActividadAcademica"
+              modal="true"
+              width="600"
+              height="400"
+              position="top"
+              style="margin-top: 30px;"
+              resizable="false">
+        <f:facet name="header">
+            <h:outputText value="Especialidad actividad académica" styleClass="subTitulo"/>
+        </f:facet>
+        
+        <p:panel id="pDialogEspecialidadActividadAcademica">
+
+            <p:focus context="pDialogEspecialidadActividadAcademica"/> 
+            
+            <h:inputHidden id="ihTipoEAAFD"
+                           value="#{especialidadActividadAcademicaFindDlgBean.tipo}"/>
+            
+            <div>
+                <h:outputText value="(Ingrese parte del nombre y presione el botón)"
+                              styleClass="aclaraciones"/>
+            </div>
+            
+            <div>
+                <h:outputText value="Ingrese parte del nombre: "/>
+                <p:inputText id="itDescripcionEAAI"
+                             value="#{especialidadActividadAcademicaFindDlgBean.descripcion}"/>
+                <p:commandButton icon="ui-icon-search"
+                                 actionListener="#{especialidadActividadAcademicaFindDlgBean.findLikeDescripcion()}"
+                                 update="dtFindEspecialidadActividadAcademica"
+                                 process="itDescripcionEAAI, @this"
+                                 title="Buscar"/>
+            </div>
+            
+            <div style="clear: both;"/>
+            
+            <div>
+                <p:dataTable id="dtFindEspecialidadActividadAcademica"
+                             value="#{especialidadActividadAcademicaLstBean.lstEspecialidadActividadAcademica}"
+                             var="eaa"
+                             paginator="true"
+                             rows="8"
+                             rowKey="#{eaa.id}"
+                             selection="#{especialidadActividadAcademicaFindDlgBean.especialidadActividadAcademicaSelect}"
+                             selectionMode="single">
+                    
+                    <!--<p:ajax event="rowSelect" 
+                            update=":frmLog:otUnidadInvestigacion"
+                            >
+                        <f:setPropertyActionListener value="{per}" target="{personaFindDlgBean.personaSelect}"/>
+                    </p:ajax>-->
+                    
+                     
+                    <p:column style="word-wrap:break-word;">
+                        <f:facet name="header">
+                            <h:outputText value="Especialidad"/>
+                        </f:facet>
+                        
+                        <h:outputText value="#{eaa.descripcion}"/>
+                    </p:column>
+                
+                    
+                    <f:facet name="footer">  
+                        <p:commandButton id="cbSelectFindEspecialidadActividadAcademica"
+                                         value="Seleccionar" 
+                                         icon="ui-icon-check"  
+                                         actionListener="#{especialidadActividadAcademicaFindDlgBean.definirComponentesActualizar()}"
+                                         process=":frmUser:dtFindEspecialidadActividadAcademica,
+                                            :frmUser:ihTipoEAAFD,
+                                            @this"
+                                         oncomplete="dlgFindEspecialidadActividadAcademica.hide();"/>  
+                    </f:facet>
+                    
+                    
+               </p:dataTable>
+            </div>
+
+        </p:panel>
+
+    </p:dialog>
+</html>

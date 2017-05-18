@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:pm="http://primefaces.org/mobile"
+      xmlns:p="http://primefaces.org/ui"
+
+
+          
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+       <pm:page title="Hello World">
+<f:view id="main">
+<pm:header title="Header" />
+<pm:content>
+ <br />
+
+            <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
+            <p:tabMenu activeIndex="1">
+                <p:menuitem value="Home" icon="ui-icon-home" outcome="index" iconPos="top"/>
+                <p:menuitem value="Settings" icon="ui-icon-gear" outcome="index" iconPos="top"/>
+                <p:menuitem value="Search" icon="ui-icon-search" outcome="index" iconPos="top"/>
+            </p:tabMenu></pm:content>
+</f:view>
+</pm:page>
+        
+     
+    </h:body>
+</html>
+

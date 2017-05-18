@@ -1,0 +1,207 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/UserTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="left">
+
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="encabezado">
+            <h:outputText value="Winsip del Proyecto: "/>
+        </div>
+        <p:panel id="pDlgWinsip">
+
+            <p:panelGrid columns="2" style="margin-bottom: 20px;">
+
+                <h:outputText value="Código Incentivo"
+                              styleClass="textoEtiqueta"/>
+                <h:outputText value="#{investigadorParticipacionesProyectoPagBean.proyectoSelect.codigoIncentivos}"
+                              styleClass="textoEtiqueta"/>
+
+                <h:outputText value="Proyecto"
+                              styleClass="textoEtiqueta"/>
+                <h:outputText value="#{investigadorParticipacionesProyectoPagBean.proyectoSelect.titulo}"
+                              styleClass="textoEtiqueta"/>
+
+                <h:outputText value="Unidad Académica"
+                              styleClass="textoEtiqueta"/>
+                <h:outputText value="#{investigadorParticipacionesProyectoPagBean.proyectoSelect.unidadAcademica.descripcion}"
+                              styleClass="textoEtiqueta"/>
+
+                <h:outputText value="Duración Teórica"
+                              styleClass="textoEtiqueta"/>
+                <h:outputText value="#{investigadorParticipacionesProyectoPagBean.proyectoSelect.duracionTeorica}"
+                              styleClass="textoEtiqueta"/>
+
+                <h:outputText value="Fecha de inicio"
+                              styleClass="textoEtiqueta"/>
+                <h:outputText value="#{investigadorParticipacionesProyectoPagBean.proyectoSelect.fechaInicio}"
+                              styleClass="textoValue">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+
+                <h:outputText value="Fecha de finalización"
+                              styleClass="textoEtiqueta"/>
+                <h:outputText value="#{investigadorParticipacionesProyectoPagBean.proyectoSelect.fechaFinalizacion}"
+                              styleClass="textoValue">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+
+
+            </p:panelGrid>
+
+
+            <p:dataTable value="#{winsipLstBean.lstWinsip}" 
+                         var="w">
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Informe Winsip"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <h:outputText value="#{w.año}"/>
+
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Tipo de informe"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <h:outputText value="#{w.tipoInforme.name}"/>
+
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Evaluación del winsip"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <h:outputText value="#{w.evaluacionWinsip.name}"/>
+
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Evaluadores"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <ui:repeat value="#{w.evaluaciones}"
+                               var="eva"                       > 
+                        <p>   <h:outputText value="#{eva.evaluador}"/></p>
+
+                    </ui:repeat>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Lugar de evaluación"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+
+                    <h:outputText value="#{w.lugarEvaluacion}"/>
+
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Archivos Adjuntos"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+
+
+                    <p>
+                        <p:commandLink   value="#{w.evaluacionProyecto.descripcion}"
+                                         action="#{investigadorArchivoBean.descargarArchivo()}"
+                                         rendered="#{w.evaluacionProyecto.documento.nombreArchivo != null}"
+                                         ajax="false">
+                            <f:setPropertyActionListener value="#{w.evaluacionProyecto.documento}" 
+                                                         target="#{investigadorArchivoBean.documento}"/>
+                        </p:commandLink>
+                    </p>
+
+
+
+                    <p>
+                       
+                        <p:commandLink   value="#{w.evaluacionIntegrantes.descripcion}"
+                                         action="#{investigadorArchivoBean.descargarArchivo()}"
+                                         rendered="#{w.evaluacionIntegrantes != null}"
+                                         ajax="false">
+                            <f:setPropertyActionListener value="#{w.evaluacionIntegrantes.documento}" 
+                                                         target="#{investigadorArchivoBean.documento}"/>
+                        </p:commandLink>
+                    </p>
+
+
+
+
+                </p:column>
+            </p:dataTable> <br/>
+            <p:dataTable value="#{winsipLstBean.lstWinsip}" 
+                         var="w">
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Informe Winsip"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <h:outputText value="#{w.año}"/>
+
+                </p:column>
+
+                      
+                        
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Evaluación de los integrantes" />
+                    </f:facet>
+
+                    <p:dataTable  var="inte" value="#{investigadorParticipacionesProyectoPagBean.obtenerIntegrantesWinsip(w.evaluacionesIntregantes)}"
+                                  emptyMessage="No hay evaluaciones cargadas">
+                        <p:column >
+                            <f:facet name="header">
+                                <h:outputText value="Integrante"
+                                              styleClass="textoEtiqueta"/>
+                            </f:facet>
+                            <h:outputText value="#{inte.investigador}" />
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Evaluación del Winsip"
+                                              styleClass="textoEtiqueta"/>
+                            </f:facet>
+                            <h:outputText value="#{inte.evaluacion.name}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Evaluación del Director"
+                                              styleClass="textoEtiqueta"/>
+                            </f:facet>
+                            <h:outputText value="#{inte.informe.name}" />
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Fecha de Evaluación del Director"
+                                              styleClass="textoEtiqueta"/>
+                            </f:facet>
+                            <h:outputText value="#{inte.fecha}" > <f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+                        </p:column>
+                    </p:dataTable></p:column>
+            </p:dataTable> <br/>
+
+        </p:panel>
+
+
+
+    </ui:define>
+
+</ui:composition>

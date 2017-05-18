@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/UserTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="left">
+       
+    </ui:define>
+
+    <ui:define name="content">
+        
+ <!--CURSOS-->   
+ 
+         <div class="encabezado">
+             <h:outputText value="Asignaturas"/>
+         </div>
+ 
+         <div class="divGeneral">
+
+            <h:outputText value="No registra Cursos" 
+                      rendered="#{empty investigadorLoginBean.investigador.cursosDictados}"
+                      styleClass="textoValue"/>
+        </div>
+ 
+        <div style="clear: both"/>
+ 
+        <div class="divGeneral">
+        <p:dataTable value="#{investigadorLoginBean.investigador.cursosDictados}"
+              var="cur"
+              rendered="#{not empty investigadorLoginBean.investigador.cursosDictados}">
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Asignatura"
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                <h:outputText value="#{cur.asignatura}"
+                          styleClass="textoValue"/>
+            </p:column>
+            
+          <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Duración"
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                <h:outputText value="#{cur.tipoDuracionAsignatura.descripcion}"
+                          styleClass="textoValue"/>
+            </p:column>
+            
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Año"
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                <h:outputText value="#{cur.duracionAnual}"
+                          styleClass="textoValue"/>
+            </p:column>
+            
+           <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Tipo"
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                <h:outputText value="#{cur.tipoAsignatura.descripcion}"
+                          styleClass="textoValue"/>
+            </p:column> 
+            
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Hs Semanales"
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                <h:outputText value="#{cur.horasSemanalesDictadoClases}"
+                          styleClass="textoValue"/>
+            </p:column>
+            
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Duración (Semanas)"
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                <h:outputText value="#{cur.semanasDuracion}"
+                          styleClass="textoValue"/>
+            </p:column>
+            
+         </p:dataTable>
+        </div>
+       
+        
+        
+    </ui:define>
+
+</ui:composition>

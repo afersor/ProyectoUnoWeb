@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./templates/finalizarSession.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+               
+        <h:inputHidden value="#{evaluadorLoginBean.setCantLogin(0)}"/>
+        <center>
+            
+        <div class="contenidoLogin">
+
+        </div>
+            
+            <p class="parrafoDetalle">
+                <h:outputText value="La sesión a finalizado presione sobre el link para volver a ingresar"/>
+            </p>
+            
+            <a href="http://gestioncyt.unca.edu.ar:8080/evaluacion/">(Presione aqui para ingresar)</a> 
+            
+        </center>
+    </ui:define>
+
+</ui:composition>

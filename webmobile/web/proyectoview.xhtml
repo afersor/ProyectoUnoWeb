@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/PrincipalTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+    <ui:define name="content">
+
+        <f:facet name="header">
+            <h:outputText value="Detalles" style="font-size: 1.5em; font-weight: bold;"/>
+        </f:facet>
+        <p:panel header="Código Incentivos:" rendered="#{proyectoBean.proyecto.codigoIncentivos!= null}">
+            <h:outputText value="#{proyectoBean.proyecto.codigoIncentivos}" rendered="#{proyectoBean.proyecto.codigoIncentivos!= null}" title="Código Incentivos"/></p:panel>
+        <p:panel header="Título:" rendered="#{proyectoBean.proyecto.titulo!= null}">
+            <h:outputText value="#{proyectoBean.proyecto.titulo}" rendered="#{proyectoBean.proyecto.titulo!= null}" title="Título"/></p:panel>
+        <p:panel header="Unidad Académica:" rendered="#{proyectoBean.proyecto.unidadAcademica.descripcion!= null}">
+            <h:outputText value="#{proyectoBean.proyecto.unidadAcademica}" rendered="#{proyectoBean.proyecto.unidadAcademica.descripcion!= null}" title="Unidad Académica"/></p:panel>
+        <p:panel header="Objetivo Socioeconómico:" rendered="#{proyectoBean.proyecto.objetivoSocioeconomico.descripcion!= null}">
+            <h:outputText value="#{proyectoBean.proyecto.objetivoSocioeconomico}" rendered="#{proyectoBean.proyecto.objetivoSocioeconomico.descripcion!= null}" title="Objetivo Socioeconómico"/></p:panel>
+        <p:panel header="Entidad Evaluadora:" rendered="#{proyectoBean.proyecto.entidadEvaluadora.descripcion!= null}">
+            <h:outputText value="#{proyectoBean.proyecto.entidadEvaluadora}" rendered="#{proyectoBean.proyecto.entidadEvaluadora.descripcion!= null}" title="Entidad Evaluadora"/></p:panel>
+        <p:panel header="Tipo de Proyecto:" rendered="#{proyectoBean.proyecto.tipoProyecto.descripcion!= null}">
+            <h:outputText value="#{proyectoBean.proyecto.tipoProyecto}" rendered="#{proyectoBean.proyecto.tipoProyecto.descripcion!= null}" title="Tipo de Proyecto"/></p:panel>
+        <p:panel header="Resumen:" rendered="#{proyectoBean.proyecto.resumen!= null}">
+            <h:outputText value="#{proyectoBean.proyecto.resumen}" title="Resumen" rendered="#{proyectoBean.proyecto.resumen!= null}"/>   </p:panel>
+        <p:panel header="Linea de Investigación:" rendered="#{proyectoBean.proyecto.lineaInvestigacion.descripcion!= null}">
+            <h:outputText value="#{proyectoBean.proyecto.lineaInvestigacion}" rendered="#{proyectoBean.proyecto.lineaInvestigacion.descripcion!= null}" title="Línea de Investigación"/></p:panel>
+        <p:panel header="Proyecto Complementario Padre:" rendered="#{proyectoBean.proyecto.proyectoComplementarioPadre.titulo!= null}">
+            <h:outputText value="#{proyectoBean.proyecto.proyectoComplementarioPadre}" rendered="#{proyectoBean.proyecto.proyectoComplementarioPadre.titulo!= null}" title="Proyecto ComplementarioPadre"/></p:panel>
+        <p:panel header="Title:" rendered="#{proyectoBean.proyecto.title!= null}">
+            <h:outputText value="#{proyectoBean.proyecto.title}" rendered="#{proyectoBean.proyecto.title!= null}" title="Title"/></p:panel>
+        <p:panel header="Summary:" rendered="#{proyectoBean.proyecto.summary!= null}">
+            <h:outputText value="#{proyectoBean.proyecto.summary}" rendered="#{proyectoBean.proyecto.summary!= null}" title="Summary"/></p:panel>
+        <p:panel header="Para mayor información:"> 
+            <p:button 
+                href="mailto:secyt@unca.edu.ar?subject=Solicitud%20Información%20Proyecto&amp;body=Proyecto%20#{proyectoBean.tituloEncondeURL}"
+                value="Consulte por correo electrónico"  icon="ui-icon-carat-r"  iconPos="right" />
+        </p:panel>
+        <p:commandButton   value="Volver" 
+                           action="proyecto.xhtml" icon="ui-icon-back"  />
+    </ui:define>
+
+</ui:composition>
+

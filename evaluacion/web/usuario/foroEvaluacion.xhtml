@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../templates/userTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns="http://www.w3.org/1999/xhtml">
+    
+
+    <ui:define name="content">
+        <div class="encabezado">
+            <h:outputText value="Foro de Evaluaciones"/>
+        </div>
+        
+      <div class="divGeneral">
+
+           
+            <div style="margin-bottom: 20px;">
+                <h:outputText value="Proyectos Evaluados" style="font-size: 1.5em; font:"/><br/>
+                <h:outputText value="(Seleccione uno del listado a continuación para acceder al foro)" styleClass="aclaraciones"/>
+                
+            </div><br/>
+ 
+                    
+            <ui:repeat value="#{evaluacionWebLstBean.lstEvaluacionWeb}"
+                       var="eval"
+                       >
+                <li>
+                    <p:commandLink value="Seleccionar. " 
+                                   action="#{foroEvaluacionPagBean.cargarAcordionPanel(eval)}"
+                                   update=":frmUser:apForoEvaluacion"
+                                   style="font-size: 1.3em;"
+                                   process="@this"
+                                   ajax="false">
+                       
+                    </p:commandLink>
+                    <h:outputText value="#{eval.proyecto} "/>
+         
+                </li><br/><br/>
+          </ui:repeat>
+     
+
+
+      </div>
+
+        <p:accordionPanel id="apForoEvaluacion"
+                          rendered="#{foroEvaluacionPagBean.renderedAcordionPanel}"
+                          dynamic="true"
+                          cache="true"
+                          style="float: left;"
+                          var="bloqueEvaluado" value="#{foroEvaluacionPagBean.evaluacionWeb.bloquesEvaluados}"
+                          >
+            <p:tab title="#{bloqueEvaluado.bloque.descripcion}" id="tabBloque1" >
+                <p:dataTable id="dtBloque" 
+                             value="#{bloqueEvaluadoBean.buscarBloqueEvaluado(bloqueEvaluado.id).mensajes}"
+                             var="mensajes"
+                             rows="10"
+                             
+                             paginator="true"
+                             binding="#{foroEvaluacionPagBean.dtBloque}"
+                             rowStyleClass="#{mensajes.evaluador != evaluadorLoginBean.evaluador ? 'colorVerde' :'colorRojo'}"
+                             >
+                            
+                    <p:column style="word-wrap:break-word;"
+                              width="150">
+                        <f:facet name="header">
+                            <h:outputText value="Evaluador"/>
+                        </f:facet>
+                        <h:outputText value="#{mensajes.evaluador}"/>
+                    </p:column>
+                    <p:column style="word-wrap:break-word;"
+                              width="125">
+                        <f:facet name="header">
+                            <h:outputText value="Mensajes"/>
+                        </f:facet>
+                        <h:outputText value="#{mensajes.mensaje}"/>
+                    </p:column>
+                    <p:column style="word-wrap:break-word;"
+                              width="25">
+                        <f:facet name="header">
+                            <h:outputText value="Fecha"/>
+                        </f:facet>
+                        <h:outputText value="#{mensajes.fecha}"
+                                      >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column><p:column style="word-wrap:break-word;"
+                              width="60">
+                        <f:facet name="header">
+                            <h:outputText value="Acciones"/>
+                        </f:facet>
+                        <p:commandButton id="cbVerMensaje"
+                                         value="Ver"
+                                         actionListener="#{foroEvaluacionPagBean.verMensaje}"
+                                         process="@this"
+                                         icon="ui-icon-zoomin"
+                                         update=":frmUser:dlgVerMensajeBloque">
+                        </p:commandButton>
+                      </p:column>
+                
+                </p:dataTable>
+                <div align="center">
+                    <h:inputHidden id="ihBloque"
+                                   value="#{bloqueEvaluado.id}"
+                                   binding="#{foroEvaluacionPagBean.ihBloque}"/>
+                    <p:commandButton id="cbAgregarMensajeBloque"
+                                     value="Agregar Mensaje Bloque"
+                                     actionListener="#{foroEvaluacionPagBean.accion}"
+                                     process="@this"
+                                     update=":frmUser:apForoEvaluacion:ihBloque">
+
+                    </p:commandButton>
+                    
+                </div>
+            </p:tab>
+
+
+        </p:accordionPanel>
+        <p:dialog id="dlgMensajeBloque"
+                  widgetVar="dlgMensajeBloque"
+                  modal="true"
+                  width="500"
+                  height="250"
+                  position="top"
+                  style="margin-top: 50px;"
+                  resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Mensaje de Evaluacion" style="font-size: 1.5em; font-weight: bold;"/>
+            </f:facet>
+            <p:outputLabel id="olMnesaje"
+                           value="Mensaje: "/>
+            <div align="center">
+            <p:inputTextarea id="taMensaje"
+                             value="#{foroEvaluacionPagBean.mensajeEvaluacion.mensaje}"
+                             rows="7"
+                             cols="70"
+                             maxlength="500"
+                             />
+            <hr size="5" style="alignment-adjust: central; width: 95%; background-color: #BC2C71; " />
+            
+                <p:commandButton id="cbGuardarMensaje"
+                             value="Aceptar"
+                             actionListener="#{foroEvaluacionPagBean.guardarMensaje()}"
+                             update=":frmUser:apForoEvaluacion">
+                
+            </p:commandButton>
+            </div>
+            
+
+
+        </p:dialog>
+        <p:dialog id="dlgVerMensajeBloque"
+                  widgetVar="dlgVerMensajeBloque"
+                  modal="true"
+                  width="500"
+                  height="250"
+                  position="top"
+                  style="margin-top: 50px;"
+                  resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Mensaje de Evaluacion" style="font-size: 1.5em; font-weight: bold;"/>
+            </f:facet>
+            <p:outputLabel id="olVerMnesaje"
+                           value="Mensaje: "/>
+            <div align="center">
+            <p:inputTextarea id="taVerMensaje"
+                             value="#{foroEvaluacionPagBean.mensajeEvaluacion.mensaje}"
+                             rows="7"
+                             cols="70"
+                             maxlength="500"
+                             readonly="true"
+                             />
+            <hr size="5" style="alignment-adjust: central; width: 95%; background-color: #BC2C71; " />
+            
+                <p:commandButton id="cbCerrarMensaje"
+                             value="Aceptar"
+                             actionListener="#{foroEvaluacionPagBean.cerrarVerMensaje()}"
+                             update=":frmUser:apForoEvaluacion,:frmUser:mIMensaje"
+                             ajax="false"
+                             >
+                
+            </p:commandButton>
+            </div>
+            
+
+
+        </p:dialog>
+
+
+    </ui:define>
+
+</ui:composition>

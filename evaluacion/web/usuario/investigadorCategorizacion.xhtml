@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../templates/userTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="left">
+       
+    </ui:define>
+
+    <ui:define name="content">
+        
+        <ui:include src="/recursos/mensajesDlg.xhtml"/>
+        
+        <ui:include src="categorizacionCreateDlg.xhtml"/>
+        
+        <ui:include src="categorizacionDeleteDlg.xhtml"/>
+        
+        <ui:include src="archivoFindDlg.xhtml"/>
+        
+        <ui:include src="unidadAcademicaCreateDlg.xhtml"/>
+        
+ <!--CURSOS-->   
+ 
+        <div  width="100%" 
+              class="encabezado">
+
+                    <h:outputText value="Categorizaciones"/>
+
+        </div>
+
+ 
+        <div style="clear: both"/>
+ 
+        <div class="divGeneral">
+            
+
+            <p:commandButton 
+                icon="ui-icon-circle-plus"
+                title="Nueva"
+                label="Nueva"
+                actionListener="#{investigadorCategorizacionPagBean.abrirDiagCreate()}"
+                update=":frmUser:dCreateCategorizacion"
+                process="@this"
+                rendered="#{evaluadorLoginBean.idUniversidad != 1}"
+                />
+            
+            <p:dataTable id="dtInvCategorizacion"
+                value="#{categorizacionLstBean.lstCategorizacion}"
+              var="cat">
+                <p:column 
+                           sortBy="#{esp.año}"
+                           rendered="#{evaluadorLoginBean.idUniversidad  != 1}">
+                     <f:facet name="header">
+                         <h:outputText value="Eliminar"/> 
+                     </f:facet>
+                     
+                     <p:commandButton 
+                            icon="ui-icon-circle-close"
+                            label="Eliminar"
+                            oncomplete="dlgDeleteCategorizacion.show()"
+                            update=":frmUser:dDeleteCategorizacion"
+                            process="@this"
+                            disabled="#{this.getEvaluadorLoginBean().getEvaluador().getInvestigador().getUniversidad().getId() == 1}">
+                         <f:setPropertyActionListener value="#{cat}" target="#{categorizacionBean.categorizacion}"/>
+                     </p:commandButton>
+                     
+                 </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Llamado"
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                <h:outputText value="#{cat.llamado.descripcion}"
+                          styleClass="textoValue"/>
+            </p:column>
+            
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Categoría Asignada"
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                <h:outputText value="#{cat.categoriaAsignada}"
+                          styleClass="textoValue"
+                          rendered="#{cat.categoriaAsignada.valorCategoria != null}"/>
+            </p:column>
+            
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Fecha Categoría"
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                <h:outputText value="#{cat.categoriaAsignada.fechaCategoria}"
+                          styleClass="textoValue"
+                          rendered="#{cat.categoriaAsignada.valorCategoria != null}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"  timeZone="GMT-03:00"/>
+                </h:outputText>
+            </p:column> 
+            
+             <p:column>
+                 <f:facet name="header">
+                    <h:outputText value="Documentos"
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                 <ul>
+                 <ui:repeat var="doc"
+                            value="#{cat.resoluciones}">
+                     <li>
+                         <p:commandLink value="#{doc.nombreArchivo}"
+                                        action="#{investigadorCategorizacionPagBean.descargarArchivo()}"
+                                       ajax="false">
+                             <f:setPropertyActionListener value="#{doc}" target="#{investigadorCategorizacionPagBean.documento}"/>
+                        </p:commandLink>
+                     </li>
+                 </ui:repeat>
+                 </ul>
+             </p:column>
+            
+         </p:dataTable>
+        </div>
+ 
+    </ui:define>
+
+</ui:composition>

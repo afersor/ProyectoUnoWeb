@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/UserTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="left">
+       
+    </ui:define>
+
+    <ui:define name="content">
+        
+ <!--CURSOS-->   
+ 
+        <div  width="100%" 
+              class="encabezado">
+
+                    <h:outputText value="Categorizaciones"/>
+
+        </div>
+ 
+        <div class="divGeneral">
+
+            <h:outputText value="No registra Categorizaciones" 
+                          rendered="#{empty investigadorLoginBean.investigador.categorizaciones}"
+                          styleClass="textoValue"/>
+        </div>
+ 
+        <div style="clear: both"/>
+ 
+        <div class="divGeneral">
+         <p:dataTable value="#{investigadorLoginBean.investigador.categorizaciones}"
+              var="cat"
+              rendered="#{not empty investigadorLoginBean.investigador.categorizaciones}">
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Categoría-Llamado-Fecha"
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                <h:outputText value="Categoría #{cat.categoriaAsignada} - #{cat.llamado.descripcion} - "
+                          styleClass="textoValue"/>
+                  <h:outputText value="#{cat.categoriaAsignada.fechaCategoria}"
+                          styleClass="textoValue">
+                    <f:convertDateTime pattern="dd/MM/yyyy"  timeZone="GMT-03:00"/>
+                </h:outputText>
+            </p:column>
+            
+         </p:dataTable>
+        </div>
+ 
+    </ui:define>
+
+</ui:composition>

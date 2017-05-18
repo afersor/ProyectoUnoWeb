@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/UserTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="left">
+
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h3>
+
+            <h:outputText value="Formación Académica"/>
+        </h3>
+
+        <h:outputText value="(Titulo - Universidad - Año de egreso - Estado)"
+                      style="font-size: 0.7em;"/>
+        <!--Grado-->  
+
+        <p:panel header="Grado">
+
+
+
+            <h:outputText value="No registra Grados Académicos" 
+                          rendered="#{empty investigadorLoginBean.investigador.formacionesAcademicasGrado}"
+                          />
+
+            <ui:repeat value="#{investigadorLoginBean.investigador.formacionesAcademicasGrado}"
+                       var="fag">
+                <h:outputText value="#{fag.tituloGrado}"
+                              />
+
+                <h:outputText value=" - #{fag.universidad.descripcion}"
+                              />
+
+                <h:outputText value=" - Egresado en #{fag.anoEgreso}" 
+                              rendered="#{fag.anoEgreso>0}"
+                              />
+                <h:outputText value=" - Sin dato" 
+                              rendered="#{fag.anoEgreso==0}"
+                              />
+
+                <h:outputText value=" - Cursando" 
+                              rendered="#{fag.anoEgreso==0}"
+                              />
+
+                <h:outputText value=" - Terminado" 
+                              rendered="#{fag.anoEgreso>0}"
+                              />
+                <br/>
+            </ui:repeat>
+        </p:panel>
+
+        <!--POSGRADO-->
+        <p:panel header="Posgrado">
+
+
+
+            <h:outputText value="No registra Posgrado" 
+                          rendered="#{empty investigadorLoginBean.investigador.formacionesAcademicasPosgrado}"
+                          />
+
+            <ui:repeat value="#{investigadorLoginBean.investigador.formacionesAcademicasPosgrado}"
+                       var="fap">
+
+                <h:outputText value="#{fap.tituloPosgrado}"
+                              />
+
+                <h:outputText value=" - #{fap.universidad.descripcion}"
+                              />
+
+                <h:outputText value=" - #{fap.anoEgreso}" 
+                              rendered="#{fap.anoEgreso>0}"
+                              />
+
+                <h:outputText value=" - Sin dato" 
+                              rendered="#{fap.anoEgreso==0}"
+                              />
+
+                <h:outputText value=" - Cursando" 
+                              rendered="#{fap.anoEgreso==0}"
+                              />
+
+                <h:outputText value=" - Terminado" 
+                              rendered="#{fap.anoEgreso>0}"
+                              />
+                <br/>
+            </ui:repeat>
+        </p:panel>        
+        <!--OTRAS-->
+        <p:panel header="Otras">
+
+            <h:outputText value="No registra otras Formaciones Académicas" 
+                          rendered="#{empty investigadorLoginBean.investigador.formacionesAcademicasOtras}"
+                          />
+
+            <ui:repeat value="#{investigadorLoginBean.investigador.formacionesAcademicasOtras}"
+                       var="fao">
+                <h:outputText value="#{fao.tituloOtro}"
+                              />
+
+                <h:outputText value=" - #{fao.institucion.descripcion}"
+                              />
+
+                <h:outputText value=" - #{fao.anoEgreso}" 
+                              rendered="#{fao.anoEgreso>0}"
+                              />
+
+                <h:outputText value=" - Sin dato" 
+                              rendered="#{fao.anoEgreso==0}"
+                              />
+
+                <h:outputText value=" - Cursando" 
+                              rendered="#{fao.anoEgreso==0}"
+                              />
+
+                <h:outputText value=" - Terminado" 
+                              rendered="#{fao.anoEgreso>0}"
+                              />
+                <br/>
+            </ui:repeat></p:panel>
+    </ui:define>
+
+</ui:composition>

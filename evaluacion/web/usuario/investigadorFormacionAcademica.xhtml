@@ -1,0 +1,601 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../templates/userTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+
+
+    <ui:define name="content">
+
+        <!--Grado-->  
+
+        <div class="encabezado">
+            <h:outputText value="Formacion Academica"/>
+        </div>
+
+        <p:accordionPanel id="apFormacionAcademica"
+                          dynamic="true"
+                          cache="true"
+                          style="float: left">
+            <p:tab title="GRADO" id="tabGrado">
+                <p:dataTable id="dtGrado"
+                             value="#{lstFormacionAcademicaBean.getFormacionesAcademicasInvestigadorLogin(evaluadorLoginBean.evaluador.investigador)}"
+                             var="listagrado"
+                             rows="10"
+                             paginator="true"
+                             >
+                    <p:column style="word-wrap:break-word;"
+                              width="150"
+                              id="GTG">
+                        <f:facet name="header">
+                            <h:outputText value="Titulo de Grado"/>
+                        </f:facet>
+                        <h:outputText value="#{listagrado.tituloGrado}"/>
+                    </p:column>
+                    <p:column style="word-wrap:break-word;"
+                              width="150"
+                              id="GU">
+                        <f:facet name="header">
+                            <h:outputText value="Universidad"/>
+                        </f:facet>
+                        <h:outputText value="#{listagrado.universidad}"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="150"
+                              id="GAI">
+                        <f:facet name="header">
+                            <h:outputText value="Año de Ingreso"/>
+                        </f:facet>
+                        <h:outputText value="Ingreso en #{listagrado.anoIngreso}" 
+                                      rendered="#{listagrado.anoIngreso>0}"
+                                      styleClass="textoValue"/>
+                        <h:outputText value=" - Sin dato" 
+                                      rendered="#{listagrado.anoIngreso==0}"
+                                      styleClass="textoValue"/>
+                    </p:column>
+                    <p:column style="word-wrap:break-word;"
+                              width="150"
+                              id="GAE">
+                        <f:facet name="header">
+                            <h:outputText value="Año de Egreso"/>
+                        </f:facet>
+                        <h:outputText value="Egresado en #{listagrado.anoEgreso}" 
+                                      rendered="#{listagrado.anoEgreso>0}"
+                                      styleClass="textoValue"/>
+                        <h:outputText value=" - Sin dato" 
+                                      rendered="#{listagrado.anoEgreso==0}"
+                                      styleClass="textoValue"/>
+                    </p:column>
+                    <p:column style="word-wrap:break-word;"
+                              width="100"
+                              id="GA">
+                        <f:facet name="header">
+                            <h:outputText value="Acciones"/>
+                        </f:facet>
+                        <p:commandButton id="cbModificarFormacionGrado"
+                                         icon="ui-icon-pencil"
+                                         actionListener="#{dlgFormacionAcademicaBean.accion}"
+                                         update=":frmUser:dlgFormacionAcademica"
+                                         disabled="#{evaluadorLoginBean.idUniversidad ==1}">
+                            <f:setPropertyActionListener value="#{listagrado}" target="#{dlgFormacionAcademicaBean.formacionAcademicaGrado}"/>
+                        </p:commandButton>
+                        
+                        <p:commandButton id="cbEliminarFormacionGrado"
+                                         oncomplete="confirmationFAG.show()"                                                                         
+                                         update=":frmUser:confirmDialogTel"
+                                         icon="ui-icon-trash"
+                                         disabled="#{evaluadorLoginBean.idUniversidad ==1}"
+                                         >
+                            <f:setPropertyActionListener value="#{listagrado}" target="#{dlgFormacionAcademicaBean.formacionAcademicaGrado}"/>
+                        </p:commandButton>
+
+                    </p:column>
+
+                </p:dataTable>
+                <div align="center">
+                    <p:commandButton id="cbAgregarFormacionGrado"
+                                     value="Nueva Formacion Grado"
+                                     actionListener="#{dlgFormacionAcademicaBean.accion}"
+                                     update=":frmUser:dlgFormacionAcademica"
+                                     process="@this"
+                                     disabled="#{evaluadorLoginBean.idUniversidad ==1}">
+                    </p:commandButton>
+                </div>
+            </p:tab>
+            <p:tab title="POSGRADO" id="tabPosgrado">
+                <p:dataTable id="dtPosgrado"
+                             value="#{lstFormacionAcademicaBean.getFormacionesAcademicasPosgradoInvestigadorLogin(evaluadorLoginBean.evaluador.investigador)}"
+                             var="listaposgrado"
+                             
+                             rows="10"
+                             paginator="true">
+                    <p:column style="word-wrap:break-word;"
+                              width="150">
+                        <f:facet name="header">
+                            <h:outputText value="Titulo de Posgrado"/>
+                        </f:facet>
+                        <h:outputText value="#{listaposgrado.tituloPosgrado}"/>
+                    </p:column>
+                    <p:column style="word-wrap:break-word;"
+                              width="150">
+                        <f:facet name="header">
+                            <h:outputText value="Universidad"/>
+                        </f:facet>
+                        <h:outputText value="#{listaposgrado.universidad}"/>
+                    </p:column>
+                    <p:column style="word-wrap:break-word;"
+                              width="150">
+                        <f:facet name="header">
+                            <h:outputText value="Año de Ingreso"/>
+                        </f:facet>
+                        <h:outputText value="#{listaposgrado.anoIngreso}" 
+                                      rendered="#{listaposgrado.anoIngreso>0}"
+                                      styleClass="textoValue"/>
+                        <h:outputText value=" - Sin dato" 
+                                      rendered="#{listaposgrado.anoIngreso==0}"
+                                      styleClass="textoValue"/>
+                    </p:column>
+                    <p:column style="word-wrap:break-word;"
+                              width="150">
+                        <f:facet name="header">
+                            <h:outputText value="Año de Egreso"/>
+                        </f:facet>
+                        <h:outputText value="#{listaposgrado.anoEgreso}" 
+                                      rendered="#{listaposgrado.anoEgreso>0}"
+                                      styleClass="textoValue"/>
+                        <h:outputText value=" - Sin dato" 
+                                      rendered="#{listaposgrado.anoEgreso==0}"
+                                      styleClass="textoValue"/>
+                    </p:column>
+                    <p:column style="word-wrap:break-word;"
+                              width="100">
+                        <f:facet name="header">
+                            <h:outputText value="Acciones"/>
+                        </f:facet>
+                        <p:commandButton id="cbModificarFormacionPosgrado"
+                                         icon="ui-icon-pencil"
+                                         actionListener="#{dlgFormacionAcademicaPosgradoBean.accion}"
+                                         update=":frmUser:dlgFormacionAcademicaPosgrado"
+                                         disabled="#{evaluadorLoginBean.idUniversidad ==1}">
+                            <f:setPropertyActionListener value="#{listaposgrado}" target="#{dlgFormacionAcademicaPosgradoBean.formacionAcademicaPosgrado}"/>
+                        </p:commandButton>
+                        
+                        <p:commandButton id="cbEliminarFormacionPosgrado"
+                                         oncomplete="confirmationFAP.show()"  
+                                         
+                                         update=":frmUser:confirmDialogPosgrado"
+                                         icon="ui-icon-trash"
+                                         disabled="#{evaluadorLoginBean.idUniversidad ==1}">
+                            <f:setPropertyActionListener value="#{listaposgrado}" target="#{dlgFormacionAcademicaPosgradoBean.formacionAcademicaPosgrado}"/>
+                        </p:commandButton>
+                        
+
+                    </p:column>
+
+                </p:dataTable>
+                <div align="center">
+                    <p:commandButton id="cbAgregarFormacionPosgrado"
+                                     value="Nueva Formacion Posgrado"
+                                     actionListener="#{dlgFormacionAcademicaPosgradoBean.accion}"
+                                     update=":frmUser:dlgFormacionAcademicaPosgrado"
+                                     process="@this"
+                                     disabled="#{evaluadorLoginBean.idUniversidad ==1}">
+                    </p:commandButton>
+                </div>
+
+            </p:tab>
+            <p:tab title="OTRAS" id="tabOtras">
+                <p:dataTable id="dtOtra"
+                             value="#{lstFormacionAcademicaBean.getFormacionesAcademicasOtraInvestigadorLogin(evaluadorLoginBean.evaluador.investigador)}"
+                             var="listaOtra"
+                             rows="10"
+                             paginator="true"
+                             >
+                    <p:column style="word-wrap:break-word;"
+                              width="150">
+                        <f:facet name="header">
+                            <h:outputText value="Otros titulos"/>
+                        </f:facet>
+                        <h:outputText value="#{listaOtra.tituloOtro}"/>
+                    </p:column>
+                    <p:column style="word-wrap:break-word;"
+                              width="150">
+                        <f:facet name="header">
+                            <h:outputText value="Institucion"/>
+                        </f:facet>
+                        <h:outputText value="#{listaOtra.institucion}"/>
+                    </p:column>
+                    <p:column style="word-wrap:break-word;"
+                              width="150">
+                        <f:facet name="header">
+                            <h:outputText value="Año de Ingreso"/>
+                        </f:facet>
+                        <h:outputText value="#{listaOtra.anoIngreso}" 
+                                      rendered="#{listaOtra.anoIngreso>0}"
+                                      styleClass="textoValue"/>
+                        <h:outputText value=" - Sin dato" 
+                                      rendered="#{listaOtra.anoIngreso==0}"
+                                      styleClass="textoValue"/>
+                    </p:column>
+                    <p:column style="word-wrap:break-word;"
+                              width="150">
+                        <f:facet name="header">
+                            <h:outputText value="Año de Egreso"/>
+                        </f:facet>
+                        <h:outputText value="#{listaOtra.anoEgreso}" 
+                                      rendered="#{listaOtra.anoEgreso>0}"
+                                      styleClass="textoValue"/>
+                        <h:outputText value=" - Sin dato" 
+                                      rendered="#{listaOtra.anoEgreso==0}"
+                                      styleClass="textoValue"/>
+                    </p:column>
+                    <p:column style="word-wrap:break-word;"
+                              width="100">
+                        <f:facet name="header">
+                            <h:outputText value="Acciones"/>
+                        </f:facet>
+
+                        
+                        <p:commandButton id="cbModificarFormacionOtra"
+                                         icon="ui-icon-pencil"
+                                         actionListener="#{dlgFormacionAcademicaOtraBean.accion}"
+                                         update=":frmUser:dlgFormacionAcademicaOtra"
+                                         disabled="#{evaluadorLoginBean.idUniversidad ==1}">
+                            <f:setPropertyActionListener value="#{listaOtra}" target="#{dlgFormacionAcademicaOtraBean.formacionAcademicaOtra}"/>
+                        </p:commandButton>
+                        <p:commandButton id="cbEliminarFormacionOtra"
+                                         oncomplete="confirmationFAO.show()" 
+                                                                           
+                                         update=":frmUser:confirmDialogOtra"
+                                         icon="ui-icon-trash"
+                                         disabled="#{evaluadorLoginBean.idUniversidad ==1}">
+                            <f:setPropertyActionListener value="#{listaOtra}" target="#{dlgFormacionAcademicaOtraBean.formacionAcademicaOtra}"/>
+                        </p:commandButton>
+
+                    </p:column>
+
+                </p:dataTable>
+                <div align="center">
+                    <p:commandButton id="cbAgregarFormacionOtra"
+                                     value="Nueva Formacion Otra"
+                                     actionListener="#{dlgFormacionAcademicaOtraBean.accion}"
+                                     update=":frmUser:dlgFormacionAcademicaOtra"
+                                     disabled="#{evaluadorLoginBean.idUniversidad ==1}"
+                                     process="@this">
+                    </p:commandButton>
+
+                </div>
+
+            </p:tab>
+
+        </p:accordionPanel>
+
+        <!-- DIALOG FORMACION ACADEMICA GRADO -->
+        <p:dialog id="dlgFormacionAcademica"
+                  widgetVar="dlgFormacionAcademica"
+                  modal="true"
+                  width="600"
+                  height="500"
+                  position="400,40">
+
+            <f:facet name="header">
+                <h:outputText value="Datos Formacion Academica" style="font-size: 1.5em; font-weight: bold;"/>
+            </f:facet>
+            <div  
+                class="encabezado">
+                <h:outputText value="Formacion Academica "/>
+            </div>
+            <h:panelGrid columns="2"
+                         border="0">
+                <p:outputLabel value="Carrera: "/>
+                <p:selectOneMenu id="somCarrera"
+                                 value="#{dlgFormacionAcademicaBean.tituloGrado}"
+                                 converter="ConversorGenerico"
+                                 style="width:250px"
+                                 filter="true"
+                                 filterMatchMode="contains"
+                                 panelStyle="width:250px">
+                    <f:selectItems value="#{tituloGradoLstBean.lstSITituloGrado}"/>
+                </p:selectOneMenu>
+                <p:outputLabel value="Institucion: "></p:outputLabel>
+                <p:selectOneMenu id="somInstitucion"
+                                 value="#{dlgFormacionAcademicaBean.universidad}"
+                                 converter="ConversorGenerico"
+                                 style="width:250px"
+                                 filter="true"
+                                 filterMatchMode="contains"
+                                 panelStyle="width:250px">
+                    <f:selectItems value="#{universidadlstBean.lstSIUniversidad}"/>
+                </p:selectOneMenu>
+                <p:outputLabel value="Año de Ingreso: "/>
+                <p:inputMask id="iMAnoIngreso"
+                             value="#{dlgFormacionAcademicaBean.anoIngreso}"
+                             mask="9999"
+                             size="4"
+                             disabled="#{dlgFormacionAcademicaBean.flagIngreso}"/>
+                <p:outputLabel value="Año de Egreso: "/>
+                <p:inputMask id="iMAnoEgreso"
+                             value="#{dlgFormacionAcademicaBean.anoEgreso}"
+                             mask="9999"
+                             size="4" 
+                             disabled="#{dlgFormacionAcademicaBean.flagEgreso}"/>
+                <p:outputLabel value="Cursando Actualmente: "/>
+                <p:selectBooleanCheckbox id="sbcCursandoActualmente"
+                                         value="#{dlgFormacionAcademicaBean.cursandoActualmente}"
+                                         disabled="#{dlgFormacionAcademicaBean.flagChkCursandoActualmente}">
+                    <p:ajax update="iMAnoEgreso sbcSinDatosAños" listener="#{dlgFormacionAcademicaBean.accionAñoEgreso()}"/>
+                </p:selectBooleanCheckbox>
+                <p:outputLabel value="Sin datos de años: "/>
+                <p:selectBooleanCheckbox id="sbcSinDatosAños"
+                                         value="#{dlgFormacionAcademicaBean.sinDatos}">
+                    <p:ajax update="iMAnoIngreso iMAnoEgreso sbcCursandoActualmente iMAnoIngreso iMAnoEgreso" 
+                            listener="#{dlgFormacionAcademicaBean.accionSinDatos()}"/>
+
+                </p:selectBooleanCheckbox>
+
+            </h:panelGrid>
+
+            <hr size="5" style="alignment-adjust: central; width: 95%; background-color: #BC2C71; " />
+            <div align="center"> 
+                <p:commandButton id="cbAceptar" 
+                                 value="Guardar"
+                                 actionListener="#{dlgFormacionAcademicaBean.accionGrado()}"
+                                 oncomplete="dlgFormacionAcademica.hide()"
+                                 update=":frmUser:apFormacionAcademica:dtGrado"
+                                 >
+                </p:commandButton>
+                
+                <p:commandButton id="cbCancelar" 
+                                 value="Cancelar"
+                                 oncomplete="dlgFormacionAcademica.hide()"
+                                 process="@this"
+                                 style="margin-left: 10px;">
+                </p:commandButton>
+            </div>    
+
+
+        </p:dialog>
+
+        <!--DIALOG FORMACION ACADEMICA POSGRADO-->
+
+        <p:dialog id="dlgFormacionAcademicaPosgrado"
+                  widgetVar="dlgFormacionAcademicaPosgrado"
+                  modal="true"
+                  width="600"
+                  height="500"
+                  position="400,40">
+
+            <f:facet name="header">
+                <h:outputText value="Datos Formacion Academica Posgrado" style="font-size: 1.5em; font-weight: bold;"/>
+            </f:facet>
+            <div  
+                class="encabezado">
+                <h:outputText value="Formacion Academica Posgrado"/>
+            </div>
+            <h:panelGrid columns="2"
+                         border="0">
+                <p:outputLabel value="Carrera: "/>
+                <p:selectOneMenu id="somCarreraP"
+                                 value="#{dlgFormacionAcademicaPosgradoBean.tituloPosgrado}"
+                                 converter="ConversorGenerico"
+                                 style="width:250px"
+                                 filter="true"
+                                 filterMatchMode="contains"
+                                 panelStyle="width:250px">
+                    <f:selectItems value="#{tituloPosgradoLstBean.lstSITituloPosgrado}"/>
+                </p:selectOneMenu>
+                <p:outputLabel value="Institucion: "></p:outputLabel>
+                <p:selectOneMenu id="somInstitucionP"
+                                 value="#{dlgFormacionAcademicaPosgradoBean.universidad}"
+                                 converter="ConversorGenerico"
+                                 style="width:250px"
+                                 filter="true"
+                                 filterMatchMode="contains"
+                                 panelStyle="width:250px">
+                    <f:selectItems value="#{universidadlstBean.lstSIUniversidad}"/>
+                </p:selectOneMenu>
+                <p:outputLabel value="Año de Ingreso: "/>
+                <p:inputMask id="iMAnoIngresoP"
+                             value="#{dlgFormacionAcademicaPosgradoBean.anoIngreso}"
+                             mask="9999"
+                             size="4"
+                             disabled="#{dlgFormacionAcademicaPosgradoBean.flagIngreso}"/>
+                <p:outputLabel value="Año de Egreso: "/>
+                <p:inputMask id="iMAnoEgresoP"
+                             value="#{dlgFormacionAcademicaPosgradoBean.anoEgreso}"
+                             mask="9999"
+                             size="4" 
+                             disabled="#{dlgFormacionAcademicaPosgradoBean.flagEgreso}"/>
+                <p:outputLabel value="Cursando Actualmente: "/>
+                <p:selectBooleanCheckbox id="sbcCursandoActualmenteP"
+                                         value="#{dlgFormacionAcademicaPosgradoBean.cursandoActualmente}"
+                                         disabled="#{dlgFormacionAcademicaPosgradoBean.flagChkCursandoActualmente}">
+                    <p:ajax update="iMAnoEgresoP sbcSinDatosAñosP" listener="#{dlgFormacionAcademicaPosgradoBean.accionAñoEgreso()}"/>
+                </p:selectBooleanCheckbox>
+                <p:outputLabel value="Sin datos de años: "/>
+                <p:selectBooleanCheckbox id="sbcSinDatosAñosP"
+                                         value="#{dlgFormacionAcademicaPosgradoBean.sinDatos}">
+                    <p:ajax update="iMAnoIngresoP iMAnoEgresoP sbcCursandoActualmenteP iMAnoIngresoP iMAnoEgresoP" 
+                            listener="#{dlgFormacionAcademicaPosgradoBean.accionSinDatos()}"/>
+
+                </p:selectBooleanCheckbox>
+
+            </h:panelGrid>
+
+            <hr size="5" style="alignment-adjust: central; width: 95%; background-color: #BC2C71; " />
+            <div align="center"> 
+                <p:commandButton id="cbAceptarP" 
+                                 value="Guardar"
+                                 actionListener="#{dlgFormacionAcademicaPosgradoBean.accionGrado()}"
+                                 oncomplete="dlgFormacionAcademicaPosgrado.hide()"
+                                 update=":frmUser:apFormacionAcademica:dtPosgrado"
+                                 >
+                </p:commandButton>
+                
+                <p:commandButton id="cbCancelarP" 
+                                 value="Cancelar"
+                                 oncomplete="dlgFormacionAcademicaPosgrado.hide()"
+                                 process="@this"
+                                 style="margin-left: 10px;">
+                </p:commandButton>
+            </div>    
+
+
+        </p:dialog>
+        <!--DIALOG FORMACION ACADEMICA OTRA-->
+
+        <p:dialog id="dlgFormacionAcademicaOtra"
+                  widgetVar="dlgFormacionAcademicaOtra"
+                  modal="true"
+                  width="600"
+                  height="400"
+                  position="400,100">
+            <f:facet name="header">
+                <h:outputText value="Datos Otra Formacion Academica " style="font-size: 1.5em; font-weight: bold;"/>
+            </f:facet>
+            <div  
+                class="encabezado">
+                <h:outputText value="Formacion Academica Otra"/>
+            </div>
+            <h:panelGrid columns="2"
+                         border="0">
+                <p:outputLabel value="Carrera: "/>
+                <p:selectOneMenu id="somCarreraO"
+                                 value="#{dlgFormacionAcademicaOtraBean.tituloOtro}"
+                                 converter="ConversorGenerico"
+                                 style="width:250px"
+                                 filter="true"
+                                 filterMatchMode="contains"
+                                 panelStyle="width:250px">
+                    <f:selectItems value="#{tituloOtroLstBean.lstSITituloOtro}"/>
+                </p:selectOneMenu>
+                <p:outputLabel value="Institucion: "></p:outputLabel>
+                <p:selectOneMenu id="somInstitucionO"
+                                 value="#{dlgFormacionAcademicaOtraBean.institucion}"
+                                 converter="ConversorGenerico"
+                                 style="width:250px"
+                                 filter="true"
+                                 filterMatchMode="contains"
+                                 panelStyle="width:250px">
+                    <f:selectItems value="#{institucionLstBean.lstSIInstitucion}"/>
+                </p:selectOneMenu>
+                <p:outputLabel value="Año de Ingreso: "/>
+                <p:inputMask id="iMAnoIngresoO"
+                             value="#{dlgFormacionAcademicaOtraBean.anoIngreso}"
+                             mask="9999"
+                             size="4"
+                             disabled="#{dlgFormacionAcademicaOtraBean.flagIngreso}"/>
+                <p:outputLabel value="Año de Egreso: "/>
+                <p:inputMask id="iMAnoEgresoO"
+                             value="#{dlgFormacionAcademicaOtraBean.anoEgreso}"
+                             mask="9999"
+                             size="4" 
+                             disabled="#{dlgFormacionAcademicaOtraBean.flagEgreso}"/>
+                <p:outputLabel value="Cursando Actualmente: "/>
+                <p:selectBooleanCheckbox id="sbcCursandoActualmenteO"
+                                         value="#{dlgFormacionAcademicaOtraBean.cursandoActualmente}"
+                                         disabled="#{dlgFormacionAcademicaOtraBean.flagChkCursandoActualmente}">
+                    <p:ajax update="iMAnoEgresoO sbcSinDatosAñosO" listener="#{dlgFormacionAcademicaOtraBean.accionAñoEgreso()}"/>
+                </p:selectBooleanCheckbox>
+                <p:outputLabel value="Sin datos de años: "/>
+                <p:selectBooleanCheckbox id="sbcSinDatosAñosO"
+                                         value="#{dlgFormacionAcademicaOtraBean.sinDatos}">
+                    <p:ajax update="iMAnoIngresoO iMAnoEgresoO sbcCursandoActualmenteO" 
+                            listener="#{dlgFormacionAcademicaOtraBean.accionSinDatos()}"/>
+
+                </p:selectBooleanCheckbox>
+
+            </h:panelGrid>
+
+            <hr size="5" style="alignment-adjust: central; width: 95%; background-color: #BC2C71; " />
+            <div align="center"> 
+                <p:commandButton id="cbAceptarO" 
+                                 value="Guardar"
+                                 actionListener="#{dlgFormacionAcademicaOtraBean.accionOtra()}"
+                                 oncomplete="dlgFormacionAcademicaOtra.hide()"
+                                 update=":frmUser:apFormacionAcademica:dtOtra"
+                                 >
+                </p:commandButton>
+
+                
+                <p:commandButton id="cbCancelarO" 
+                                 value="Cancelar"
+                                 oncomplete="dlgFormacionAcademicaOtra.hide()"
+                                 process="@this"
+                                 style="margin-left: 10px;">
+                </p:commandButton>
+            </div>   
+            
+        </p:dialog>
+        <!--CONFIRMDLG ELIMINAR GRADO-->
+        <p:confirmDialog id="confirmDialogTel" message="Seguro Desea Eliminar el elemento Seleccionado?"  
+                         header="Proceso de Eliminacion" severity="alert" widgetVar="confirmationFAG">  
+
+            
+            <h:inputText value="#{dlgFormacionAcademicaBean.formacionAcademicaGrado.id}"/>
+            <div align="center">
+                        <p:commandButton id="confirmFAG" 
+                                         value="Aceptar" 
+                                         oncomplete="confirmationFAG.hide()" 
+                                         actionListener="#{lstFormacionAcademicaBean.quitarFormacionAcademicaGrado(
+                                                           dlgFormacionAcademicaBean.formacionAcademicaGrado.id)}"
+                                         update=":frmUser:apFormacionAcademica:dtGrado"
+                                         process="confirmDialogTel"/> 
+
+                        <p:commandButton id="declineFAG" value="Cancelar" onclick="confirmationFAG.hide()" type="button" />   
+            </div>
+
+        </p:confirmDialog>
+
+        
+        <!--CONFIRMDLG ELIMINAR POSGRADO-->
+        <p:confirmDialog id="confirmDialogPosgrado" message="Seguro Desea Eliminar el elemento Seleccionado?"  
+                         header="Proceso de Eliminacion" severity="alert" widgetVar="confirmationFAP"
+                         width="300" rendered="true"> 
+            
+            <h:inputHidden value="#{dlgFormacionAcademicaPosgradoBean.formacionAcademicaPosgrado.id}"/>
+            <div align="center">
+                <p:commandButton id="confirmFAP" 
+                                 value="Aceptar" 
+                                 oncomplete="confirmationFAP.hide()" 
+                                 actionListener="#{lstFormacionAcademicaBean.quitarFormacionAcademicaPosgrado(
+                                                   dlgFormacionAcademicaPosgradoBean.formacionAcademicaPosgrado.id)}" 
+                                 update=":frmUser:apFormacionAcademica:dtPosgrado"
+                                 process="confirmDialogPosgrado"/> 
+                
+                <p:commandButton id="declineFAP" value="Cancelar" onclick="confirmationFAP.hide()" type="button"/>  
+            </div>
+
+          
+        </p:confirmDialog>
+        
+          <!--CONFIRMDLG ELIMINAR OTRA-->
+        <p:confirmDialog id="confirmDialogOtra" message="Seguro Desea Eliminar el elemento Seleccionado?"  
+                         header="Proceso de Eliminacion" severity="alert" widgetVar="confirmationFAO"
+                         width="300" rendered="true"> 
+            
+            <h:inputHidden value="#{dlgFormacionAcademicaOtraBean.formacionAcademicaOtra.id}"/>
+            <div align="center">
+                
+                <p:commandButton id="confirmFAO" 
+                                 value="Aceptar" 
+                                 oncomplete="confirmationFAO.hide()" 
+                                 update=":frmUser:apFormacionAcademica:dtOtra" 
+                                 actionListener="#{lstFormacionAcademicaBean.quitarFormacionAcademicaOtra(dlgFormacionAcademicaOtraBean.formacionAcademicaOtra.id)}" 
+                                 process="confirmDialogOtra"/> 
+                <p:commandButton id="declineFAO" value="Cancelar" onclick="confirmationFAO.hide()" type="button"/>  
+            </div>
+
+          
+        </p:confirmDialog>
+        
+
+    </ui:define>
+
+</ui:composition>

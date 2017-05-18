@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <p:dialog id="dDeleteEspecializacion" 
+              widgetVar="dlgDeleteEspecializacion"
+              modal="true"
+              width="600"
+              height="300"
+              position="top"
+              style="margin-top: 30px;"
+              resizable="false">
+        
+        <f:facet name="header">
+            <h:outputText value="Eliminar Especialización" styleClass="subTitulo"/>
+        </f:facet>
+        
+        <p:panel id="pDlgDeleteEspecialidad">
+
+            <p:focus context="pDlgDeleteEspecialidad"/> 
+            <h:inputHidden id="ihIdEspecializacion"
+                           value="#{especializacionBean.especializacion.id}"/>
+            
+            <div class="separador">
+                <h:outputText value="Año*: "/>
+                <h:outputText value="#{especializacionBean.especializacion.año}"/>
+            </div>
+            
+            <div style="clear: both;"/>
+            
+            <div class="separador">
+                <h:outputText value="Especialidad investigación*: "/>
+                <h:outputText value="#{especializacionBean.especializacion.especialidadInvestigacion.descripcion}"/>
+            </div>
+            
+            <div style="clear: both;"/>
+            
+            <div class="separador"> 
+               <h:outputText value="Especialidad actividad académica*: "/>
+               <h:outputText value="#{especializacionBean.especializacion.especialidadActividadAcademica.descripcion}"/>
+             </div>   
+            
+            
+           <div style="clear: both;"/>
+                    
+
+                    <div style="text-align: center;">
+                        <p:commandButton id="cbGuardarED"
+                                         value="Eliminar"
+                                         action="#{especializacionDlgBean.delete()}"
+                                         icon="ui-icon-close"
+                                         style="margin-right: 10px;"
+                                         update="dMensaje"/>
+                        
+                        
+                        <p:commandButton id="cbSalirED"
+                                         value="Salir"
+                                         icon="ui-icon-cancel"
+                                         oncomplete="dlgDeleteEspecializacion.hide()"
+                                         process="@this"/>
+                    </div>
+            
+            
+
+        </p:panel>
+
+    </p:dialog>
+</html>

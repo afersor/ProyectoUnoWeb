@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <p:dialog id="dFindTelefono" 
+              widgetVar="dlgFindTelefono"
+              modal="true"
+              width="600"
+              height="200"
+              position="top"
+              style="margin-top: 30px;"
+              resizable="false">
+        <f:facet name="header">
+            <h:outputText value="Telefonos" styleClass="subTitulo"/>
+        </f:facet>
+        <p:panel id="pDialogTelefono">
+
+            <p:focus context="pDialogTelefono"/> 
+            
+            <h:inputHidden id="ihTipoTFD"
+                           value="#{telefonoFindDlgBean.telefono.tipoTelefono}"/>
+            
+            <div>
+                
+                <h:outputText value="Tipo: "/>
+                <p:selectOneMenu id="somTipoTelefono"
+                                 value="#{telefonoFindDlgBean.telefono.tipoTelefono}"
+                                 panelStyle="width:150px"
+                                 converter="ConversorGenerico"
+                                 style="padding-right: 5px;">
+                    <f:selectItems value="#{tipoTelefonoLstBean.lstSITipoTelefono}"/>
+
+                </p:selectOneMenu>
+                
+                
+            </div>
+            
+            <div>
+                
+                <h:outputText value="Número: "/>
+                <p:inputText id="itDescripcionPC"
+                             value="#{telefonoFindDlgBean.telefono.numero}"/>
+                
+                
+            </div>
+            <div align="center">
+                
+                <p:commandButton icon="ui-icon-search"
+                                 value="Agregar"
+                                 actionListener="#{telefonoFindDlgBean.definirComponentesActualizar()}"
+                                 process="dFindTelefono, @this"
+                                 style="margin: 30px 20px 30px 20px;"/>
+                
+                <p:commandButton icon="ui-icon-search"
+                                 value="Salir"
+                                 oncomplete="dlgFindTelefono.hide()"
+                                 process="@this"/>
+            </div>
+            
+
+        </p:panel>
+
+    </p:dialog>
+</html>

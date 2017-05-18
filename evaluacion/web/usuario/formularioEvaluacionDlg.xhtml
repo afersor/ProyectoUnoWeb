@@ -1,0 +1,190 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+        <p:dialog id="dFormularioEvaluacion" 
+              widgetVar="dlgFormularioEvaluacion"
+              modal="true"
+              width="600"
+              height="400"
+              position="top"
+              style="margin-top: 30px;"
+              resizable="true"
+              rendered="#{formularioEvaluacionPagLstBean.evaluacionWebSelect != null}"
+              header="Formulario de Evaluación"
+              >
+            <div style="margin: 20px 5px 20px 5px;">
+                <h:inputHidden id ="ihIdEvaluacionWeb" value="#{evaluacionWebBean.evaluacionWeb.id}"/>
+                <h:inputHidden id ="ihIdProyecto" value="#{evaluacionWebBean.evaluacionWeb.proyecto.id}"/>
+                <h:inputHidden id ="ihIdProyectoTitulo" value="#{evaluacionWebBean.evaluacionWeb.proyecto.titulo}"/>
+                
+                <h:outputText value="#{evaluacionWebBean.evaluacionWeb.proyecto.titulo}"
+                              style="font-size: 1.5em; font-weight: bold;"/>
+            </div>
+            
+        <div style="margin: 5px 5px 5px 5px;">
+            <p:accordionPanel id ="apForEva" var="bl" 
+                              value="#{formularioEvaluacionPagLstBean.evaluacionWebSelect.bloquesEvaluados}">  
+
+                <p:tab  title="#{bl.bloque.descripcion}">
+
+                <h:inputHidden id ="ihIdBloque" value="#{bl.bloque.id}" 
+                               binding="#{formularioEvaluacionPagBean.hihBLoque}"/>
+                
+                <table border="2" id="tabla">
+                    <tr>
+                        <td>
+
+                            
+                        </td>
+                        
+                        <td>
+                            <table cellspacing="10">                                                         
+                                <ui:repeat value="#{calificacionWebLstBean.lstCalificacionWeb}" var="cal">
+                                    <td>
+                                        <h:outputText value="#{cal.nombre}"/> 
+                                    </td>
+                                </ui:repeat>
+                            </table>
+                        </td>
+                        
+                    </tr>
+                    
+                   
+                    
+                    <ui:repeat value="#{bl.detallesEvaluados}" var="de" >
+                        <tr>
+                            <td>
+                                
+                                <!--<h:outputText value="{formularioEvaluacionPagBean.optenerContenidoBloque(bl.bloque)}"/>-->
+                            </td>
+
+                                <td>
+
+              
+                                    <p:selectOneRadio id="sorCalificacion"                     
+                                                      value="#{de.calificacion}"
+                                                      valueChangeListener="#{formularioEvaluacionPagBean.eventChange}"
+                                                      converter="ConversorGenerico"
+                                                      > 
+                                        <f:selectItems value="#{calificacionWebLstBean.lstSICalificacionWeb}"
+                                                       />  
+                                        
+                                 
+                                        <p:ajax event="change" 
+                                                process="@form,   
+                                                :frmUser:apForEva:ihIdBloque, sorCalificacion"/>
+                                        
+                                    </p:selectOneRadio>
+                                    
+                                </td>
+                                    
+                           
+                                
+                            
+                        </tr>
+                    </ui:repeat>
+                    
+                    <tr>
+                        <td>
+                            <h:outputText value="Calificación Global del BLoque"/>
+                        </td>
+
+                        <td>
+
+                            <h:inputHidden id ="ihIdContenidoBloqueCalificacion" value="0" 
+                                           binding="#{formularioEvaluacionPagBean.hihContenidoBLoqueCalificacion}"/>
+                            
+                            <p:selectOneRadio id="sorCGB"  
+                                              value="#{bl.calificacion}"
+                                valueChangeListener="#{formularioEvaluacionPagBean.eventChange}"
+                                converter="ConversorGenerico" 
+                                > 
+                                <f:selectItems value="#{calificacionWebLstBean.lstSICalificacionWeb}"
+                                               />  
+                                <p:ajax event="change" process="@this, 
+                                        ihIdContenidoBloqueCalificacion, 
+                                        :frmUser:apForEva:ihIdBloque" />
+
+                            </p:selectOneRadio>
+                                
+                                
+                        </td>
+
+                    </tr>
+                    
+                </table>
+        
+
+
+        
+                
+
+            </p:tab>
+            
+
+        </p:accordionPanel>
+        </div>
+        
+        <div style="margin: 15px 5px 5px 5px;">
+            <table border="2" cellspacing="5">
+                <tr>
+                    <td>
+                        <h:outputText value="Calificación Global Total del Proyecto"/>
+                    </td>
+                    <td>
+                        <p:selectOneRadio                                                       
+                                converter="ConversorGenerico" 
+                                value="#{formularioEvaluacionPagLstBean.evaluacionWebSelect.calificacionGlobal}"> 
+                            <f:selectItems value="#{calificacionGlobalLstBean.lstSICalificacionGlobal}"
+                                               />  
+
+                         </p:selectOneRadio>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <p>
+                            Se considera un proyecto Aprobado con Modificaciones, cuando ségun criterio de los 
+                            evaluadores, se deba realizar modificaciones de forma en su formulación, 
+                            para poder adquirir la condición de aprobado
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div style="margin: 15px 5px 5px 5px;">
+            <h3>
+            <h:outputText value="Comentarios Finales"/>
+            </h3>   
+            <p:inputTextarea rows="6" cols="50" maxlength="3000"
+                             value="#{formularioEvaluacionPagLstBean.evaluacionWebSelect.comentariosFinales}"
+                             /> 
+            
+        </div>
+        
+        
+        <div align="center" style="margin: 15px 5px 5px 5px;">
+            <p:commandButton value="Guardar"
+                             style="margin-left: 15px;"
+                             actionListener="#{formularioEvaluacionPagBean.guardar(false)}"/>
+            
+            <p:commandButton value="Guardar y Finalizar"
+                             actionListener="#{formularioEvaluacionPagBean.guardar(true)}"/>
+            
+            <p:commandButton value="Vista Previa"
+                             actionListener="#{formularioEvaluacionPagBean.generarReporte(0)}"
+                             ajax="false"/>
+
+        </div>
+        
+
+        </p:dialog>
+</html>
+

@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/UserTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="left">
+
+    </ui:define>
+
+    <ui:define name="content">
+        <h3>Docencia</h3>
+        <!--DATOS PERSONALES-->   
+        <ui:repeat value="#{investigadorLoginBean.investigador.docencias}"
+                   var="inv"                       >        
+            <h4><h:outputText value="Año: "/><h:outputText value="#{inv.año}"/></h4>
+            <p:panel header="Universidad:">
+                <h:outputText value="#{inv.universidad.descripcion}"
+                              styleClass="textoValue"/></p:panel>
+            <p:panel header="Unidad Académica:">
+
+                <h:outputText value="#{inv.unidadAcademica.descripcion}"
+                              styleClass="textoValue"/>
+            </p:panel>
+
+            <p:panel header="Departamento Docente:">
+                <h:outputText value="#{inv.departamentoDocente.descripcion}"
+                              styleClass="textoValue"/>
+            </p:panel>
+
+            <p:panel header="Categoría Docente: ">
+                <h:outputText value="#{inv.categoriaDocente.descripcion}"
+                              styleClass="textoValue"/>
+            </p:panel>
+
+            <p:panel header="Dedicación Docente: ">
+                <h:outputText value="#{inv.dedicacionDocente.descripcion}"
+                              styleClass="textoValue">
+                    <f:convertDateTime pattern="dd/MM/yyyy"  timeZone="GMT-03:00"/>
+                </h:outputText>
+            </p:panel>
+
+           
+
+            <p:panel header="Modo de Obtención: ">
+                <h:outputText value="#{inv.modoObtencionCargo.descripcion}"
+                              styleClass="textoValue"/>
+            </p:panel>
+
+            <p:panel header="Fecha: ">
+                <h:outputText value="#{inv.fechaObtencionCargo}"
+                              styleClass="textoValue">
+                    <f:convertDateTime pattern="dd/MM/yyyy"  timeZone="GMT-03:00"/>
+                </h:outputText>
+            </p:panel>
+
+
+
+        
+        </ui:repeat> 
+
+
+
+
+
+
+
+    </ui:define>
+
+</ui:composition>

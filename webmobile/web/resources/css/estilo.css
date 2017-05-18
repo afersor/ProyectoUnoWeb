@@ -1,0 +1,17 @@
+.tablaDetalle {  border: #AFAFAF 1px solid;   border-collapse: collapse; 
+
+}
+
+.tablaDetalle td{
+    background-color:#F3F3F3;
+    font-weight: bold;
+    color:#4f4f4f;
+    margin:0px; padding: 3px;
+    border:1px solid #a8a8a8;
+
+}
+.tablaDetalle td span{
+    color:#395270;
+    font-weight: normal
+
+}

@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/UserTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="left">
+       
+    </ui:define>
+
+    <ui:define name="content">
+        
+ <!--CURSOS-->   
+ 
+         <div class="encabezado">
+             <h:outputText value="Conducción"/>
+         </div>
+                    
+ 
+         <div class="divGeneral">
+
+            <h:outputText value="No registra Conducción" 
+                          rendered="#{empty investigadorLoginBean.investigador.actividadesConduccion}"
+                      styleClass="textoValue"/>
+        </div>
+ 
+        <div style="clear: both"/>
+ 
+        <div class="divGeneral">
+        <p:dataTable value="#{investigadorLoginBean.investigador.actividadesConduccion}"
+              var="con"
+              rendered="#{not empty investigadorLoginBean.investigador.actividadesConduccion}">
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Cargo"
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                <h:outputText value="#{con.cargoConduccion.descripcion} en #{con.dependencia.descripcion}, desde: "
+                          styleClass="textoValue"/>
+                 <h:outputText value="#{con.fechaDesde}"
+                          styleClass="textoValue">
+                    <f:convertDateTime pattern="dd/MM/yyyy"  timeZone="GMT-03:00"/>
+                </h:outputText>
+                <h:outputText value=", hasta: " />
+                <h:outputText value="#{con.fechaHasta}"
+                          styleClass="textoValue"
+                          rendered="#{not empty con.fechaHasta}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"  timeZone="GMT-03:00"/>
+                </h:outputText>
+                <h:outputText value="Sigue Vigente"
+                              styleClass="textoValue"
+                              rendered="#{empty con.fechaHasta}"/>
+                
+            </p:column>
+              
+            
+         </p:dataTable>
+        </div>
+        
+       
+        
+        
+    </ui:define>
+
+</ui:composition>

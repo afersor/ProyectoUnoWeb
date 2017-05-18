@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <p:dialog id="dCreateCategorizacion" 
+              widgetVar="dlgCreateCategorizacion"
+              modal="true"
+              width="600"
+              height="400"
+              position="top"
+              style="margin-top: 30px;"
+              resizable="false">
+        
+        <f:facet name="header">
+            <h:outputText value="Nueva categorización" styleClass="subTitulo"/>
+        </f:facet>
+        
+        <p:panel id="pDlgCreateCategorizacion">
+
+            <p:focus context="pDlgCreateCategorizacion"/> 
+            
+            <div class="separador">
+                <h:outputText value="Unidad Académica*: "/>
+                <p:selectOneMenu id="somUnidadAcademicaCreate"
+                                 label="Unidad Académica"
+                                 value="#{categorizacionBean.categorizacion.unidadAcademica}"
+                                converter="ConversorGenerico">
+                    <f:selectItem itemLabel="Select" noSelectionOption="true"/>
+                    <f:selectItems value="#{unidadAcademicaLstBean.lstSIUnidadAcademica}"/>
+
+
+                </p:selectOneMenu>
+                
+                <p:commandButton 
+                    icon="ui-icon-circle-plus"
+                    label="Nueva"
+                    oncomplete="dlgCreateUnidadAcademica.show()"
+                    style="vertical-align: text-bottom; margin-left: 3px;"
+                    process="@this"
+                />
+            </div>
+            
+            <div style="clear: both;"/>
+            
+            <div class="separador"> 
+               <h:outputText value="Disciplina*: "/>
+               <p:selectOneMenu id="somDisciplinaC"
+                   label="Disciplina"
+                                value="#{categorizacionBean.categorizacion.comision}"
+                                converter="ConversorGenerico"
+                                rendered="#{not empty comisionCategorizacionLstBean.lstSIComisionCategorizacion}">
+                    <f:selectItem itemLabel="Select" noSelectionOption="true"/>
+                    <f:selectItems value="#{comisionCategorizacionLstBean.lstSIComisionCategorizacion}"/>
+
+
+                </p:selectOneMenu>
+               
+             </div>   
+            
+            <div style="clear: both;"/>
+            
+            <div class="separador"> 
+               <h:outputText value="Llamado*: "/>
+               <p:selectOneMenu label="Llamado"
+                                value="#{categorizacionBean.categorizacion.llamado}"
+                                converter="ConversorGenerico">
+                    <f:selectItem itemLabel="Select" noSelectionOption="true"/>
+                    <f:selectItems value="#{llamadoLstBean.lstSILlamado}"/>
+                </p:selectOneMenu>
+               
+            </div>
+            
+            <div style="clear: both;"/>
+            
+            <div class="separador"> 
+               <h:outputText value="Condición*: "/>
+               <p:selectOneMenu label="Condición"
+                                value="#{categorizacionBean.categorizacion.condicion}"
+                                converter="ConversorGenerico">
+                   <f:selectItem itemLabel="Firme" itemValue="Firme"/>
+                   <f:selectItem itemLabel="Vencida" itemValue="Vencida"/>
+                   <f:selectItem itemLabel="En Revisión" itemValue="En Revisión"/>
+                </p:selectOneMenu>
+               
+               
+            </div>
+            
+            <div style="clear: both;"/>
+            
+            <div class="separador"> 
+                <p:panel header="Categoría asignada">
+                    <h:panelGrid columns="5" cellspacing="5">
+                        <h:outputText value="Categoría*: "/>
+                        <p:selectOneMenu label="Categoría"
+                                         value="#{categorizacionBean.categorizacion.categoriaAsignada.valorCategoria}"
+                                         converter="ConversorGenerico">
+                            <f:selectItems value="#{valorCategoriaLstBean.lstSIValorCategoria}"/>
+                        </p:selectOneMenu>
+                        
+                        <h:outputText value="Fecha*: "/>
+                        <p:calendar value="#{categorizacionBean.categorizacion.categoriaAsignada.fechaCategoria}"
+                                    locale="es"
+                                    pattern="dd/MM/yyyy"
+                                    timeZone="GMT-03:00"
+                                    style="padding-right: 5px;"/>  
+                    </h:panelGrid>
+                </p:panel>
+               
+               
+            </div>
+            
+            <div style="clear: both;"/>
+            
+            <div class="separador"> 
+                <p:panel header="Documentos">
+                    <p:commandButton id="cbBuscarArchivos" 
+                                  icon="ui-icon-search"
+                                  actionListener="#{archivoFindDlgBean.setTipo(0)}"
+                                  oncomplete="dlgFindArchivo.show();"
+                                  process="@this"
+                                  update=":frmUser:ihTipoAFD"
+                                  title="Agregar"/> <br/>
+
+                    <h:form  id="frmTablaDoc" enctype="multipart/form-data">
+                             <p:dataTable id="dtDocumento"
+                                          value="#{documentoLstBean.lstDocumento}"
+                                          var="doc"
+                                          style="width: 500px; overflow: auto;"
+                                          >
+                                 <p:column style="word-wrap:break-word;">
+                                     <f:facet name="header">
+                                         <h:outputText value="Documento"/>
+                                     </f:facet>
+
+                                     <h:outputText value="#{doc.nombreArchivo}"/>
+                                 </p:column>
+
+                                 <p:column style="word-wrap:break-word;">
+                                     <f:facet name="header">
+                                         <h:outputText value="Quitar"/>
+                                     </f:facet>
+
+                                     <p:commandButton icon="ui-icon-circle-close"
+                                                      actionListener="#{archivoFindDlgBean.quitarArchivo(doc)}"
+                                                      process="dtDocumento"
+                                                      update="dtDocumento">
+                                         
+                                     </p:commandButton>
+                                 </p:column>
+                             </p:dataTable>
+                    </h:form>
+                </p:panel>
+               
+               
+            </div>
+            
+            
+           <div style="clear: both;"/>
+                    
+
+                    <div style="text-align: center;">
+                        <p:commandButton id="cbGuardarCC"
+                                         value="Guardar"
+                                         actionListener="#{categorizacionDlgBean.create()}"
+                                         icon="ui-icon-disk"
+                                         style="margin-right: 10px;"
+                                         process="dCreateCategorizacion"
+                                         update=":frmUser:dMensaje"/>
+                        
+                        
+                        <p:commandButton id="cbSalirCC"
+                                         value="Salir"
+                                         icon="ui-icon-cancel"
+                                         oncomplete="dlgCreateCategorizacion.hide()"
+                                         />
+                    </div>
+           
+            
+            
+
+        </p:panel>
+
+    </p:dialog>
+</html>

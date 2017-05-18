@@ -1,0 +1,449 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/UserTemplate.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <div class="encabezado">
+            <h:outputText value="Rendicion"/>
+        </div>
+
+        <div class="divGeneral">
+
+            <div style="margin-bottom: 20px;">
+                <h:outputText value="Listado de proyectos" style="font-size: 1.5em; font: bold;"/><br/>
+                <h:outputText value="(Seleccione uno de los listados a continuación para ver los detalles)" styleClass="aclaraciones"/>
+            </div>
+
+
+
+            <ui:repeat value="#{proyectoLstBean.lstProyecto}"
+                       var="pro"
+                       >
+                <li>
+                    <p:commandLink value="Seleccionar. " 
+                                   action="#{investigadorRendicionBean.mostrarAcoordingPanel()}"
+                                   update=":frmUser:pgProyectoSelect, :frmUser:apRendicion"
+                                   style="font-size: 1.3em;">
+                        <f:setPropertyActionListener value="#{pro}" target="#{investigadorRendicionBean.proyecto}"/>
+                    </p:commandLink>
+                    <h:outputText value="#{pro} "/>
+
+                </li><br/>
+            </ui:repeat>
+
+        </div>
+
+        <div class="divGeneral" style="padding: 15px 5px 15px 5px;border: 1px solid #000; width: 98%;">
+
+            <h:panelGroup id="pgProyectoSelect">
+                <h:inputHidden id="ihProyecto" value="#{investigadorRendicionBean.proyecto.id}"/>
+                <h:outputText 
+                    value="Proyecto seleccionado:"
+                    style="font-size: 1.5em; font: bold;"/><br/>
+                <h:outputText 
+                    value="#{investigadorRendicionBean.proyecto}"/>
+            </h:panelGroup>
+
+        </div>
+
+        <div class="divGeneral"
+             style=" width: 100%;">
+
+            <p:accordionPanel id="apRendicion"
+                              dynamic="true" 
+                              cache="true"
+                              style="float: left; visibility: #{investigadorRendicionBean.sOcultarAcordinPanel}"
+                              >  
+
+                <p:ajax event="tabChange" 
+                        listener="#{investigadorRendicionBean.onTabChange}" 
+                        process="@this, :frmUser:ihProyecto"
+                        update="dtPagos, dtPresupuesto, dtRendicion, dtRetiroDeFondoYSaldo, dtResoluciones"/>  
+
+                <!--PAGOS-->     
+
+                <p:tab title="Pagos" id="tPagos"> 
+                    <p:dataTable id="dtPagos"
+                                 value="#{investigadorRendicionBean.proyecto.pagos}"
+                                 var="p"
+                                 rows="10"
+                                 paginator="true"
+                                 rendered="#{investigadorRendicionBean.getbPagos()}">
+                        <p:column style="word-wrap:break-word;"
+                                  width="150">
+                            <f:facet name="header">
+                                <h:outputText value="Número de expediente"/>
+                            </f:facet>
+                            <h:outputText value="#{p.numeroExpediente}"/>
+                        </p:column>
+
+                        <p:column style="word-wrap:break-word;"
+                                  width="100">
+                            <f:facet name="header">
+                                <h:outputText value="Monto"/>
+                            </f:facet>
+                            <h:outputText value="\$#{p.monto}">
+
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column style="word-wrap:break-word;"
+                                  width="150">
+                            <f:facet name="header">
+                                <h:outputText value="Resolución Rectoral"/>
+                            </f:facet>
+                            <h:outputText value="#{p.resolucionRectoral}"/>
+                        </p:column>
+
+                        <p:column style="word-wrap:break-word;"
+                                  width="150">
+                            <f:facet name="header">
+                                <h:outputText value="Fecha Rectoral"/>
+                            </f:facet>
+                            <h:outputText value="#{p.resolucionRectoral.fechaResolucion}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column style="word-wrap:break-word;"
+                                  width="180">
+                            <f:facet name="header">
+                                <h:outputText value="Resolución Consejo Superior"/>
+                            </f:facet>
+                            <h:outputText value="#{p.resolucionConsejoSuperior}"/>
+                        </p:column>
+
+                        <p:column style="word-wrap:break-word;"
+                                  width="150">
+                            <f:facet name="header">
+                                <h:outputText value="Fecha Consejo Superior"/>
+                            </f:facet>
+                            <h:outputText value="#{p.resolucionConsejoSuperior.fechaResolucion}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                        </p:column>
+
+                    </p:dataTable>
+                </p:tab>
+
+                <!--PRESUPUESTO-->                 
+                <p:tab title="Presupuesto" id="tPresupuesto"> 
+                    <p:dataTable id="dtPresupuesto"
+                                 value="#{investigadorRendicionBean.proyecto.presupuesto}"
+                                 var="pre"
+                                 rows="10"
+                                 paginator="true"
+                                 rendered="#{investigadorRendicionBean.getbPresupuesto()}">
+
+                        <p:columnGroup type="header">  
+                            <p:row>  
+                                <p:column headerText="Año" />  
+                                <p:column  headerText="Valor" />  
+                            </p:row>  
+                        </p:columnGroup> 
+
+                        <p:subTable var="con" value="#{pre.bienConsumo}"> 
+                            <f:facet name="header">  
+                                <h:outputText value="Consumos"/>
+                            </f:facet>  
+
+                            <p:column style="word-wrap:break-word;"
+                                      width="50">
+                                <h:outputText value="#{con.anio}"/>
+                            </p:column>
+
+                            <p:column style="word-wrap:break-word;"
+                                      width="50">
+                                <h:outputText value="#{con.valorA}"/>
+                            </p:column>
+
+                            <p:columnGroup type="footer">  
+                                <p:row>  
+                                    <p:column footerText="Sub Total: "
+                                              styleClass="tablaSubTotal"/>  
+                                    <p:column colspan="3"
+                                              footerText="\$#{investigadorRendicionBean.obtenerSubTotalPresupuesto()}" 
+                                              styleClass="tablaSubTotal"/> 
+                                </p:row>  
+                            </p:columnGroup>
+                        </p:subTable>
+
+                        <p:subTable var="np" value="#{pre.bienNoPersonal}"> 
+                            <f:facet name="header">  
+                                <h:outputText value="No Personales"/>
+                            </f:facet>  
+
+                            <p:column style="word-wrap:break-word;"
+                                      width="50">
+                                <h:outputText value="#{np.anio}"/>
+                            </p:column>
+
+                            <p:column style="word-wrap:break-word;"
+                                      width="50">
+                                <h:outputText value="#{np.valorA}"/>
+                            </p:column>
+
+                            <p:columnGroup type="footer">  
+                                <p:row>  
+                                    <p:column footerText="Sub Total: "
+                                              styleClass="tablaSubTotal"/>  
+                                    <p:column colspan="3"
+                                              footerText="\$#{investigadorRendicionBean.obtenerSubTotalPresupuesto()}" 
+                                              styleClass="tablaSubTotal"/> 
+                                </p:row>  
+                            </p:columnGroup>
+                        </p:subTable>
+
+                        <p:subTable var="gv" value="#{pre.gastosViaje}"> 
+                            <f:facet name="header">  
+                                <h:outputText value="Gastos de Viaje"/>
+                            </f:facet>  
+
+                            <p:column style="word-wrap:break-word;"
+                                      width="50">
+                                <h:outputText value="#{gv.anio}"/>
+                            </p:column>
+
+                            <p:column style="word-wrap:break-word;"
+                                      width="50">
+                                <h:outputText value="#{gv.valorA}"/>
+                            </p:column>
+
+                            <p:columnGroup type="footer">  
+                                <p:row>  
+                                    <p:column footerText="Sub Total: "
+                                              styleClass="tablaSubTotal"/>  
+                                    <p:column colspan="3"
+                                              footerText="\$#{investigadorRendicionBean.obtenerSubTotalPresupuesto()}" 
+                                              styleClass="tablaSubTotal"/> 
+                                </p:row>  
+                            </p:columnGroup>
+                        </p:subTable>
+
+                        <p:subTable var="bu" value="#{pre.bienUso}"> 
+                            <f:facet name="header">  
+                                <h:outputText value="Capital"/>
+                            </f:facet>  
+
+                            <p:column style="word-wrap:break-word;"
+                                      width="50">
+                                <h:outputText value="#{bu.anio}"/>
+                            </p:column>
+
+                            <p:column style="word-wrap:break-word;"
+                                      width="50">
+                                <h:outputText value="#{bu.valorA}"/>
+                            </p:column>
+
+                            <p:columnGroup type="footer">  
+                                <p:row>  
+                                    <p:column footerText="Sub Total: "
+                                              styleClass="tablaSubTotal"/>  
+                                    <p:column colspan="3"
+                                              footerText="\$#{investigadorRendicionBean.obtenerSubTotalPresupuesto()}" 
+                                              styleClass="tablaSubTotal"/> 
+                                </p:row>  
+                            </p:columnGroup>
+                        </p:subTable>
+
+                        <p:columnGroup type="footer">  
+                            <p:row >  
+                                <p:column footerText="Total General: "
+                                          styleClass="tablaTotal"/>  
+                                <p:column colspan="3" 
+                                          footerText="\$#{investigadorRendicionBean.obtenerTotalGeneralPresupuesto()}" 
+                                          styleClass="tablaTotal"/>  
+                            </p:row>  
+                        </p:columnGroup>
+
+                    </p:dataTable>
+                </p:tab>
+
+                <!--RENDICIONES-->                 
+                <p:tab title="Rendiciones" id="tRendicion"> 
+                    <p:dataTable id="dtRendicion"
+                                 value="#{investigadorRendicionBean.proyecto.pagos}"
+                                 var="p"
+                                 rows="10"
+                                 paginator="true"
+                                 rendered="#{investigadorRendicionBean.getbRendicion()}"
+                                 sortBy="#{p.id}"
+                                 sortOrder="descending" >
+
+                        <p:columnGroup type="header">  
+                            <p:row>  
+                                <p:column headerText="Fecha" />  
+                                <p:column  headerText="Monto" />  
+                                <p:column  headerText="Año" />  
+                                <p:column  headerText="Libre Deuda" />  
+                            </p:row>  
+                        </p:columnGroup> 
+
+                        <p:subTable var="re" value="#{investigadorRendicionBean.getRendicionesOrdenadasPorFecha(p)}"
+                                    rendered="#{not empty investigadorRendicionBean.getRendicionesOrdenadasPorFecha(p)}"> 
+
+
+
+                            <f:facet name="header">  
+                                <h:outputText value="Pago #{p.numeroExpediente} \$#{p.monto}"
+                                              style="font-size: 1.2em;"/>
+                            </f:facet>  
+
+                            <p:column style="word-wrap:break-word;"
+                                      width="50">
+                                <h:outputText value="#{re.fechaRendicion}">
+                                    <f:convertDateTime pattern="dd/MM/yyy"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column style="word-wrap:break-word;"
+                                      width="50">
+                                <h:outputText value="\$#{re.montoRendido}"/>
+                            </p:column>
+
+                            <p:column style="word-wrap:break-word;"
+                                      width="50">
+                                <h:outputText value="#{re.anioRendido}"/>
+                            </p:column>
+
+                            <p:column style="word-wrap:break-word;"
+                                      width="150">
+                                <h:outputText value="#{re.libreDeuda}"/>
+                            </p:column>
+
+                            <p:columnGroup type="footer">  
+                                <p:row>  
+                                    <p:column footerText="Sub Total: " styleClass="tablaSubTotal"/>  
+                                    <p:column colspan="3"
+                                              footerText="\$#{investigadorRendicionBean.obtenerSubTotalRendicion(p)}" 
+                                              styleClass="tablaSubTotal"/>  
+                                </p:row>  
+                            </p:columnGroup>
+                        </p:subTable>
+
+                        <p:columnGroup type="footer">  
+                            <p:row >  
+                                <p:column footerText="Total General: "
+                                          styleClass="tablaTotal"/>  
+                                <p:column colspan="3" 
+                                          footerText="\$#{investigadorRendicionBean.obtenerTotalGeneralRendicion()}" 
+                                          styleClass="tablaTotal"/>  
+                            </p:row>  
+                        </p:columnGroup>
+
+                    </p:dataTable>
+                </p:tab>
+
+                <!--RETIRO DE FONDOS Y SALDOS-->                 
+                <p:tab title="Retiro de Fondos y Saldos" id="tRetiroDeFondoYSaldo"> 
+                    <p:dataTable id="dtRetiroDeFondoYSaldo"
+                                 value="#{investigadorRendicionBean.proyecto.pagos}"
+                                 var="p"
+                                 rows="10"
+                                 paginator="true"
+
+                                 rendered="#{investigadorRendicionBean.getbRetiroDeFondoYSaldo()}">
+
+                        <p:columnGroup type="header">  
+                            <p:row>  
+                                <p:column headerText="Fecha" />  
+                                <p:column  headerText="Monto" />  
+                                <p:column  headerText="Número de cheque" />  
+                                <p:column  headerText="Pago" />  
+                            </p:row>  
+                        </p:columnGroup> 
+
+                        <p:subTable var="cob" value="#{p.cobros}"
+                                    rendered="#{not empty p.cobros}"> 
+
+
+
+                            <f:facet name="header">  
+                                <h:outputText value="Pago #{p.numeroExpediente} \$#{p.monto}"
+                                              style="font-size: 1.2em;"/>
+                            </f:facet>  
+
+                            <p:column style="word-wrap:break-word;"
+                                      width="50">
+                                <h:outputText value="#{cob.fechaCobro}">
+                                    <f:convertDateTime pattern="dd/MM/yyy"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column style="word-wrap:break-word;"
+                                      width="50">
+                                <h:outputText value="\$#{cob.montoCobrado}"/>
+                            </p:column>
+
+                            <p:column style="word-wrap:break-word;"
+                                      width="50">
+                                <h:outputText value="#{cob.numeroCheque}"/>
+                            </p:column>
+
+                            <p:columnGroup type="footer">  
+                                <p:row>  
+                                    <p:column footerText="Sub Total: " styleClass="tablaSubTotal"/>  
+                                    <p:column colspan="3"
+                                              footerText="\$#{investigadorRendicionBean.obtenerSubTotalRetiroDeFondoYSaldo()}" 
+                                              styleClass="tablaSubTotal"/>  
+                                </p:row>  
+                            </p:columnGroup>
+                        </p:subTable>
+
+                        <p:columnGroup type="footer">  
+                            <p:row >  
+                                <p:column footerText="Total General: "
+                                          styleClass="tablaTotal"/>  
+                                <p:column colspan="3" 
+                                          footerText="\$#{investigadorRendicionBean.obtenerTotalGeneralRetiroDeFondoYSaldo()}" 
+                                          styleClass="tablaTotal"/>  
+                            </p:row>  
+                        </p:columnGroup>
+
+                    </p:dataTable>
+                </p:tab>
+
+                <!--RETIRO DE FONDOS Y SALDOS-->                 
+                <p:tab title="Resoluciones" id="tResoluciones" 
+                       rendered="#{not empty investigadorRendicionBean.proyecto.pagos}"> 
+
+                    <ui:repeat id="dtResoluciones" value="#{investigadorRendicionBean.proyecto.pagos}"
+                               var="pag"                       > 
+                        <h:panelGrid columns="1" styleClass="tablaDetalle">
+                            <p:commandLink 
+                                rendered="#{pag.archivoResolucionConsejoSuperior!=null}"
+                                value="#{pag.archivoResolucionConsejoSuperior.nombreArchivo}"
+                                action="#{investigadorArchivoBean.descargarArchivo()}"
+                                ajax="false">
+                                <f:setPropertyActionListener value="#{pag.archivoResolucionConsejoSuperior}" target="#{investigadorArchivoBean.documento}"/>
+                            </p:commandLink>
+                            <p:commandLink  rendered="#{pag.archivoResolucionRectoral!=null}"
+                                            value="#{pag.archivoResolucionRectoral.nombreArchivo}"
+                                            action="#{investigadorArchivoBean.descargarArchivo()}"
+                                            ajax="false">
+                                <f:setPropertyActionListener value="#{pag.archivoResolucionRectoral}" target="#{investigadorArchivoBean.documento}"/>
+                            </p:commandLink>
+                            <p:commandLink                                     rendered="#{pag.archivoResolucionSecyt!=null}"
+                                                                               value="#{pag.archivoResolucionSecyt.nombreArchivo}"
+                                                                               action="#{investigadorArchivoBean.descargarArchivo()}"
+                                                                               ajax="false">
+                                <f:setPropertyActionListener value="#{pag.archivoResolucionSecyt}" target="#{investigadorArchivoBean.documento}"/>
+                            </p:commandLink>
+                        </h:panelGrid>
+                    </ui:repeat>
+                </p:tab>
+
+
+
+
+            </p:accordionPanel>
+
+        </div>
+    </ui:define>
+
+</ui:composition>

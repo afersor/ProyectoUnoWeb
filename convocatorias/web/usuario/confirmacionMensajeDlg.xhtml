@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <p:dialog id="dConfirmacionMensaje"
+              widgetVar="dlgConfirmacionMensaje"
+              modal="true"
+              position="top"
+              style="margin-top: 30px;"
+              resizable="false">
+
+        <f:facet name="header">
+            <h:outputText value="Confirmación" styleClass="subTitulo"/>
+        </f:facet>
+
+        <div style="padding: 5px 5px 5px 5px;">
+
+            <p:panel style="padding: 10px 5px 10px 5px;">
+                <h:outputText value="¿Desea guardar el proyecto?"/>
+                <p><strong style="color:red"> Recuerde que una vez presionado el botón SI no podrá hacer ninguna modificación en el proyecto</strong></p>
+
+            </p:panel>
+
+        </div>
+
+        <div style="clear: both;"/>
+
+        <div style="text-align: center;
+             padding: 5px 5px 5px 5px;">
+
+            <p:commandButton value="Si"
+                             onclick="this.form.target='_blank'"
+                             onblur="this.form.target='_self'"
+                             actionListener="#{proyectoWebBean.guardar(11)}"
+                             process="@this, cbImprimir"
+                             update="dMensaje, cbImprimir"/>
+
+            <p:commandButton value="No"
+                             oncomplete="dlgConfirmacionMensaje.hide();"
+                             process="@this"/>
+
+
+            <p:commandButton id="cbImprimir"
+                             value="Imprimir"
+                             onclick="this.form.target='_blank'"
+                             onblur="this.form.target='_self'"
+                             actionListener="#{proyectoWebBean.generarReporte(1)}"
+                             disabled="#{proyectoWebBean.proyectoWeb.id == null or not proyectoWebBean.proyectoWeb.finalizado}"
+                             ajax="false"/>
+
+
+            <p:commandButton value="Menu Principal"
+                             action="#{navegarBean.entrarPagConvocatoriasOnce()}"
+                             process="@this"/>
+        </div>
+    </p:dialog>
+</html>

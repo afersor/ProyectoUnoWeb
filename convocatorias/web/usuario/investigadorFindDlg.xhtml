@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <p:dialog id="dFindInvestigador" 
+              widgetVar="dlgFindInvestigador"
+              modal="true"
+              width="600"
+              height="400"
+              position="top"
+              style="margin-top: 30px;"
+              resizable="false">
+        <f:facet name="header">
+            <h:outputText value=" Investigadores" styleClass="subTitulo"/>
+        </f:facet>
+        <p:panel id="pDialogInvestigador">
+
+            <p:focus context="pDialogInvestigador"/> 
+            <h:inputHidden id="ihTipoIFD"
+                         value="#{investigadorFindDlgBean.tipo}"/>
+            
+            <div>
+                <h:outputText value="(Ingrese parte del nombre y presione el botón. Ej diego)"
+                              styleClass="aclaraciones"/>
+            </div>
+            
+            <div>
+                <h:outputText value="Ingrese parte del nombre o el apellido: "/>
+                <p:inputText id="itCadenaNombreApellido"
+                             value="#{investigadorFindDlgBean.sNombreApellido}"/>
+                <p:commandButton icon="ui-icon-search"
+                                 actionListener="#{investigadorFindDlgBean.findLikeNombreApellido()}"
+                                 update="dtFindInvestigador"
+                                 process="itCadenaNombreApellido, @this"/>
+            </div>
+            
+            <div style="clear: both;"/>
+            
+            <div>
+                <p:dataTable id="dtFindInvestigador"
+                             value="#{investigadorLstBean.lstInvestigador}"
+                             var="inv"
+                             paginator="true"
+                             rows="8"
+                             rowKey="#{inv.id}"
+                             selection="#{investigadorFindDlgBean.investigadorSelect}"
+                             selectionMode="single">
+                    
+                    <!--<p:ajax event="rowSelect" 
+                            update=":frmLog:otInvestigador"
+                            >
+                        <f:setPropertyActionListener value="{per}" target="{personaFindDlgBean.personaSelect}"/>
+                    </p:ajax>-->
+                    
+                     
+                    <p:column style="word-wrap:break-word;">
+                        <f:facet name="header">
+                            <h:outputText value="Apellido"/>
+                        </f:facet>
+                        
+                        <h:outputText value="#{inv.persona.apellido}"/>
+                    </p:column>
+                
+                    <p:column style="word-wrap:break-word;">
+                        <f:facet name="header">
+                            <h:outputText value="Nombre"/>
+                        </f:facet>
+                        
+                        <h:outputText value="#{inv.persona.nombre}"/>
+                    </p:column>
+                   
+                    
+                    <p:column style="word-wrap:break-word;">
+                        <f:facet name="header">
+                            <h:outputText value="CUIL"/>
+                        </f:facet>
+                        
+                        <h:outputText value="#{inv.persona.cuil}"/>
+                    </p:column>
+                    
+                    
+                    <f:facet name="footer">  
+                        <p:commandButton id="cbSelectFindInvestigador"
+                                         value="Seleccionar" 
+                                         icon="ui-icon-check"  
+                                         actionListener="#{investigadorFindDlgBean.definirComponentesActualizar()}"
+                                         process="dtFindInvestigador,
+                                            :frmUser:ihTipoIFD,
+                                            @this"
+                                         oncomplete="dlgFindInvestigador.hide();"/>  
+                    </f:facet>
+                    
+                    
+                </p:dataTable>
+            </div>
+
+        </p:panel>
+
+    </p:dialog>
+</html>

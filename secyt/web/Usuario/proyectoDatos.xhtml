@@ -1,0 +1,206 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/UserTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="left">
+
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="encabezado">
+            <h:outputText value="Datos del Proyecto: "/>
+        </div>
+
+        <f:view>
+            <h:form>
+                <h:panelGrid columns="2" styleClass="tablaDetalle">
+                    <h:outputText value="Código:" rendered="#{proyectoBean.proyecto.codigo != null}"/>
+                    <h:outputText value="#{proyectoBean.proyecto.codigo}" rendered="#{proyectoBean.proyecto.codigo!= null}" title="Código"/>
+                    <h:outputText value="Código Incentivos:" rendered="#{proyectoBean.proyecto.codigoIncentivos!= null}"/>
+                    <h:outputText value="#{proyectoBean.proyecto.codigoIncentivos}" rendered="#{proyectoBean.proyecto.codigoIncentivos!= null}" title="Código Incentivos"/>
+                    <h:outputText value="Título:" rendered="#{proyectoBean.proyecto.titulo!= null}"/>
+
+                    <h:outputText value="#{proyectoBean.proyecto.titulo}" rendered="#{proyectoBean.proyecto.titulo!= null}" title="Título"/>
+                    <h:outputText value="Unidad Académica:" rendered="#{proyectoBean.proyecto.unidadAcademica.descripcion!= null}"/>
+                    <h:outputText value="#{proyectoBean.proyecto.unidadAcademica}" rendered="#{proyectoBean.proyecto.unidadAcademica.descripcion!= null}" title="Unidad Académica"/>
+                    <h:outputText value="Unidad Ejecutora:" rendered="#{proyectoBean.proyecto.unidadEjecutora.descripcion!= null}"/>
+                    <h:outputText value="#{proyectoBean.proyecto.unidadEjecutora}" rendered="#{proyectoBean.proyecto.unidadEjecutora.descripcion!= null}" title="Unidad Ejecutora"/>
+
+                    <h:outputText value="Objetivo Socioeconómico:" rendered="#{proyectoBean.proyecto.objetivoSocioeconomico.descripcion!= null}"/>
+                    <h:outputText value="#{proyectoBean.proyecto.objetivoSocioeconomico}" rendered="#{proyectoBean.proyecto.objetivoSocioeconomico.descripcion!= null}" title="Objetivo Socioeconómico"/>
+                    <h:outputText value="Entidad Evaluadora:" rendered="#{proyectoBean.proyecto.entidadEvaluadora.descripcion!= null}"/>
+                    <h:outputText value="#{proyectoBean.proyecto.entidadEvaluadora}" rendered="#{proyectoBean.proyecto.entidadEvaluadora.descripcion!= null}" title="Entidad Evaluadora"/>
+                    <h:outputText value="Duración Teórica (Años):" rendered="#{proyectoBean.proyecto.duracionTeorica != null and proyectoBean.proyecto.duracionTeorica > 0}"/>
+                    <h:outputText value="#{proyectoBean.proyecto.duracionTeorica}" rendered="#{proyectoBean.proyecto.duracionTeorica != null and proyectoBean.proyecto.duracionTeorica > 0}" title="Duración Teórica"/>
+                    <h:outputText value="Fecha de Inicio:" rendered="#{proyectoBean.proyecto.fechaInicio != null}"/>
+                    <h:outputText value="#{proyectoBean.proyecto.fechaInicio}" rendered="#{proyectoBean.proyecto.fechaInicio != null}" title="Fecha de Inicio">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                    <h:outputText value="Fecha de Finalización:" rendered="#{proyectoBean.proyecto.fechaFinalizacion != null }"/>
+                    <h:outputText value="#{proyectoBean.proyecto.fechaFinalizacion}" rendered="#{proyectoBean.proyecto.fechaFinalizacion != null }" title="Fecha de Finalización">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                    <h:outputText value="Tipo de Proyecto:" rendered="#{proyectoBean.proyecto.tipoProyecto.descripcion!= null}"/>
+                    <h:outputText value="#{proyectoBean.proyecto.tipoProyecto}" rendered="#{proyectoBean.proyecto.tipoProyecto.descripcion!= null}" title="Tipo de Proyecto"/>
+                    <h:outputText value="Resumen:" rendered="#{proyectoBean.proyecto.resumen!= null}"/>
+                    <h:outputText value="#{proyectoBean.proyecto.resumen}" title="Resumen" rendered="#{proyectoBean.proyecto.resumen!= null}"/>   
+                    <h:outputText value="Linea de Investigación:" rendered="#{proyectoBean.proyecto.lineaInvestigacion.descripcion!= null}"/>
+                    <h:outputText value="#{proyectoBean.proyecto.lineaInvestigacion}" rendered="#{proyectoBean.proyecto.lineaInvestigacion.descripcion!= null}" title="Línea de Investigación"/>
+                    <h:outputText value="Observaciones:" rendered="#{proyectoBean.proyecto.observaciones!= null}"/>
+                    <h:outputText value="#{proyectoBean.proyecto.observaciones}" rendered="#{proyectoBean.proyecto.observaciones!= null}" title="Observaciones"/>
+                    <h:outputText value="Palabras Claves:" rendered="#{proyectoBean.proyecto.palabrasClaves.size() > 0}"/>
+                    <ui:repeat rendered="#{proyectoBean.proyecto.palabrasClaves.size() > 0}" value="#{proyectoBean.proyecto.palabrasClaves}"
+                               var="pal"><span><h:outputText value="#{pal}"/></span><br /></ui:repeat>                   
+                    <h:outputText value="Programa:" rendered="#{proyectoBean.proyecto.programa!=null}"/>
+                    <h:outputText value="#{proyectoBean.proyecto.programa}" rendered="#{proyectoBean.proyecto.programa!= null}" title="Programa"/>
+                    <h:outputText value="Proyecto Complementario Padre:" rendered="#{proyectoBean.proyecto.proyectoComplementarioPadre.titulo!= null}"/>
+                    <h:outputText value="#{proyectoBean.proyecto.proyectoComplementarioPadre}" rendered="#{proyectoBean.proyecto.proyectoComplementarioPadre.titulo!= null}" title="Proyecto ComplementarioPadre"/>
+
+                    <h:outputText value="Title:" rendered="#{proyectoBean.proyecto.title!= null}"/>
+                    <h:outputText value="#{proyectoBean.proyecto.title}" rendered="#{proyectoBean.proyecto.title!= null}" title="Title"/>
+                    <h:outputText value="Summary:" rendered="#{proyectoBean.proyecto.summary!= null}"/>
+                    <h:outputText value="#{proyectoBean.proyecto.summary}" rendered="#{proyectoBean.proyecto.summary!= null}" title="Summary"/>
+                    <h:outputText value="Keywords:" rendered="#{proyectoBean.proyecto.keywords.size() > 0}"/>
+                    <ui:repeat rendered="#{proyectoBean.proyecto.keywords.size() > 0}" value="#{proyectoBean.proyecto.keywords}"
+                               var="key"><span><h:outputText value="#{key}"/></span><br /></ui:repeat>
+                </h:panelGrid>
+            </h:form>
+        </f:view><div class="encabezado">
+            <h:outputText value="Integrantes del Proyecto: "/>
+        </div>
+        <div class="divGeneral">
+
+            <h:outputText value="No registra Participaciones en Proyectos" 
+                          rendered="#{empty proyectoBean.proyecto.participaciones}"
+                          styleClass="textoValue"/>
+        </div>
+        <div style="clear: both"/>
+
+        <div style="overflow-x: scroll;">
+            <p:dataTable value="#{proyectoBean.proyecto.participaciones}"
+                         var="pp"
+                         rendered="#{not empty proyectoBean.proyecto.participaciones}"
+                         style="width: 80%;">
+
+
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Investigador"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <h:outputText value="#{pp.investigador.persona.apellido}, #{pp.investigador.persona.nombre}"
+                                  styleClass="textoValue"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Rol"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <h:outputText value="#{pp.rol.descripcion}"
+                                  styleClass="textoValue"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Fecha Desde"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <h:outputText value="#{pp.fechaDesde}"
+                                  styleClass="textoValue">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                </p:column>            
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Fecha Hasta"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <h:outputText value="#{pp.fechaHasta}"
+                                  styleClass="textoValue">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+
+                </p:column>  
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Dedicación Semanal"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <h:outputText value="#{pp.dedicacionSemanal}"
+                                  styleClass="textoValue"/>
+                </p:column>
+
+            </p:dataTable>
+        </div>
+        <div class="encabezado">
+            <h:outputText value="Archivos del Proyecto: " rendered="#{not empty proyectoBean.proyecto.resoluciones}"/>
+        </div>
+        <p:dataTable rendered="#{not empty proyectoBean.proyecto.resoluciones}" id="dtArchivos"
+                     value="#{proyectoBean.proyecto.resoluciones}"
+                     var="resol"
+                     style="float: left;">
+
+
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Nombre"/>
+                </f:facet>
+                <h:outputText value="#{resol.descripcion}"/>
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Descargar"/>
+                </f:facet>      
+                <p:commandLink value="Descargar"
+                               action="#{investigadorArchivoBean.descargarArchivo()}"
+                               ajax="false">
+                    <f:setPropertyActionListener value="#{resol.documento}" target="#{investigadorArchivoBean.documento}"/>
+                </p:commandLink>
+            </p:column>
+        </p:dataTable>
+        <!-- Rendiciones -->
+        <div class="encabezado">
+            <h:outputText value="Archivos de Rendiciones del Proyecto: " rendered="#{not empty proyectoBean.proyecto.pagos and proyectoBean.director eq investigadorLoginBean.investigador}"/>
+        </div>
+        <div style="clear:both"></div>
+
+        <ui:repeat rendered="#{not empty proyectoBean.proyecto.pagos and proyectoBean.director eq investigadorLoginBean.investigador}" value="#{proyectoBean.proyecto.pagos}"
+                   var="pag"                       > 
+                            <h:panelGrid columns="1" styleClass="tablaDetalle">
+ <p:commandLink 
+                    rendered="#{pag.archivoResolucionConsejoSuperior!=null}"
+                    value="#{pag.archivoResolucionConsejoSuperior.nombreArchivo}"
+                    action="#{investigadorArchivoBean.descargarArchivo()}"
+                    ajax="false">
+                    <f:setPropertyActionListener value="#{pag.archivoResolucionConsejoSuperior}" target="#{investigadorArchivoBean.documento}"/>
+                </p:commandLink>
+            <p:commandLink  rendered="#{pag.archivoResolucionRectoral!=null}"
+                               value="#{pag.archivoResolucionRectoral.nombreArchivo}"
+                               action="#{investigadorArchivoBean.descargarArchivo()}"
+                               ajax="false">
+                    <f:setPropertyActionListener value="#{pag.archivoResolucionRectoral}" target="#{investigadorArchivoBean.documento}"/>
+                </p:commandLink>
+            <p:commandLink                                     rendered="#{pag.archivoResolucionSecyt!=null}"
+                                                                  value="#{pag.archivoResolucionSecyt.nombreArchivo}"
+                                                                  action="#{investigadorArchivoBean.descargarArchivo()}"
+                                                                  ajax="false">
+                    <f:setPropertyActionListener value="#{pag.archivoResolucionSecyt}" target="#{investigadorArchivoBean.documento}"/>
+                </p:commandLink>
+                            </h:panelGrid>
+        </ui:repeat>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,607 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../templates/userTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+        <ui:include src="/recursos/mensajesDlg.xhtml"/>
+        
+        <!--DATOS PERSONALES-->   
+
+        <h:panelGroup id="pgDatosPersonales">
+            
+        
+        <div  
+            class="encabezado">
+
+            <h:outputText value="Datos Personales"/>
+        </div>
+
+        <div class="divGeneral">
+            <h:outputText value="Apellido: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{evaluadorLoginBean.evaluador.investigador.persona.apellido}"
+                          styleClass="textoValue"/>
+        </div>
+        <div class="divGeneral">
+            <h:outputText value="Nombre: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{evaluadorLoginBean.evaluador.investigador.persona.nombre}"
+                          styleClass="textoValue"/>
+        </div>
+
+        <div class="divHorizontal">
+            <h:outputText value="Tipo de documento: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{evaluadorLoginBean.evaluador.investigador.persona.documentoIdentidad.tipoDocumento.descripcion}"
+                          styleClass="textoValue"/>
+        </div>
+
+        <div>
+            <h:outputText value="Número de documento: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{evaluadorLoginBean.evaluador.investigador.persona.documentoIdentidad.numero}"
+                          styleClass="textoValue"/>
+        </div>
+
+        <div class="divGeneral">
+            <h:outputText value="Fecha de Nacimiento: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{evaluadorLoginBean.evaluador.investigador.persona.fechaNacimiento}"
+                          styleClass="textoValue">
+                <f:convertDateTime pattern="dd/MM/yyyy"  timeZone="GMT-03:00"/>
+            </h:outputText>
+        </div>
+
+        <div class="divGeneral">
+            <h:outputText value="Sexo: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{evaluadorLoginBean.evaluador.investigador.persona.sexo}"
+                          styleClass="textoValue"/>
+        </div>
+
+        <!--DOMICILIO-->
+
+        <div class="encabezado">
+            <h:outputText value="Domicilio"/>
+        </div>
+
+
+        <div class="divGeneral">
+            <h:outputText value="Calle: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{evaluadorLoginBean.evaluador.investigador.persona.domicilio.calle}"
+                          styleClass="textoValue"/>
+        </div>
+        <div class="divHorizontal">
+            <h:outputText value="Número: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{evaluadorLoginBean.evaluador.investigador.persona.domicilio.numero}"
+                          styleClass="textoValue"/>
+        </div>
+        <div class="divHorizontal">
+            <h:outputText value="Piso: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{evaluadorLoginBean.evaluador.investigador.persona.domicilio.piso}"
+                          styleClass="textoValue"/>
+        </div>
+        <div class="divGeneral">
+            <h:outputText value="Departamento: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{evaluadorLoginBean.evaluador.investigador.persona.domicilio.dpto}"
+                          styleClass="textoValue"/>
+        </div>
+        <div class="divGeneral">
+            <h:outputText value="Entre Calles: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{evaluadorLoginBean.evaluador.investigador.persona.domicilio.entreCalles}"
+                          styleClass="textoValue"/>
+        </div>
+        <div class="divGeneral">
+            <h:outputText value="Referencia: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{evaluadorLoginBean.evaluador.investigador.persona.domicilio.referencia}"
+                          styleClass="textoValue"/>
+        </div>
+        <div class="divGeneral">
+            <h:outputText value="Barrio: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{evaluadorLoginBean.evaluador.investigador.persona.domicilio.barrio}"
+                          styleClass="textoValue"/>
+        </div>
+        <div class="divGeneral">
+            <h:outputText value="Provincia: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{evaluadorLoginBean.evaluador.investigador.persona.domicilio.localidad.departamento.provincia.descripcion}"
+                          styleClass="textoValue"/>
+        </div>
+
+        <div class="divGeneral">
+            <h:outputText value="Departamento: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{evaluadorLoginBean.evaluador.investigador.persona.domicilio.localidad.departamento.descripcion}"
+                          styleClass="textoValue"/>
+        </div>
+
+        <div class="divGeneral">
+            <h:outputText value="Localidad: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{evaluadorLoginBean.evaluador.investigador.persona.domicilio.localidad.descripcion}"
+                          styleClass="textoValue"/>
+        </div>
+        <div class="divGeneral">
+            <h:outputText value="Codigo Postal: "
+                          styleClass="textoEtiqueta"/>
+            <h:outputText value="#{evaluadorLoginBean.evaluador.investigador.persona.domicilio.codigoPostal}"
+                          styleClass="textoValue"/>
+        </div>
+
+        <!--TELEFONOS-->  
+
+        <div class="encabezado">
+            <h:outputText value="Teléfonos"/>
+        </div>
+
+
+        <div class="divGeneral">
+
+            <h:outputText value="No registra Teléfonos" 
+                          rendered="#{empty evaluadorLoginBean.evaluador.investigador.persona.telefonos}"
+                          styleClass="textoValue"/>
+        </div>
+
+        <div class="divGeneral">
+            <ui:repeat value="#{evaluadorLoginBean.evaluador.investigador.persona.telefonos}"
+                       var="tel">
+                <h:outputText value="#{tel.numero} - (#{tel.tipoTelefono.descripcion})"/><br/>
+            </ui:repeat>
+        </div>
+
+        <!--CORREOS ELECTRONICOS-->  
+
+        <div class="encabezado">
+            <h:outputText value="Correos Electrónicos"/>
+        </div>
+
+        <div class="divGeneral">
+
+            <h:outputText value="No registra Teléfonos" 
+                          rendered="#{empty evaluadorLoginBean.evaluador.investigador.persona.correosElectronicos}"
+                          styleClass="textoValue"/>
+        </div>
+
+        <div class="divGeneral"> 
+            <ui:repeat value="#{evaluadorLoginBean.evaluador.investigador.persona.correosElectronicos}"
+                       var="ce">
+                <h:outputText value="#{ce.direccion}"/><br/>
+            </ui:repeat><br/>
+
+        </div>
+        <hr size="5" style="alignment-adjust: central; width: 95%; background-color: #BC2C71; " />
+        <div align="center"> 
+            <p:commandButton id="cbModificar" 
+                             value="Modificar Datos"
+                             action="#{domicilioBean.cargarDomicilio()}"
+                             oncomplete="dlgInvestigador.show()"
+                             process="@this"
+                             update=":frmUser:dInvestigador"
+                             >
+            </p:commandButton>
+        </div>
+        
+        </h:panelGroup>
+
+
+        <p:dialog id="dInvestigador"
+                  widgetVar="dlgInvestigador"
+                  modal="true"
+                  width="600"
+                  height="500"
+                  position="400,40">
+
+            <f:facet name="header">
+                <h:outputText value="Modificacion de Datos Personales" style="font-size: 1.5em; font-weight: bold;"/>
+            </f:facet>
+            <div  
+                class="encabezado">
+
+                <h:outputText value="Datos Personales"/>
+            </div>
+            <div class="divGeneral">
+                <h:outputText value="Apellido: "
+                              styleClass="textoEtiqueta"/>
+
+                <h:inputText value="#{evaluadorLoginBean.evaluador.investigador.persona.apellido}"
+                             styleClass="textoValue"
+                             disabled="true"/>
+            </div>
+            <div class="divGeneral">
+                <h:outputText value="Nombre: "
+                              styleClass="textoEtiqueta"/>
+                <h:inputText value="#{evaluadorLoginBean.evaluador.investigador.persona.nombre}"
+                             styleClass="textoValue"
+                             disabled="true"/>
+            </div>
+
+            <div class="divGeneral">
+                <h:outputText value="Tipo de documento: "
+                              styleClass="textoEtiqueta"/>
+                <h:selectOneMenu id="tipoDni"
+                                 converter="ConversorGenerico"
+                                 value="#{evaluadorLoginBean.evaluador.investigador.persona.documentoIdentidad.tipoDocumento}"
+                                 required="true"
+                                 disabled="true">
+                    <f:selectItems value="#{listadoTipoDocumentoBean.lstSITipoDocumento}"/>
+                </h:selectOneMenu>
+            </div>
+
+            <div class="divGeneral">
+                <h:outputText value="Número de documento: "
+                              styleClass="textoEtiqueta"/>
+                <h:inputText value="#{evaluadorLoginBean.evaluador.investigador.persona.documentoIdentidad.numero}"
+                             styleClass="textoValue"
+                             disabled="true"/>
+            </div>
+
+            <div class="divGeneral">
+                <h:outputText value="Fecha de Nacimiento: "
+                              styleClass="textoEtiqueta"/>
+                <p:calendar id="fechaNac" 
+                            required="false"
+                            value="#{evaluadorLoginBean.evaluador.investigador.persona.fechaNacimiento}"
+                            mode="popup"
+                            showOn="button"
+                            navigator="true"
+                            locale="es"
+                            disabled="true">
+                    <f:convertDateTime pattern="dd/MM/yyyy"  timeZone="GMT-03:00"/>
+                </p:calendar>
+
+            </div>
+
+            <div class="divGeneral">
+                <h:outputText value="Sexo: "
+                              styleClass="textoEtiqueta"/>
+                <h:selectOneMenu id="somSexo"
+                                 converter="ConversorGenerico"
+                                 value="#{evaluadorLoginBean.evaluador.investigador.persona.sexo}"
+                                 required="true"
+                                 disabled="true">
+                    <f:selectItems value="#{listadoSexoBean.lstSISexo}"/>
+                </h:selectOneMenu>
+
+            </div>
+
+            <div class="encabezado">
+                <h:outputText value="Domicilio"/>
+            </div>
+
+
+            <div class="divGeneral">
+                <h:outputText value="Calle: "
+                              styleClass="textoEtiqueta"/>
+                <h:inputText value="#{evaluadorLoginBean.evaluador.investigador.persona.domicilio.calle}"
+                             styleClass="textoValue"/>
+            </div>
+            <div class="divHorizontal">
+                <h:outputText value="Número: "
+                              styleClass="textoEtiqueta"/>
+                <h:inputText value="#{evaluadorLoginBean.evaluador.investigador.persona.domicilio.numero}"
+                             styleClass="textoValue"/>
+            </div>
+            <div class="divHorizontal">
+                <h:outputText value="Piso: "
+                              styleClass="textoEtiqueta"/>
+                <h:inputText value="#{evaluadorLoginBean.evaluador.investigador.persona.domicilio.piso}"
+                             styleClass="textoValue"/>
+            </div>
+            <div class="divGeneral">
+                <h:outputText value="Departamento: "
+                              styleClass="textoEtiqueta"/>
+                <h:inputText value="#{evaluadorLoginBean.evaluador.investigador.persona.domicilio.dpto}"
+                             styleClass="textoValue"/>
+            </div>
+            <div class="divGeneral">
+                <h:outputText value="Entre Calles: "
+                              styleClass="textoEtiqueta"/>
+                <h:inputText value="#{evaluadorLoginBean.evaluador.investigador.persona.domicilio.entreCalles}"
+                             styleClass="textoValue"/>
+            </div>
+            <div class="divGeneral">
+                <h:outputText value="Referencia: "
+                              styleClass="textoEtiqueta"/>
+                <h:inputText value="#{evaluadorLoginBean.evaluador.investigador.persona.domicilio.referencia}"
+                             styleClass="textoValue"/>
+            </div>
+            <div class="divGeneral">
+                <h:outputText value="Barrio: "
+                              styleClass="textoEtiqueta"/>
+                <h:inputText value="#{evaluadorLoginBean.evaluador.investigador.persona.domicilio.barrio}"
+                             styleClass="textoValue"/>
+            </div>
+
+
+
+            <div class="divGeneral">
+                <h:outputText value="Codigo Postal: "
+                              styleClass="textoEtiqueta"/>
+                <h:inputText value="#{evaluadorLoginBean.evaluador.investigador.persona.domicilio.codigoPostal}"
+                             styleClass="textoValue"/>
+            </div>
+            <div class="divGeneral">
+                <h:outputText value="Provincia: "/>
+                <h:selectOneMenu id="somProvincia"
+                                 converter="ConversorGenerico"
+                                 value="#{domicilioBean.provincia}">
+                    <f:selectItems value="#{domicilioBean.listaProvincias}"/>
+                    <p:ajax                                    
+                        listener="#{domicilioBean.cargarDepartamentos()}"
+                        update=":frmUser:somDepartamento"/> 
+
+
+                </h:selectOneMenu>
+
+            </div>
+            <div class="divGeneral">
+                <h:outputText value="Departamento: "/>
+
+                <h:selectOneMenu id="somDepartamento"
+                                 converter="ConversorGenerico"
+                                 value="#{domicilioBean.departamento}"
+                                 >
+                    <f:selectItems value="#{domicilioBean.listaDepartamentos}"/>
+
+                    <p:ajax  
+                        update=":frmUser:somLocalidad"
+                        listener="#{domicilioBean.cargarLocalidades()}"/>
+                </h:selectOneMenu>
+
+            </div>
+            <div class="divGeneral">
+                <h:outputText value="Localidad: "/>
+                <h:selectOneMenu id="somLocalidad"
+                                 converter="ConversorGenerico"
+                                 value="#{evaluadorLoginBean.evaluador.investigador.persona.domicilio.localidad}">
+                    <f:selectItems value="#{domicilioBean.listaLocalidades}"/>
+                </h:selectOneMenu>
+
+
+            </div>
+            <div  
+                class="encabezado">
+                <h:outputText value="Telefonos"/>
+            </div>
+            <h:panelGrid columns="3"
+                         width="500px">
+
+                <h:outputText value="Telefonos"/>
+                <p:dataTable var="tel" 
+                             value="#{listadoTelefonosBean.getTelefonosInvestigadorLogin()}" 
+                             id="dtTelefonos"
+                             binding="#{listadoTelefonosBean.dtTelefono}"> 
+                    <p:column id="dtTelefonosCboton">
+
+
+                        <p:commandButton id="btnDelete" 
+                                         action="#{listadoTelefonosBean.quitarTablaTelefonos(tel)}"                                                                       
+                                         update=":frmUser:dtTelefonos"
+                                         
+                                         icon="ui-icon-close"
+                                         process="dtTelefonos">
+
+                        </p:commandButton>
+                    </p:column>
+                    <p:column headerText="Tipo"
+                              id="dtTelefonosCtipo">  
+                        <h:outputText id="dtTelefonosTipo" 
+                                      value="#{tel.tipoTelefono}" />  
+                    </p:column>  
+
+                    <p:column headerText="Numero"
+                              id="dtTelefonosCnumero">  
+                        <h:outputText id="dtTelefonosNumero"
+                                      value="#{tel.numero}" />  
+                    </p:column>  
+                </p:dataTable> 
+
+                <p:commandButton id="btnCreateTelefonos"
+                                 value="Agregar" 
+                                 oncomplete="dlgTel.show();"
+                                 icon="ui-icon-disk"/>
+
+            </h:panelGrid>
+            <div  
+                class="encabezado">
+                <h:outputText value="Correos Electronicos"/>
+            </div>
+            <h:panelGrid columns="3"
+                         width="500px">
+
+                <h:outputText value="Correos Electronicos"/>
+                <p:dataTable var="mail" 
+                             value="#{listadoEmailsBean.getCorreosInvestigadorLogin()}" 
+                             id="dtCorreo"
+                             binding="#{listadoEmailsBean.dtCorreo}"> 
+                    <p:column>
+
+
+                        <p:commandButton id="btnDeleteMail" 
+                                         action="#{listadoEmailsBean.quitarTablaCorreosElectronicos(mail)}"                                                                     
+                                         update=":frmUser:dtCorreo"                                       
+                                         icon="ui-icon-close">
+
+                        </p:commandButton>
+                    </p:column>
+                    <p:column headerText="Correo Electronico">  
+                        <h:outputText value="#{mail.direccion}" />  
+                    </p:column>  
+                </p:dataTable> 
+
+                <p:commandButton id="btnCreateMail"
+                                 value="Agregar" 
+                                 oncomplete="dlgEmail.show();"
+                                 icon="ui-icon-disk"/>
+
+            </h:panelGrid><br/>
+            <hr size="5" style="alignment-adjust: central; width: 485px; background-color: #BC2C71; " />
+            <div align="center">
+                <p:messages autoUpdate="true"/><br/>
+                
+                <p:commandButton id="cbModificarInvestigador" 
+                                 value="Modificar Datos"
+                                 actionListener="#{investigadorBean.edit(evaluadorLoginBean.evaluador.investigador)}"
+                                 style="padding: 10px 30px;"                                >
+                </p:commandButton>
+            </div>   
+        </p:dialog>
+
+        <!--Inicio Dialogo Cargar telefonos-->
+        <p:dialog id="dTelefonos" 
+                  widgetVar="dlgTel"
+                  width="600"
+                  modal="true" >
+
+            <f:facet name="header">  
+                <h:outputText value="Telefonos"/>
+            </f:facet>  
+            <p:panel id="pTelefonos">
+                <table cellpadding="5" cellspacing="5">
+
+                    <tr>
+                        <td>
+                            <h:outputText value="Tipo"/>
+                        </td>
+                        <td>
+                            <p:selectOneMenu id="somTipoTelefono"
+                                             value="#{listadoTelefonosBean.telefono.tipoTelefono}"
+                                             panelStyle="width:150px"
+                                             converter="ConversorGenerico"
+                                             style="padding-right: 5px;">
+                                <f:selectItems value="#{tipoTelefonoLstBean.lstSITipoTelefono}"/>
+
+                            </p:selectOneMenu>
+                        </td>
+                        <td>
+                            <h:outputText value="Numero"/>
+                        </td>
+                        <td>
+                            <p:inputMask id="iNumero"
+                                         label="Numero" 
+                                         value="#{listadoTelefonosBean.telefono.numero}"
+                                         size="30"
+                                         maxlength="30"
+                                         mask="9999-999999"/>
+                        </td>
+                    </tr>
+                </table>
+            </p:panel>
+
+            
+            
+            <center>
+                <p:messages autoUpdate="true"/><br/>
+                <table cellpadding="5" cellspacing="5">
+                    <tr>
+                        <td align="center">
+                            <p:commandButton id="btnAction"
+                                             value="Agregar" 
+                                             action="#{listadoTelefonosBean.cargarTablaTelefonos()}"
+                                             update=":frmUser:dtTelefonos"
+                                             icon="ui-icon-disk"                               
+                                             />
+
+                        </td>
+                    </tr>
+                </table>
+            </center> 
+        </p:dialog>
+
+        <!--Inicio Dialogo Cargar Correos Electronicos-->
+        <p:dialog id="dEmail" 
+                  widgetVar="dlgEmail" 
+                  modal="true"
+                  width="500">
+
+            <f:facet name="header">  
+                <h:outputText value="Correos Electronicos"/>
+            </f:facet>  
+            <p:panel id="pEmail">
+                <div>
+                    <div class="left">
+                        <h:outputText value="Email"/>
+                    </div>
+                    <div class="contenidopanel">
+                        <p:inputText id="itEmail"
+                                     value="#{listadoEmailsBean.correoElectronico.direccion}"
+                                     
+                                     >
+
+                            <!--<f:validator validatorId="EmailValidator"/-->
+
+                        </p:inputText>
+
+                    </div>
+                </div>
+            </p:panel>
+
+
+            <center>
+                <p:messages autoUpdate="true"/><br/>
+                <table cellpadding="5" cellspacing="5">
+                    <tr>
+                        <td align="center">
+                            <p:commandButton id="btnAction2"
+                                             value="Agregar Email" 
+                                             action="#{listadoEmailsBean.cargarTablaCorreosElectronicos()}"
+                                             update=":frmUser:dtCorreo"
+                                             icon="ui-icon-disk"
+                                             
+                                             process="dEmail"/>
+                        </td>
+                    </tr>
+                </table>
+            </center> 
+        </p:dialog>
+
+        <p:confirmDialog id="confirmDialogTel" message="Seguro Desea Eliminar El Telefono Seleccionado?"  
+                         header="Proceso de Eliminacion" severity="alert" widgetVar="confirmationTel">  
+
+            <table cellpadding="5" cellspacing="5" width="350">
+                <tr>
+                    <td align="right">
+                        <p:commandButton id="confirmTel" value="Aceptar" oncomplete="confirmationTel.hide()" 
+                                          
+                                         update=":frmUser:dtTelefonos"/> 
+                    </td>  
+                    <td align="left">
+                        <p:commandButton id="declineTel" value="Cancelar" 
+                                         onclick="confirmationTel.hide()" 
+                                         type="button" />   
+                    </td>
+                </tr>
+            </table>
+        </p:confirmDialog>
+        
+        <p:confirmDialog id="confirmDialogMail" message="Seguro Desea Eliminar El Correo Seleccionado?"  
+                         header="Proceso de Eliminacion" severity="alert" widgetVar="confirmationMail">  
+
+            <table cellpadding="5" cellspacing="5" width="350">
+                <tr>
+                    <td align="right">
+                        <p:commandButton id="confirmMail" value="Aceptar" oncomplete="confirmationMail.hide()"  update=":frmUser:dtCorreo"/> 
+                    </td>  
+                    <td align="left">
+                        <p:commandButton id="declineMail" value="Cancelar" onclick="confirmationMail.hide()" type="button" />   
+                    </td>
+                </tr>
+            </table>
+        </p:confirmDialog>
+
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,244 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/UserTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+        <div class="encabezado">
+            <h:outputText value="Becas"/>
+        </div>
+
+
+        <div class="divGeneral">
+
+            <h:outputText value="No registra becas" 
+                          rendered="#{empty postulacionBecasLstBean.lstPostulacionBeca}"
+                          styleClass="textoValue"/>
+        </div>
+
+        <div style="clear: both"/>
+
+        <div class="divGeneral"
+             style="overflow-x: auto; width: 99%;">
+
+            <p:dataTable value="#{postulacionBecasLstBean.lstPostulacionBeca}"
+                         var="pb"
+                         rendered="#{not empty postulacionBecasLstBean.lstPostulacionBeca}"
+                         >
+
+                <p:column style="word-wrap:break-word;"
+                          width="200">
+                    <f:facet name="header">
+                        <h:outputText value="Beca"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <h:outputText value="#{pb.beca.descripcion}"
+                                  styleClass="textoValue"/>
+                </p:column>
+
+                
+                <p:column style="word-wrap:break-word;"
+                          width="100">
+                    <f:facet name="header">
+                        <h:outputText value="Desde"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <h:outputText value="#{pb.beca.fechainicio}"
+                                  styleClass="textoValue">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column style="word-wrap:break-word;"
+                          width="100">
+                    <f:facet name="header">
+                        <h:outputText value="Hasta"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <h:outputText value="#{pb.beca.fechafinalizacion}"
+                                  styleClass="textoValue">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>     
+                <p:column style="word-wrap:break-word;"
+                          width="100">
+                    <f:facet name="header">
+                        <h:outputText value="Asesores"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>  <ui:repeat var="asesor"
+                               value="#{pb.asesores}">
+                        <p><h:outputText value="#{asesor}"
+                                             styleClass="textoValue"/></p>
+                    </ui:repeat>
+                  
+                </p:column>  
+
+                <p:column style="word-wrap:break-word;"
+                          width="100">
+                    <f:facet name="header">
+                        <h:outputText value="Proyecto"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <h:outputText value="#{pb.proyecto}"
+                                  styleClass="textoValue">                        
+                    </h:outputText>
+                </p:column> 
+                <p:column style="word-wrap:break-word;"
+                          width="100">
+                    <f:facet name="header">
+                        <h:outputText value="Plan de Trabajo"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <h:outputText value="#{pb.plandetrabajo}"
+                                  styleClass="textoValue">
+                    </h:outputText>
+                </p:column>
+
+                <p:column style="word-wrap:break-word;"
+                          width="100">
+                    <f:facet name="header">
+                        <h:outputText value="Estado"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <h:outputText value="#{pb.postulanteestado.descripcion}"
+                                  styleClass="textoValue"/>
+
+                </p:column>  
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Resoluciones"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <ui:repeat var="resol"
+                               value="#{pb.documentacion}">
+                        <p>
+                            <p:commandLink value="#{resol}"
+                                           action="#{investigadorArchivoBean.descargarArchivo()}"
+                                           ajax="false">
+                                <f:setPropertyActionListener value="#{resol.documento}" target="#{investigadorArchivoBean.documento}"/>
+                            </p:commandLink>
+                        </p>
+                    </ui:repeat>
+                </p:column>
+
+            </p:dataTable>
+
+        </div>
+
+        <!-- Becas que dirige -->
+        <div class="divGeneral"
+             style="overflow-x: auto; width: 99%;">
+            <div class="encabezado"><h:outputText rendered="#{not empty postulacionBecasLstBean.lstPostulacionBecasDirector}" value="Becas de Proyectos que dirige"/></div> 
+
+            <p:dataTable value="#{postulacionBecasLstBean.lstPostulacionBecasDirector}"
+                         var="pbd"
+                         rendered="#{not empty postulacionBecasLstBean.lstPostulacionBecasDirector}"
+                         >
+
+                <p:column style="word-wrap:break-word;"
+                          width="200">
+                    <f:facet name="header">
+                        <h:outputText value="Proyecto"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <h:outputText value="#{pbd.proyecto}"
+                                  styleClass="textoValue"/>
+                </p:column>
+                <p:column style="word-wrap:break-word;"
+                          width="200">
+                    <f:facet name="header">
+                        <h:outputText value="Postulante"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <h:outputText value="#{pbd.postulante}"
+                                  styleClass="textoValue"/>
+                </p:column>
+                <p:column style="word-wrap:break-word;"
+                          width="200">
+                    <f:facet name="header">
+                        <h:outputText value="Nombre"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <h:outputText value="#{pbd.beca.descripcion}"
+                                  styleClass="textoValue"/>
+                </p:column>
+
+
+
+                <p:column style="word-wrap:break-word;"
+                          width="100">
+                    <f:facet name="header">
+                        <h:outputText value="Desde"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <h:outputText value="#{pbd.beca.fechainicio}"
+                                  styleClass="textoValue">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column style="word-wrap:break-word;"
+                          width="100">
+                    <f:facet name="header">
+                        <h:outputText value="Hasta"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <h:outputText value="#{pbd.beca.fechafinalizacion}"
+                                  styleClass="textoValue">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>     
+                <p:column style="word-wrap:break-word;"
+                          width="100">
+                    <f:facet name="header">
+                        <h:outputText value="Asesores"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>  <ui:repeat var="asesor"
+                               value="#{pbd.asesores}">
+                        <p><h:outputText value="#{asesor}"
+                                             styleClass="textoValue"/></p>
+                    </ui:repeat>
+                  
+                </p:column>  
+                <p:column style="word-wrap:break-word;"
+                          width="100">
+                    <f:facet name="header">
+                        <h:outputText value="Estado"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <h:outputText value="#{pbd.postulanteestado.descripcion}"
+                                  styleClass="textoValue"/>
+
+                </p:column>  
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Resoluciones"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <ui:repeat var="resolpbd"
+                               value="#{pbd.documentacion}">
+                        <p>
+                            <p:commandLink value="#{resolpbd}"
+                                           action="#{investigadorArchivoBean.descargarArchivo()}"
+                                           ajax="false">
+                                <f:setPropertyActionListener value="#{resolpbd.documento}" target="#{investigadorArchivoBean.documento}"/>
+                            </p:commandLink>
+                        </p>
+                    </ui:repeat>
+                </p:column>
+
+            </p:dataTable>
+
+        </div>
+    </ui:define>
+
+
+
+</ui:composition>

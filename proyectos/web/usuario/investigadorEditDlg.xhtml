@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <p:dialog id="dEditInvestigador" 
+              widgetVar="dlgEditInvestigador"
+              modal="true"
+              width="600"
+              height="400"
+              position="top"
+              style="margin-top: 30px;"
+              resizable="false">
+        <f:facet name="header">
+            <h:outputText value="Nuevo Investigador" styleClass="subTitulo"/>
+        </f:facet>
+        
+        <p:panel id="pDialogInvestigadorEdit">
+
+            <p:focus context="pDialogInvestigadorEdit"/> 
+            
+            <div class="separador">
+                <h:outputText value="Nombre*: "/>
+                <p:inputText id="itNombreInv"
+                             value="#{investigadorEditDlgBean.investigador.persona.nombre}"/>
+            </div>
+            
+            <div style="clear: both;"/>
+            
+            <div class="separador">
+                <h:outputText value="Apellido*: "/>
+                <p:inputText id="itApellidoInv"
+                             value="#{investigadorEditDlgBean.investigador.persona.apellido}"/>
+            </div>
+            
+            <div style="clear: both;"/>
+            
+            <div class="separador"> 
+                <h:outputText value="Tipo Doc*: "/>
+                <p:selectOneMenu id="somTipoDocumentoInv"
+                                 value="#{investigadorEditDlgBean.investigador.persona.documentoIdentidad.tipoDocumento}"
+                                 panelStyle="width:150px"
+                                 converter="ConversorGenerico"
+                                 style="padding-right: 5px;">
+                    <f:selectItems value="#{tipoDocumentoLstBean.lstSITipoDocumento}"/>
+
+                </p:selectOneMenu>
+             </div>   
+            
+            <div style="clear: both;"/>
+            
+            <div class="separador"> 
+                <h:outputText value="Número (Sin puntos)*: "/>
+                <p:inputText id="itNumeroDocInv"
+                             value="#{investigadorEditDlgBean.investigador.persona.documentoIdentidad.numero}"
+                             style="padding-right: 5px;"/>
+            </div>
+            
+            <div style="clear: both;"/>
+            
+            <div class="separador"> 
+                <h:outputText value="Cuil*: "/>
+                <p:inputMask id="itCuilInv"
+                             value="#{investigadorEditDlgBean.investigador.persona.cuil}" label="CUIL"
+                             mask="99-99999999-9"                             />
+                
+                
+            </div>
+            
+            <div style="clear: both;"/>
+            
+            <div class="separador">
+                <h:outputText value="Fecha de nacimiento: "/>
+                <p:calendar id="cFechaNacimientoInv"
+                            value="#{investigadorEditDlgBean.investigador.persona.fechaNacimiento}" 
+                            locale="es"
+                            pattern="dd/MM/yyyy"
+                            timeZone="GMT-03:00"
+                            style="padding-right: 5px;"/>  
+           </div>
+            
+            <div style="clear: both;"/>
+            
+            <div class="separador">
+                
+                <h:outputText value="Sexo: "/>
+                <p:selectOneMenu id="somSexoInv"
+                                 value="#{investigadorEditDlgBean.investigador.persona.sexo}"
+                                 panelStyle="width:150px"
+                                 converter="ConversorGenerico"
+                                 style="padding-right: 5px;">
+                    <f:selectItems value="#{sexoLstBean.lstSISexo}"/>
+
+                </p:selectOneMenu>
+            </div>
+            
+            <div style="clear: both;"/>
+            
+            <div class="separador">
+                <p:panel header="Domicilio">
+                    
+                    <div class="separador">
+                        <h:outputText value="Calle: "/>
+                        <p:inputText id="itCalleInv"
+                                 value="#{investigadorEditDlgBean.investigador.persona.domicilio.calle}"
+                                 size="50"/>
+                    </div>
+                    
+                    <div style="clear: both;"/>
+                    
+                    <div class="separador">
+                        <h:outputText value="Número: "/>
+                        <p:inputText id="itNumeroInv"
+                                     value="#{investigadorEditDlgBean.investigador.persona.domicilio.numero}"
+                                 style="padding-right: 5px;"
+                                 size="10"/>
+                        
+                        <h:outputText value="Piso: "/>
+                        <p:inputText id="itPisoInv"
+                                     value="#{investigadorEditDlgBean.investigador.persona.domicilio.piso}"
+                                 style="padding-right: 5px;"
+                                 size="10"/>
+                        
+                        <h:outputText value="Dpto: "/>
+                        <p:inputText id="itDptoInv"
+                                     value="#{investigadorEditDlgBean.investigador.persona.domicilio.dpto}"
+                                 style="padding-right: 5px;"
+                                 size="10"/>
+                        
+                    </div>
+                    
+                    <div style="clear: both;"/>
+                    
+                    <div class="separador">
+                        <h:outputText value="Entre calles: "/>
+                        <p:inputText id="itEntreCallesInv"
+                                     value="#{investigadorEditDlgBean.investigador.persona.domicilio.entreCalles}"
+                                     size="50"/>
+                    </div>
+                    
+                    <div style="clear: both;"/>
+                    
+                    <div class="separador">
+                        <h:outputText value="Referencia: "/>
+                        <p:inputText id="itReferenciaInv"
+                                     value="#{investigadorEditDlgBean.investigador.persona.domicilio.referencia}"
+                                     size="50"/>
+                    </div>
+                    
+                    <div style="clear: both;"/>
+                    
+                    <div class="separador">
+                        <h:outputText value="Barrio: "/>
+                        <p:inputText id="itBarrioInv"
+                                     value="#{investigadorEditDlgBean.investigador.persona.domicilio.barrio}"
+                                     size="50"/>
+                    </div>
+                    
+                    <div style="clear: both;"/>
+                    
+                    <div class="separador">
+                        <h:outputText value="Provincia: "/>
+                        <p:selectOneMenu id="somProvinciaInv"
+                                         valueChangeListener="#{provinciaBean.handleChange}"
+                                         panelStyle="width:150px"
+                                         converter="ConversorGenerico"
+                                         style="padding-right: 5px;">
+                            <f:selectItem  itemLabel="Seleccionar" noSelectionOption="true"/>
+                            <f:selectItems value="#{provinciaLstBean.lstSIProvincia}"/>
+                            <p:ajax update="somDepartamentoInv" />  
+                        </p:selectOneMenu>
+    
+                    </div>
+                    
+                    <div style="clear: both;"/>
+                    
+                    <div class="separador">
+                        <h:outputText value="Departamento: "/>
+                        <p:selectOneMenu id="somDepartamentoInv"
+                                         valueChangeListener="#{departamentoBean.handleChange}"
+                                         panelStyle="width:150px"
+                                         converter="ConversorGenerico"
+                                         style="padding-right: 5px;">
+                            <f:selectItem  itemLabel="Seleccionar" noSelectionOption="true"/>
+                            <f:selectItems value="#{departamentoLstBean.lstSIDepartamento}"/>
+                            <p:ajax update="somLocalidadInv" />  
+                        </p:selectOneMenu>
+
+                    </div>
+                    
+                    <div style="clear: both;"/>
+                    
+                    <div class="separador">
+                        <h:outputText value="Localidad: "/>
+                        <p:selectOneMenu id="somLocalidadInv"
+                                         value="#{investigadorEditDlgBean.investigador.persona.domicilio.localidad}"
+                                         panelStyle="width:150px"
+                                         converter="ConversorGenerico"
+                                         style="padding-right: 5px;">
+                            <f:selectItem  itemLabel="Seleccionar" noSelectionOption="true"/>
+                            <f:selectItems value="#{localidadLstBean.lstSILocalidad}"/>  
+                        </p:selectOneMenu>
+                        
+                    </div>
+                    <div class="separador">
+                        <h:outputText value="Codigo postal: "/>
+                        <p:inputText id="itCodigoPostalInv"
+                                     value="#{investigadorEditDlgBean.investigador.persona.domicilio.codigoPostal}"/>
+                    </div>
+                    
+                </p:panel>
+                  
+            </div>
+                   <!-- 
+                    <div>
+                        <h:outputText value="Teléfonos: "/>
+                    </div>
+                    <div class="separador">
+                        <p:commandButton id="cbNuevoTelefono" 
+                                         icon="ui-icon-search"
+                                         actionListener="# {telefonoFindDlgBean.init(0)}"
+                                         oncomplete="dlgFindTelefono.show();"
+                                         process="@this"
+                                         update=":frmUser:ihTipoTFD, :frmUser:somTipoTelefono"
+                                         title="Agregar"/>
+
+                        <p:dataTable id="dtTelefono"
+                                     value="# {telefonoLstBean.lstTelefono}"
+                                     var="tel">
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Tipo"/>
+                                </f:facet>
+
+                                <h:outputText value="# {tel.tipoTelefono.descripcion}"/>
+                            </p:column>
+
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Número"/>
+                                </f:facet>
+
+                                <h:outputText value="# {tel.numero}"/>
+                            </p:column>
+
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Quitar"/>
+                                </f:facet>
+                                <p:commandButton icon="ui-icon-circle-close"
+                                                 actionListener="# {investigadorEditDlgBean.quitarTelefono(t)}"
+                                                 update="dtTelefono"/>
+                
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                    
+                    -->
+                    
+                    <div>
+                        <h:outputText value="Correos Electrónicos: "/>
+                    </div>
+                    
+                    <div class="separador">
+                        <p:commandButton id="cbNuevoCorreo" 
+                                         icon="ui-icon-search"
+                                         actionListener="#{correoElectronicoFindDlgBean.setTipo(0)}"
+                                         oncomplete="dlgFindCorreoElectronico.show();"
+                                         process="@this"
+                                         update=":frmUser:ihTipoCEFD"
+                                         title="Agregar"/>
+
+                        <p:dataTable id="dtCorreoElectronico"
+                                     value="#{correoElectronicoLstBean.lstCorreoElectronico}"
+                                     var="correo">
+
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Dirección"/>
+                                </f:facet>
+
+                                <h:outputText value="#{correo.direccion}"/>
+                            </p:column>
+
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Quitar"
+                                                  />
+                                </f:facet>
+                                
+                                <p:commandButton icon="ui-icon-circle-close"
+                                                 actionListener="#{investigadorEditDlgBean.quitarCorreoElectronico(correo)}"
+                                                 update="dtCorreoElectronico"/>
+                
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <p:commandButton id="cbGuardarIED"
+                                         value="Guardar"
+                                         icon="ui-icon-disk"
+                                         actionListener="#{investigadorEditDlgBean.create()}"
+                                         style="margin-right: 10px;"
+                                         update="dMensaje"/>
+                        
+                        
+                        <p:commandButton id="cbSalirIED"
+                                         value="Salir"
+                                         icon="ui-icon-cancel"
+                                         oncomplete="dlgEditInvestigador.hide()"
+                                         process="@this"/>
+                    </div>
+            
+            
+
+        </p:panel>
+
+    </p:dialog>
+</html>

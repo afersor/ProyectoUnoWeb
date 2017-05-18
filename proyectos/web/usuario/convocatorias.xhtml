@@ -1,0 +1,196 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../templates/userTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="content">
+
+        <ui:include src="/recursos/mensajesDlg.xhtml"/>
+
+        <div align="center">
+            <h:outputText value="No hay convocatorias abiertas"
+                          rendered="#{empty convocatoriaLstBean.lstConvocatoria}"/>
+        </div>
+
+        <div style="clear: both;"/>
+
+        <div style="margin-left: auto;
+             margin-right: auto;
+             padding: 0px; width: 1004px;">
+
+
+            <div align="center" class="titulo" style="margin: 10px 0px 10px 0px;">
+                <h:outputText value="Menú Principal"
+                              styleClass="titulo"/><br/>
+                <h:outputText value="(Seleccione la convocatoria a la cual desea 
+                              presentar su proyecto)"
+                              styleClass="aclaraciones"/>
+
+            </div>
+
+            <div>
+                <p:messages id="msgError" autoUpdate="true"/>
+            </div>
+
+            <div align="center"
+                 style="margin-bottom: 10px;">
+                <p:dataTable id="dtConvocatoria"
+                             var="conv"
+                             value="#{convocatoriaLstBean.lstConvocatoria}"
+                             style="width: 900px;">
+
+                    <p:column style="word-wrap:break-word;">
+                        <f:facet name="header">
+                            <h:outputText value="Convocatoria"/>
+                        </f:facet>
+                        <h:outputText value="#{conv.nombre}"/>
+                    </p:column>
+
+                    <p:column style="word-wrap:break-word;">
+                        <f:facet name="header">
+                            <h:outputText value="Descripción"/>
+                        </f:facet>
+                        <h:outputText value="#{conv.descripcion}"/>
+                    </p:column>
+
+                    <p:column style="word-wrap:break-word;">
+                        <f:facet name="header">
+                            <h:outputText value="Desde"/>
+                        </f:facet>
+                        <h:outputText value="#{conv.fechaIni}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column style="word-wrap:break-word;">
+                        <f:facet name="header">
+                            <h:outputText value="Hasta"/>
+                        </f:facet>
+                        <h:outputText value="#{conv.fechaFin}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column >
+                        <p:commandButton value="Postular"
+                                         action="#{navegarBean.entrarPagProyectoI(conv)}"                                   
+                                         process="@this"
+                                         update=":frmUser:dMensaje"
+                                         />
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+
+            <div align="center" class="titulo" style="margin: 30px 0px 10px 0px;">
+                <h:outputText value="Proyectos"
+                              styleClass="titulo"/><br/>
+                <h:outputText value="(Presione el botón seleccionar para 
+                              continuar cargando datos del proyecto)"
+                              styleClass="aclaraciones"/>
+            </div>
+
+            <div align="center"
+                 style="margin-bottom: 10px;">
+                <p:dataTable id="dtProyectoWeb"
+                             var="pw"
+                             value="#{proyectoWebLstBean.lstProyectoWeb}"
+                             style="width: 900px;">
+
+                    <p:column style="word-wrap:break-word;">
+                        <f:facet name="header">
+                            <h:outputText value="Nombre del Programa"/>
+                        </f:facet>
+                        <h:outputText value="#{pw.titulo}"/>
+                    </p:column>
+
+
+                    <p:column style="word-wrap:break-word;">
+                        <f:facet name="header">
+                            <h:outputText value="Estado segun investigador"/>
+                        </f:facet>
+                        <h:outputText value="#{pw.finalizado}"
+                                      converter="ConversorEstadoProyecto"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;">
+                        <f:facet name="header">
+                            <h:outputText value="SECyt"/>
+                        </f:facet>
+                        <h:outputText value="#{pw.tipoEstadoSecyt.name}"/>
+                    </p:column>
+
+                    <p:column style="word-wrap:break-word;">
+
+
+                        <dl>
+                            <dt>
+                                <h:outputText value="#{pw.aprobado}"
+                                              converter="ConversorAprobadoProyecto"/>
+                            </dt>
+                            <dd>
+                                <h:outputText value="#{pw.observaciones}"/>
+                            </dd>
+                        </dl>
+
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Convocatoria"/>
+                        </f:facet>
+                        <h:outputText value="#{pw.convocatoria.nombre}"/>
+                    </p:column>
+                    <p:column>
+
+                        <p:commandButton icon="ui-icon-circle-check"
+                                         label="Seleccionar"
+                                         action="#{navegarBean.cargarProyectoSeleccionado(pw)}"                                   
+                                         process="@this"
+                                         rendered="#{convocatoriaPagBean.activarBotonEditar(pw)}"
+                                         />
+
+                        <p:commandButton 
+                            icon="ui-icon-circle-close"
+                            action="#{convocatoriaPagBean.deleteProyecto(pw)}"    
+                            label="Eliminar"
+                            process="@this"
+                            rendered="#{not pw.finalizado}"
+                            update=":frmUser:dMensaje, dtProyectoWeb"
+                            />
+
+                        <p:commandButton 
+                            rendered="#{not pw.finalizado}"
+                            icon="ui-icon-print"
+                            onclick="this.form.target = '_blank'"
+                            onblur="this.form.target = '_self'"
+                            action="#{proyectoWebBean.generarReporte(0)}"   
+                            label="Vista previa"
+                            process="@this"
+                            update=":frmUser:dMensaje"
+                            ajax="false">
+                            <f:setPropertyActionListener value="#{pw}" target="#{proyectoWebBean.proyectoWeb}"/>
+                        </p:commandButton>
+                        <p:commandButton     
+                            rendered="#{pw.finalizado}"
+                            icon="ui-icon-print"
+                            onclick="this.form.target = '_blank'"
+                            onblur="this.form.target = '_self'"
+                            action="#{proyectoWebBean.generarReporte(1)}"   
+                            label="Vista previa"
+                            process="@this"
+                            update=":frmUser:dMensaje"
+                            ajax="false">
+                            <f:setPropertyActionListener value="#{pw}" target="#{proyectoWebBean.proyectoWeb}"/>
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>

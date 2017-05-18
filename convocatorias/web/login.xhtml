@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./templates/loginTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+        <ui:include src="/recursos/mensajesDlg.xhtml"/>
+
+        <p class="parrafoDetalle">
+            <h:outputText value="Ingrese el CUIL del investigador y presione el boton aceptar para consultar sus datos"
+                          />
+        </p>
+        <center>
+
+            <div class="contenidoLogin">
+                <h:outputText value="CUIL" styleClass="camposDetalles"/><br/>
+                <p:inputMask value="#{loginBean.cuil}"
+                             label="CUIL"
+                             mask="99-99999999-9"
+                             required="true"/>
+            </div>
+
+            <div class="contenidoLogin">
+                <h:outputText value="Contraseña" styleClass="camposDetalles"/><br/>           
+                <p:password value="#{loginBean.contrasena}"
+                            label="Contraseña"
+                            required="true"/>
+            </div>
+
+            <div class="contenidoLogin">
+                <h:outputText value="Si no dispone de una contraseña haga click " styleClass="camposDetalles"/>
+                <p:commandLink value="aqui" action="registro.xhtml?faces-redirect=true" immediate="true" styleClass="linkResaltado"/>
+            </div>
+
+
+            <p:messages autoUpdate="true"/><br/><br/>
+
+            <p:commandButton value="Entrar" 
+                             action="#{loginBean.loginInvestigador()}"
+                             style="padding: 10px 20px;"
+                             ajax="false">
+
+            </p:commandButton>
+        </center>
+        <footer>
+            <!--Start of Tawk.to Script-->
+            <script type="text/javascript">
+                var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+                (function () {
+                    var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+                    s1.async = true;
+                    s1.src = 'https://embed.tawk.to/581339a6304e8e758568106d/default';
+                    s1.charset = 'UTF-8';
+                    s1.setAttribute('crossorigin', '*');
+                    s0.parentNode.insertBefore(s1, s0);
+                })();
+            </script>
+            <!--End of Tawk.to Script-->
+        </footer>
+    </ui:define>
+
+</ui:composition>

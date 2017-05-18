@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../templates/userTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="content">
+
+        <ui:include src="/recursos/mensajesDlg.xhtml"/>
+
+        <ui:include src="formularioEvaluacionDlg.xhtml"/>
+
+        <!--<ui:include src="formularioEvaluacionVistaPreviaDlg.xhtml"/>-->
+
+
+        <p:dialog id="dDetalleProyecto"
+                  widgetVar="dlgDetalleProyecto"
+                  modal="true"
+                  width="600"
+                  height="400"
+                  closable="false">
+
+            <f:facet name="header">
+                <h:outputText value="Identificación del Proyecto" style="font-size: 1.5em; font-weight: bold;"/>
+            </f:facet>
+            <h:panelGrid columns="2" styleClass="tablaDetalle">
+                <h:outputText value="Título:" rendered="#{proyectoBean.proyecto.titulo!= null}"/>
+                <h:outputText value="#{proyectoBean.proyecto.titulo}" rendered="#{proyectoBean.proyecto.titulo!= null}" title="Título"/>
+                <h:outputText value="Director:"/>
+                <h:outputText value="#{proyectoBean.director}" title="Director"/>
+                <h:outputText value="Código:" rendered="#{proyectoBean.proyecto.codigo != null}"/>
+                <h:outputText value="#{proyectoBean.proyecto.codigo}" rendered="#{proyectoBean.proyecto.codigo!= null}" title="Código"/>
+                <h:outputText value="Código Incentivos:" rendered="#{proyectoBean.proyecto.codigoIncentivos!= null}"/>
+                <h:outputText value="#{proyectoBean.proyecto.codigoIncentivos}" rendered="#{proyectoBean.proyecto.codigoIncentivos!= null}" title="Código Incentivos"/>
+                <h:outputText value="Fecha de Inicio:" rendered="#{proyectoBean.proyecto.fechaInicio != null}"/>
+                <h:outputText value="#{proyectoBean.proyecto.fechaInicio}" rendered="#{proyectoBean.proyecto.fechaInicio != null}" title="Fecha de Inicio">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+                <h:outputText value="Fecha de Finalización:" rendered="#{proyectoBean.proyecto.fechaFinalizacion != null }"/>
+                <h:outputText value="#{proyectoBean.proyecto.fechaFinalizacion}" rendered="#{proyectoBean.proyecto.fechaFinalizacion != null }" title="Fecha de Finalización">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+                <h:outputText value="Unidad Académica:" rendered="#{proyectoBean.proyecto.unidadAcademica.descripcion!= null}"/>
+                <h:outputText value="#{proyectoBean.proyecto.unidadAcademica}" rendered="#{proyectoBean.proyecto.unidadAcademica.descripcion!= null}" title="Unidad Académica"/>
+
+                <h:outputText value="Archivos digitales:" rendered="#{not empty proyectoBean.proyecto.resoluciones}"/>
+
+                <ui:repeat rendered="#{not empty proyectoBean.proyecto.resoluciones}" 
+                           value="#{proyectoBean.proyecto.resoluciones}"
+                           var="resol"
+                           ><br/>
+                    <p:commandLink  
+                        value="#{resol.documento.nombreArchivo}"
+                        action="#{proyectoBean.descargarArchivo(
+                                  resol.documento.contenidoArchivo, 
+                                  resol.documento.nombreArchivo)}"
+                        ajax="false">
+
+                    </p:commandLink>
+
+                </ui:repeat>
+
+            </h:panelGrid>
+            <br/>
+
+            <center>
+                <p:commandButton value="Salir"
+                                 process="@this"
+                                 oncomplete="dlgDetalleProyecto.hide();"/>
+            </center><br/>
+           
+        </p:dialog>
+
+
+        <div style="clear: both"/>
+
+        <p:dataTable id="dtProyecto"
+                     value="#{evaluacionWebLstBean.lstEvaluacionWeb}"
+                     paginator="true" 
+                     rows="20" 
+                     filterEvent="enter"
+                     var="e"
+                     filteredValue="#{proyectoLstBean.proyectosFiltrados}"
+                     >
+
+            <!-->    <f:facet name="header">
+                     <h:outputText value="(Puede buscar ingresando parte del código o nombre del proyecto y presionando la tecla enter)"/>
+                 </f:facet>  <-->
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Código "
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                <h:outputText value="#{e.proyecto.codigoIncentivos}"
+                              styleClass="textoValue" />
+            </p:column>
+
+            <p:column >
+                <f:facet name="header">
+                    <h:outputText value="Proyecto"
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                <h:outputText value="#{e.proyecto.titulo}"
+                              styleClass="textoValue"/>
+            </p:column>
+
+            <p:column >
+                <f:facet name="header">
+                    <h:outputText value="Detalle"
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                <p:commandButton actionListener="#{proyectoBean.setProyecto(e.proyecto)}"
+                                 oncomplete="dlgDetalleProyecto.show()" 
+                                 value="Ver" 
+                                 styleClass="textoValue"
+                                 update=":frmUser:dDetalleProyecto"
+                                 process="@this"/>
+
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Evaluar"
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                
+                <p:commandButton actionListener="#{formularioEvaluacionPagBean.entrar(e)}"
+                                 oncomplete="dlgFormularioEvaluacion.show()" 
+                                 value="Evaluar" 
+                                 styleClass="textoValue"
+                                 process="@this"
+                                 update=":frmUser:dFormularioEvaluacion"
+                                 rendered="#{not e.finalizado}"/>
+                
+                <p:commandButton action="#{formularioEvaluacionPagBean.generarReporte(1)}"
+                                 value="Imprimir" 
+                                 styleClass="textoValue"
+                                 rendered="#{e.finalizado}"
+                                 ajax="false">
+                    <f:setPropertyActionListener value="#{e}" target="#{formularioEvaluacionPagLstBean.evaluacionWebSelect}"/>
+                </p:commandButton>
+
+            </p:column>
+
+        </p:dataTable>
+    </ui:define>
+
+</ui:composition>

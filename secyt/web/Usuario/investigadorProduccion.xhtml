@@ -1,0 +1,606 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/UserTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <div class="encabezado">
+             <h:outputText value="Producción"/>
+         </div>
+        
+        <div class="divGeneral">
+        
+           
+            <div style="margin-bottom: 20px;">
+                <h:outputText value="Listado de proyectos" style="font-size: 1.5em; font: bold;"/><br/>
+                <h:outputText value="(Seleccione uno de los listados a continuación para ver los detalles)" styleClass="aclaraciones"/>
+            </div>
+ 
+
+               
+                    
+            <ui:repeat value="#{proyectoLstBean.lstProyecto}"
+                       var="pro"
+                       >
+                <li>
+                    <p:commandLink value="Seleccionar. " 
+                                   action="#{investigadorProduccionBean.limpiar()}"
+                                   update=":frmUser:pgProyectoSelect, :frmUser:apProduccion"
+                                   style="font-size: 1.3em;">
+                        <f:setPropertyActionListener value="#{pro}" target="#{investigadorProduccionBean.proyecto}"/>
+                    </p:commandLink>
+                    <h:outputText value="#{pro} "/>
+
+                </li><br/>
+            </ui:repeat>
+             
+
+            
+                
+            
+
+
+        </div>
+        
+        <div class="divGeneral" style="padding: 15px 5px 15px 5px; border: 1px solid #000; width: 98%;">
+        
+            <h:panelGroup id="pgProyectoSelect"
+                          >
+                <h:inputHidden value="#{investigadorProduccionBean.proyecto.id}"/>
+                <h:outputText 
+                              value="Proyecto seleccionado:"
+                              style="font-size: 1.5em; font: bold;"/><br/><br/>
+                <h:outputText 
+                              value="#{investigadorProduccionBean.proyecto.titulo}"/>
+            </h:panelGroup>
+        
+        </div>
+        
+        <div class="divGeneral"
+             style=" width: 100%;">
+        
+        <p:accordionPanel id="apProduccion"
+                          dynamic="true" 
+                          cache="true"
+                          style="float: left; visibility: #{investigadorProduccionBean.sOcultarAcordinPanel}"
+                          >  
+  
+            <p:ajax event="tabChange" 
+                    listener="#{investigadorProduccionBean.onTabChange}" 
+                    process="@this, :frmUser:pgProyectoSelect"
+                    update="dtArticulosRevistas, dtCapitulosDeLibro, dtCongreso, 
+                    dtContratos, dtFormacionRRHH, dtLibros, dtPropiedadIndustrial, dtPropiedadIntelectual"/>  
+            
+ <!--ARTICULOS DE REVISTAS-->     
+
+        <p:tab title="Artículos de revistas" id="tArticulosRevistas">  
+                
+                <p:dataTable id="dtArticulosRevistas"
+                         value="#{publicacionLstBean.lstPublicacion}"
+                         var="ar"
+                         rows="10"
+                         paginator="true"
+                         rendered="#{investigadorProduccionBean.getbArticulosRevistas()}">
+                    <p:column style="word-wrap:break-word;"
+                              width="50">
+                        <f:facet name="header">
+                            <h:outputText value="Codigo"/>
+                        </f:facet>
+                        <h:outputText value="#{ar.id}"/>
+                    </p:column>
+
+                    <p:column style="word-wrap:break-word;"
+                              width="300">
+                        <f:facet name="header">
+                            <h:outputText value="Nombre artículo"/>
+                        </f:facet>
+                        <h:outputText value="#{ar.titulo}"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="150">
+                        <f:facet name="header">
+                            <h:outputText value="Nombre revista"/>
+                        </f:facet>
+                        <h:outputText value="#{ar.nombreRevista}"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="300">
+                        <f:facet name="header">
+                            <h:outputText value="Autores"/>
+                        </f:facet>
+                        <ul>
+                            <ui:repeat value="#{ar.investigadores}"
+                                   var="inv">
+                                <li>
+                                    <h:outputText value="#{inv.persona.getApellido()} #{inv.persona.getNombre()}"/>
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="50">
+                        <f:facet name="header">
+                            <h:outputText value="Año"/>
+                        </f:facet>
+                        <h:outputText value="#{ar.anioEdicion}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:tab>
+ 
+ <!--CAPITULO DE LIBROS-->   
+ 
+            <p:tab title="Capitulos de libros" id="tCapitulosDeLibros">  
+                <p:dataTable id="dtCapitulosDeLibro"
+                         value="#{publicacionLstBean.lstPublicacion}"
+                         var="cl"
+                         rows="10"
+                         paginator="true"
+                         rendered="#{investigadorProduccionBean.getbCapitulosDeLibros()}">
+                    <p:column style="word-wrap:break-word;"
+                              width="50">
+                        <f:facet name="header">
+                            <h:outputText value="Codigo"/>
+                        </f:facet>
+                        <h:outputText value="#{cl.id}"/>
+                    </p:column>
+
+                    <p:column style="word-wrap:break-word;"
+                              width="300">
+                        <f:facet name="header">
+                            <h:outputText value="Capitulo"/>
+                        </f:facet>
+                        <h:outputText value="#{cl.titulo}"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="300">
+                        <f:facet name="header">
+                            <h:outputText value="Libro"/>
+                        </f:facet>
+                        
+                        <h:outputText value="#{cl.nombreLibro}"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="200">
+                        <f:facet name="header">
+                            <h:outputText value="Autores"/>
+                        </f:facet>
+                        <ul>
+                            <ui:repeat value="#{cl.investigadores}"
+                                   var="inv">
+                                <li>
+                                    <h:outputText value="#{inv.persona.getApellido()} #{inv.persona.getNombre()}"/>
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="200">
+                        <f:facet name="header">
+                            <h:outputText value="Editor"/>
+                        </f:facet>
+                        <h:outputText value="#{cl.editor}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:tab>
+ 
+ <!--CONGRESOS-->  
+ 
+            <p:tab title="Congresos" id="tCongresos">  
+                <p:dataTable id="dtCongreso"
+                         value="#{publicacionLstBean.lstPublicacion}"
+                         var="con"
+                         rows="10"
+                         paginator="true"
+                         rendered="#{investigadorProduccionBean.getbCongresos()}">
+                    <p:column style="word-wrap:break-word;"
+                              width="50">
+                        <f:facet name="header">
+                            <h:outputText value="Codigo"/>
+                        </f:facet>
+                        <h:outputText value="#{con.id}"/>
+                    </p:column>
+                    
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="250">
+                        <f:facet name="header">
+                            <h:outputText value="Congreso"/>
+                        </f:facet>
+                        <h:outputText value="#{con.titulo}"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="250">
+                        <f:facet name="header">
+                            <h:outputText value="Nombre del evento"/>
+                        </f:facet>
+                        
+                        <h:outputText value="#{con.nombreEvento}"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="250">
+                        <f:facet name="header">
+                            <h:outputText value="Participantes"/>
+                        </f:facet>
+                        <ul>
+                            <ui:repeat value="#{con.investigadores}"
+                                   var="inv">
+                                <li>
+                                    <h:outputText value="#{inv.persona.getApellido()} #{inv.persona.getNombre()}"/>
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="250">
+                        <f:facet name="header">
+                            <h:outputText value="Lugar"/>
+                        </f:facet>
+                        <h:outputText value="#{con.lugar}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:tab>
+ <!--CONTRATOS-->              
+            <p:tab title="Contratos" id="tContratos">  
+                 <p:dataTable id="dtContratos"
+                         value="#{publicacionLstBean.lstPublicacion}"
+                         var="cont"
+                         rows="10"
+                         paginator="true"
+                         rendered="#{investigadorProduccionBean.getbContratos()}">
+                    <p:column style="word-wrap:break-word;"
+                              width="50">
+                        <f:facet name="header">
+                            <h:outputText value="Codigo"/>
+                        </f:facet>
+                        <h:outputText value="#{cont.id}"/>
+                    </p:column>
+                    
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="250">
+                        <f:facet name="header">
+                            <h:outputText value="Objeto"/>
+                        </f:facet>
+                        <h:outputText value="#{cont.objeto}"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="250">
+                        <f:facet name="header">
+                            <h:outputText value="Tipo"/>
+                        </f:facet>
+                        
+                        <h:outputText value="#{cont.tipoContrato}"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="250">
+                        <f:facet name="header">
+                            <h:outputText value="Destinatarios"/>
+                        </f:facet>
+                        <h:outputText value="#{cont.destinatarios}"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="250">
+                        <f:facet name="header">
+                            <h:outputText value="Fecha"/>
+                        </f:facet>
+                        <h:outputText value="#{cont.fechaContrato}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                        </h:outputText>
+                    </p:column>
+                     
+                     <p:column style="word-wrap:break-word;"
+                              width="250">
+                        <f:facet name="header">
+                            <h:outputText value="Monto"/>
+                        </f:facet>
+                        <h:outputText value="#{cont.montoObtenido}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:tab>
+  <!--CFORMACION RRHH-->             
+            <p:tab title="Formación RRHH" id="tFormacionRRHH">  
+                <p:dataTable id="dtFormacionRRHH"
+                         value="#{publicacionLstBean.lstPublicacion}"
+                         var="fr"
+                         rows="10"
+                         paginator="true"
+                         rendered="#{investigadorProduccionBean.getbFormacionRRHH()}">
+                    <p:column style="word-wrap:break-word;"
+                              width="50">
+                        <f:facet name="header">
+                            <h:outputText value="Codigo"/>
+                        </f:facet>
+                        <h:outputText value="#{fr.id}"/>
+                    </p:column>
+                    
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="250">
+                        <f:facet name="header">
+                            <h:outputText value="Fecha"/>
+                        </f:facet>
+                        <h:outputText value="#{fr.fecha}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                        </h:outputText>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="50">
+                        <f:facet name="header">
+                            <h:outputText value="Nro Becarios Alumnos"
+                                          style="word-wrap:break-word;"/>
+                        </f:facet>
+                        
+                        <h:outputText value="#{fr.becariosAlumnos}"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="50">
+                        <f:facet name="header">
+                            <h:outputText value="Nro Becarios Guardados"
+                                          style="word-wrap:break-word;"/>
+                        </f:facet>
+                        <h:outputText value="#{fr.becariosGraduados}"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="50">
+                        <f:facet name="header">
+                            <h:outputText value="Nro Tesis dirigidas"
+                                          style="word-wrap:break-word;"/>
+                        </f:facet>
+                        <h:outputText value="#{fr.tesisDirigidas}"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="50">
+                        <f:facet name="header">
+                            <h:outputText value="Tesis aprobadas Maestría"
+                                          style="word-wrap:break-word;"/>
+                        </f:facet>
+                        <h:outputText value="#{fr.tesisAprobadasMaestria}"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="50">
+                        <f:facet name="header">
+                            <h:outputText value="Tesis aprobadas Doctorado"
+                                          style="word-wrap:break-word;"/>
+                        </f:facet>
+                        <h:outputText value="#{fr.tesisAprobadasDoctorado}"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="50">
+                        <f:facet name="header">
+                            <h:outputText value="Tesinas de grado aprobadas"
+                                          style="word-wrap:break-word;"/>
+                        </f:facet>
+                        <h:outputText value="#{fr.tesinasGradoAprobadas}"/>
+                    </p:column>
+                    
+                </p:dataTable>
+            </p:tab>
+  <!--LIBROS-->             
+            <p:tab title="Libros" id="tLibros">  
+                <p:dataTable id="dtLibros"
+                         value="#{publicacionLstBean.lstPublicacion}"
+                         var="l"
+                         rows="10"
+                         paginator="true"
+                         rendered="#{investigadorProduccionBean.getbLibros()}">
+                    <p:column style="word-wrap:break-word;"
+                              width="50">
+                        <f:facet name="header">
+                            <h:outputText value="Codigo"/>
+                        </f:facet>
+                        <h:outputText value="#{l.id}"/>
+                    </p:column>
+
+                    <p:column style="word-wrap:break-word;"
+                              width="300">
+                        <f:facet name="header">
+                            <h:outputText value="Titulo"/>
+                        </f:facet>
+                        <h:outputText value="#{l.titulo}"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="200">
+                        <f:facet name="header">
+                            <h:outputText value="Autores"/>
+                        </f:facet>
+                        <ul>
+                            <ui:repeat value="#{l.investigadores}"
+                                   var="inv">
+                                <li>
+                                    <h:outputText value="#{inv.persona.getApellido()} #{inv.persona.getNombre()}"/>
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="200">
+                        <f:facet name="header">
+                            <h:outputText value="Editor"/>
+                        </f:facet>
+                        <h:outputText value="#{l.editor}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:tab>
+ <!--PROPIEDAD INTELECTUAL-->      
+ 
+            <p:tab title="Propiedad Industrial" id="tPropiedadIndustrial">  
+                <p:dataTable id="dtPropiedadIndustrial"
+                             value="#{propiedadLstBean.lstPropiedad}"
+                         var="pr"
+                         rows="10"
+                         paginator="true"
+                         rendered="#{investigadorProduccionBean.getbPropiedadIndustrial()}">
+                    <p:column style="word-wrap:break-word;"
+                              width="50">
+                        <f:facet name="header">
+                            <h:outputText value="Codigo"/>
+                        </f:facet>
+                        <h:outputText value="#{pr.id}"/>
+                    </p:column>
+
+                    <p:column style="word-wrap:break-word;"
+                              width="300">
+                        <f:facet name="header">
+                            <h:outputText value="Titulo"/>
+                        </f:facet>
+                        <h:outputText value="#{pr.titulo}"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="150">
+                        <f:facet name="header">
+                            <h:outputText value="Tipo de registro"/>
+                        </f:facet>
+                        <h:outputText value="#{pr.tipoRegistroIndustrial}"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="150">
+                        <f:facet name="header">
+                            <h:outputText value="Titulares"/>
+                        </f:facet>
+                        <h:outputText value="#{pr.titulares}"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="200">
+                        <f:facet name="header">
+                            <h:outputText value="Integrantes"/>
+                        </f:facet>
+                        <ul>
+                            <ui:repeat value="#{pr.investigadores}"
+                                   var="inv">
+                                <li>
+                                    <h:outputText value="#{inv.persona.getApellido()} #{inv.persona.getNombre()}"/>
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="150">
+                        <f:facet name="header">
+                            <h:outputText value="Pais"/>
+                        </f:facet>
+                        <h:outputText value="#{pr.pais}"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="200">
+                        <f:facet name="header">
+                            <h:outputText value="Fecha"/>
+                        </f:facet>
+                        <h:outputText value="#{pr.fecha}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+            </p:tab>
+ 
+            <p:tab title="Propiedad Intelectual" id="tPropiedadIntelectual">  
+                <p:dataTable id="dtPropiedadIntelectual"
+                             value="#{propiedadLstBean.lstPropiedad}"
+                         var="pri"
+                         rows="10"
+                         paginator="true"
+                         rendered="#{investigadorProduccionBean.getbPropiedadIntelectual()}">
+                    <p:column style="word-wrap:break-word;"
+                              width="50">
+                        <f:facet name="header">
+                            <h:outputText value="Codigo"/>
+                        </f:facet>
+                        <h:outputText value="#{pri.id}"/>
+                    </p:column>
+
+                    <p:column style="word-wrap:break-word;"
+                              width="300">
+                        <f:facet name="header">
+                            <h:outputText value="Titulo"/>
+                        </f:facet>
+                        <h:outputText value="#{pri.titulo}"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="150">
+                        <f:facet name="header">
+                            <h:outputText value="Tipo de registro"/>
+                        </f:facet>
+                        <h:outputText value="#{pri.tipoRegistroIntelectual}"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="150">
+                        <f:facet name="header">
+                            <h:outputText value="Titulares"/>
+                        </f:facet>
+                        <h:outputText value="#{pri.titulares}"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="200">
+                        <f:facet name="header">
+                            <h:outputText value="Integrantes"/>
+                        </f:facet>
+                        <ul>
+                            <ui:repeat value="#{pri.investigadores}"
+                                   var="inv">
+                                <li>
+                                    <h:outputText value="#{inv.persona.getApellido()} #{inv.persona.getNombre()}"/>
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="150">
+                        <f:facet name="header">
+                            <h:outputText value="Pais"/>
+                        </f:facet>
+                        <h:outputText value="#{pri.pais}"/>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="200">
+                        <f:facet name="header">
+                            <h:outputText value="Fecha"/>
+                        </f:facet>
+                        <h:outputText value="#{pri.fecha}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+            </p:tab>
+ 
+            
+            
+        </p:accordionPanel>
+        </div>
+        
+        
+    </ui:define>
+
+</ui:composition>

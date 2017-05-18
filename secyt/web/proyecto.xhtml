@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/PrincipalTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="content">
+
+        <p:dialog id="dDetalleProyecto"
+                  widgetVar="dlgDetalleProyecto"
+                  modal="true"
+                  width="600"
+                  height="400">
+
+            <f:facet name="header">
+                <h:outputText value="Detalles" style="font-size: 1.5em; font-weight: bold;"/>
+            </f:facet>
+            <h:panelGrid columns="2" styleClass="tablaDetalle">
+                <h:outputText value="Código:" rendered="#{proyectoBean.proyecto.codigo != null}"/>
+                <h:outputText value="#{proyectoBean.proyecto.codigo}" rendered="#{proyectoBean.proyecto.codigo!= null}" title="Código"/>
+                <h:outputText value="Código Incentivos:" rendered="#{proyectoBean.proyecto.codigoIncentivos!= null}"/>
+                <h:outputText value="#{proyectoBean.proyecto.codigoIncentivos}" rendered="#{proyectoBean.proyecto.codigoIncentivos!= null}" title="Código Incentivos"/>
+                <h:outputText value="Título:" rendered="#{proyectoBean.proyecto.titulo!= null}"/>
+                <h:outputText value="#{proyectoBean.proyecto.titulo}" rendered="#{proyectoBean.proyecto.titulo!= null}" title="Título"/>
+                <h:outputText value="Unidad Académica:" rendered="#{proyectoBean.proyecto.unidadAcademica.descripcion!= null}"/>
+                <h:outputText value="#{proyectoBean.proyecto.unidadAcademica}" rendered="#{proyectoBean.proyecto.unidadAcademica.descripcion!= null}" title="Unidad Académica"/>
+                <h:outputText value="Objetivo Socioeconómico:" rendered="#{proyectoBean.proyecto.objetivoSocioeconomico.descripcion!= null}"/>
+                <h:outputText value="#{proyectoBean.proyecto.objetivoSocioeconomico}" rendered="#{proyectoBean.proyecto.objetivoSocioeconomico.descripcion!= null}" title="Objetivo Socioeconómico"/>
+                <h:outputText value="Entidad Evaluadora:" rendered="#{proyectoBean.proyecto.entidadEvaluadora.descripcion!= null}"/>
+                <h:outputText value="#{proyectoBean.proyecto.entidadEvaluadora}" rendered="#{proyectoBean.proyecto.entidadEvaluadora.descripcion!= null}" title="Entidad Evaluadora"/>
+                <h:outputText value="Duración Teórica (Años):" rendered="#{proyectoBean.proyecto.duracionTeorica != null}"/>
+                <h:outputText value="#{proyectoBean.proyecto.duracionTeorica}" rendered="#{proyectoBean.proyecto.duracionTeorica != null}" title="Duración Teórica"/>
+                <h:outputText value="Fecha de Inicio:" rendered="#{proyectoBean.proyecto.fechaInicio != null}"/>
+                <h:outputText value="#{proyectoBean.proyecto.fechaInicio}" rendered="#{proyectoBean.proyecto.fechaInicio != null}" title="Fecha de Inicio">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+                <h:outputText value="Fecha de Finalización:" rendered="#{proyectoBean.proyecto.fechaFinalizacion != null }"/>
+                <h:outputText value="#{proyectoBean.proyecto.fechaFinalizacion}" rendered="#{proyectoBean.proyecto.fechaFinalizacion != null }" title="Fecha de Finalización">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+                <h:outputText value="Tipo de Proyecto:" rendered="#{proyectoBean.proyecto.tipoProyecto.descripcion!= null}"/>
+                <h:outputText value="#{proyectoBean.proyecto.tipoProyecto}" rendered="#{proyectoBean.proyecto.tipoProyecto.descripcion!= null}" title="Tipo de Proyecto"/>
+                <h:outputText value="Resumen:" rendered="#{proyectoBean.proyecto.resumen!= null}"/>
+                <h:outputText value="#{proyectoBean.proyecto.resumen}" title="Resumen" rendered="#{proyectoBean.proyecto.resumen!= null}"/>   
+                <h:outputText value="Linea de Investigación:" rendered="#{proyectoBean.proyecto.lineaInvestigacion.descripcion!= null}"/>
+                <h:outputText value="#{proyectoBean.proyecto.lineaInvestigacion}" rendered="#{proyectoBean.proyecto.lineaInvestigacion.descripcion!= null}" title="Línea de Investigación"/>
+                <h:outputText value="Observaciones:" rendered="#{proyectoBean.proyecto.observaciones!= null}"/>
+                <h:outputText value="#{proyectoBean.proyecto.observaciones}" rendered="#{proyectoBean.proyecto.observaciones!= null}" title="Observaciones"/>
+                <h:outputText value="Palabras Claves:" rendered="#{proyectoBean.proyecto.palabrasClaves.size() > 0}"/>
+                <ui:repeat rendered="#{proyectoBean.proyecto.palabrasClaves.size() > 0}" value="#{proyectoBean.proyecto.palabrasClaves}"
+                           var="pal"><span><h:outputText value="#{pal}"/></span><br /></ui:repeat>                    
+                <h:outputText value="Programa:" rendered="#{proyectoBean.proyecto.programa!=null}"/>
+                <h:outputText value="#{proyectoBean.proyecto.programa}" rendered="#{proyectoBean.proyecto.programa!= null}" title="Programa"/>
+                <h:outputText value="Proyecto Complementario Padre:" rendered="#{proyectoBean.proyecto.proyectoComplementarioPadre.titulo!= null}"/>
+                <h:outputText value="#{proyectoBean.proyecto.proyectoComplementarioPadre}" rendered="#{proyectoBean.proyecto.proyectoComplementarioPadre.titulo!= null}" title="Proyecto ComplementarioPadre"/>
+                <h:outputText value="Title:" rendered="#{proyectoBean.proyecto.title!= null}"/>
+                <h:outputText value="#{proyectoBean.proyecto.title}" rendered="#{proyectoBean.proyecto.title!= null}" title="Title"/>
+                <h:outputText value="Summary:" rendered="#{proyectoBean.proyecto.summary!= null}"/>
+                <h:outputText value="#{proyectoBean.proyecto.summary}" rendered="#{proyectoBean.proyecto.summary!= null}" title="Summary"/>
+                <h:outputText value="Keywords:" rendered="#{proyectoBean.proyecto.keywords.size() > 0}"/>
+                <ui:repeat rendered="#{proyectoBean.proyecto.keywords.size() > 0}" value="#{proyectoBean.proyecto.keywords}"
+                           var="key"><span><h:outputText value="#{key}"/></span><br /></ui:repeat>
+            </h:panelGrid>
+            <h:outputLink value="mailto:secyt@unca.edu.ar">Para mayor información escriba a proyectosecyt@unca.edu.ar </h:outputLink>
+
+        </p:dialog>
+
+        <div style="margin-top: 10px;">
+            <h:outputText value="Seleccione el año de los proyectos a consultar"/><br/>
+            <h:selectOneMenu id="selectAnio"  value="#{preyectoPTBean.anio}">
+                <f:selectItem itemLabel="Todos los años" itemValue="" /> 
+
+                <f:selectItems value="#{proyectoLstBean.aniosDeProyecto}"/>              
+                <f:convertNumber/>
+            </h:selectOneMenu>&nbsp;
+
+            <h:outputText value="Codigo: "/>
+            <p:inputText id="iTCodigo" value="#{preyectoPTBean.codigo}"/>&nbsp;
+
+            <h:outputText value="Título: "/>
+            <p:inputText id="iTProyecto" value="#{preyectoPTBean.nombre}"/>&nbsp;
+
+            <h:outputText value="Resumen: "/>
+            <p:inputText id="iTResumen" value="#{preyectoPTBean.resumen}"/>&nbsp;
+
+
+            <p:commandButton value="Buscar" 
+                             actionListener="#{preyectoPTBean.findByAñoCodigoNombreResumen()}"
+                             update="selectAnio,dtProyecto, otDetalle,iTProyecto,iTResumen,iTCodigo"
+                             icon="ui-icon-search"
+                             />
+            <p:messages autoUpdate="true"/>
+        </div>
+
+
+        <div style="margin-top: 20px; margin-bottom: 10px;">
+            <h:outputText id="otDetalle" 
+                          value="#{preyectoPTBean.detalle}"
+                          style="color: cadetblue; font-size: 2em;"/>
+        </div>
+
+        <div style="clear: both"/>
+
+        <p:dataTable id="dtProyecto"
+                     value="#{proyectoLstBean.lstProyecto}"
+                     paginator="true" 
+                     rows="20" 
+                     filterEvent="enter"
+                     var="p"
+                     filteredValue="#{proyectoLstBean.proyectosFiltrados}"
+                     >
+
+            <!-->    <f:facet name="header">
+                     <h:outputText value="(Puede buscar ingresando parte del código o nombre del proyecto y presionando la tecla enter)"/>
+                 </f:facet>  <-->
+            <p:column width="50">
+                <f:facet name="header">
+                    <h:outputText value="Código"
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                <h:outputText value="#{p.codigoIncentivos}"
+                              styleClass="textoValue" />
+            </p:column>
+
+            <p:column >
+                <f:facet name="header">
+                    <h:outputText value="Proyecto"
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                <h:outputText value="#{p.titulo}"
+                              styleClass="textoValue"/>
+            </p:column>
+
+            <p:column width="50" >
+                <f:facet name="header">
+                    <h:outputText value="Detalle"
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                <p:commandButton actionListener="#{proyectoBean.setProyecto(p)}"
+                                 oncomplete="PF('dlgDetalleProyecto').show()" 
+                                 value="Ver" 
+                                 styleClass="textoValue"
+                                 update=":frmPrincipal:dDetalleProyecto"/>
+
+            </p:column>
+        </p:dataTable>
+
+    </ui:define>
+
+</ui:composition>

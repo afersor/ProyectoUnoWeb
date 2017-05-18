@@ -1,0 +1,304 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="../resources/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="../resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+        <title>Secretaría de Ciencia y Tecnología</title>
+    </h:head>
+
+    <script type="text/javascript">
+        var startFrom = #{sessionControlerBean.getiTimeSession()}; // Total session time out setting eg 10 sec, Real implementation assign values from jsf controller
+        var loopTill = 20;//#{systemController.getSessionTimeoutAlertDuration()}; //Count down degins from 6 sec and starts after 4 sec ie 10-6
+        var reduce = 1;
+        var handleDialog = null;
+        var redirectPage = "#{request.contextPath}/login.xhtml";
+        var countDownDiv = "dialog-countdown";
+
+        function resetPageTimer() {
+            timeoutDialog.hide();
+            startPageTimer(startFrom, loopTill);
+            clearInterval(handleDialog);
+        }
+
+        function startDialogTimer(wCounter, timeOutPage) {
+            var e = null;
+            if (!e)
+                e = document.getElementById(countDownDiv);
+            e.innerHTML = wCounter;
+            handleDialog = setInterval(function () {
+                if (wCounter == 0) {
+                    clearInterval(handleDialog);
+                    window.location.href = timeOutPage;
+                }
+                else {
+                    wCounter -= reduce;
+                    e.innerHTML = wCounter;
+                }
+            }, reduce * 1000);
+        }
+
+        function startPageTimer(wFrom, wReach) {
+            var handle = null;
+            handle = setInterval(function () {
+                if (wFrom == wReach) {
+                    clearInterval(handle);
+                    timeoutDialog.show();
+                    startDialogTimer(loopTill, redirectPage);
+                }
+                else {
+                    wFrom -= reduce;
+                }
+            }, reduce * 1000);
+        }
+
+        function redirectLogin() {
+            window.location.href = redirectPage;
+        }
+
+        startPageTimer(startFrom, loopTill);
+        PrimeFaces.locales['es'] = {
+            closeText: 'Cerrar',
+            prevText: 'Anterior',
+            currentText: 'Inicio',
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+            dayNamesMin: ['DO', 'LU', 'MA', 'MI', 'JU', 'VI', 'SA'],
+            weekHeader: 'Semana',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: '',
+            timeOnlyTitle: 'Sólo hora',
+            timeText: 'Tempo',
+            hourText: 'Hora',
+            minuteText: 'Minuto',
+            secondText: 'Segundo',
+            currentText: 'Hora actual',
+                    ampm: false,
+            month: 'Mes',
+            week: 'Semana',
+            day: 'Día',
+            allDayText: 'Todo el día'
+        };
+    </script>
+
+    <h:body>
+
+        <p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>  
+
+        <p:dialog modal="true" widgetVar="statusDialog" header="Estado"   
+                  draggable="false" closable="true">  
+            <p:graphicImage value="../resources/imagenes/load.gif" />  
+        </p:dialog> 
+
+        <h:form id="frmUser" enctype="multipart/form-data">
+
+            <p:dialog header="La session ha expirado!"
+                      widgetVar="timeoutDialog" 
+                      showEffect="fade" 
+                      hideEffect="fade" 
+                      modal="true"
+                      width="400"
+                      height="200"
+                      closable="false"
+                      draggable="false"
+                      resizable="false" 
+                      position="top"
+                      > 
+                <br/>
+                <p>
+                    <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>
+                    <div>Se cerrara la sesion en  <span id="dialog-countdown" style="font-weight:bold"></span> segundos.</div>
+                </p>
+                <br/><br/>
+                <h:outputText value="¿Deseas continuar con la session?"/>
+
+                <center>
+                    <p:commandButton value="SI"  oncomplete="resetPageTimer()"/>
+                    <p:commandButton value="No"  action="#{sessionControlerBean.cerrarSession()}" oncomplete="redirectLogin()"/>
+                </center>
+
+            </p:dialog>
+
+            <div class="cuerpoPagina">
+                <div id="top" class="top">
+
+
+                    <div style="float: right; padding: 10px 10px;" >
+                        <h:outputText value="#{fechaActualBean.fechaActual}" styleClass="fecha"/>                       
+                    </div>
+
+
+                </div>
+                <div style="clear:both;"></div>
+
+                <div class="headerInvestigador">
+                    <h:outputText value=" Investigador #{investigadorLoginBean.investigador.persona.apellido} #{investigadorLoginBean.investigador.persona.nombre}."
+                                  styleClass="usuario"/>   <div style="float: right; padding: 10px 10px;" >
+                        <p:commandLink id="clSesion"
+                                       value="Cerrar Sesión" 
+                                       style="color: #ffffff;"
+                                       action="#{sessionControlerBean.cerrarSession()}"
+                                       immediate="true"/>
+                    </div>
+                </div>
+
+                <div style="clear:both;"/>
+
+
+                <div id="izquierda">
+
+
+
+                    <p:menu >
+
+
+
+
+                        <p:submenu label="Datos personales"
+                                   styleClass="menu">
+
+                            <p:menuitem value="Datos personales"
+                                        action="#{navegarUser.pInvestigadorDatosPersonales()}"
+                                        styleClass="menuContenido"
+                                        process="@this"
+                                        />
+
+                            <p:menuitem value="Especialización"
+                                        action="#{navegarUser.pInvestigadorEspecializacion()}"
+                                        styleClass="menuContenido"
+                                        ajax="false"/>
+
+                            <p:menuitem value="Formación Académica"
+                                        action="#{navegarUser.pInvestigadorFormacionAcademica()}"
+                                        styleClass="menuContenido"
+                                        ajax="false"/>
+                        </p:submenu>
+
+                        <p:submenu label="Universidad"
+                                   styleClass="menu">
+
+                            <p:menuitem value="Asignaturas"
+                                        action="#{navegarUser.pInvestigadorCursos()}"
+                                        styleClass="menuContenido"
+                                        ajax="false"/>
+
+                            <p:menuitem value="Becas"
+                                        action="#{navegarUser.pInvestigadorPostulacionBecas()}"
+                                        styleClass="menuContenido"
+                                        ajax="false"/>
+
+
+
+
+
+                            <p:menuitem value="Categorización"
+                                        action="#{navegarUser.pInvestigadorCateforizacion()}"
+                                        styleClass="menuContenido"
+                                        ajax="false"/>
+
+                            <p:menuitem value="Conducción"
+                                        action="#{navegarUser.pInvestigadorConduccion()}"
+                                        styleClass="menuContenido"
+                                        ajax="false"/>
+
+                            <p:menuitem value="Docencia"
+                                        action="#{navegarUser.pInvestigadorDocencia()}"
+                                        styleClass="menuContenido"
+                                        ajax="false"/>
+
+
+                        </p:submenu>
+
+
+
+
+
+
+
+
+
+
+                        <p:submenu label="Proyectos"
+                                   styleClass="menu">
+                            <p:menuitem value="Proyectos de investigación"
+                                        action="#{navegarUser.pInvestigadorParticipacionesProyectos()}"
+                                        styleClass="menuContenido"
+                                        ajax="false"/>
+
+                            <p:menuitem value="Proyectos de vinculación"
+                                        action="#{navegarUser.pInvestigadorParticipacionVinculacion()}"
+                                        styleClass="menuContenido"
+                                        ajax="false"/>
+
+                            <p:menuitem value="Producción"
+                                        action="#{navegarUser.pInvestigadorProduccion()}"
+                                        styleClass="menuContenido"
+                                        ajax="false"/>
+                            <p:menuitem value="Rendiciones"
+                                        action="#{navegarUser.pInvestigadorRendicion()}"
+                                        styleClass="menuContenido"
+                                        ajax="false"/>
+                        </p:submenu>
+
+                        <p:submenu label="Varios"
+                                   styleClass="menu">
+                            <p:menuitem value="Cambiar contraseña"
+                                        action="#{navegarUser.pInvestigadorCambiarContrasena()}"
+                                        styleClass="menuContenido"
+                                        ajax="false"/>
+
+                            <p:menuitem value="Mensajes"
+                                        action="#{navegarUser.pInvestigadorMensaje()}"
+                                        styleClass="menuContenido"
+                                        ajax="false"/>
+                        </p:submenu>
+
+                        <p:menuitem value="Archivos Adjuntos"
+                                    action="#{navegarUser.pInvestigadorArchivo()}"
+                                    styleClass="menuContenido"
+                                    ajax="false"/>
+
+
+
+
+                    </p:menu>
+
+                </div>
+
+                <div id="contenido" >
+                    <ui:insert name="content">Content</ui:insert>
+                </div>
+                <div style="clear:both;"></div>
+                <div class="footer">
+                    <!--Start of Tawk.to Script-->
+                    <script type="text/javascript">
+                        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+                        (function () {
+                            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+                            s1.async = true;
+                            s1.src = 'https://embed.tawk.to/581339a6304e8e758568106d/default';
+                            s1.charset = 'UTF-8';
+                            s1.setAttribute('crossorigin', '*');
+                            s0.parentNode.insertBefore(s1, s0);
+                        })();
+                    </script>
+                    <!--End of Tawk.to Script-->
+
+                    <p><strong>Secretaría de Ciencia y Tecnología - Universidad Nacional de Catamarca</strong><br />Avda Belgrano Nº 300 Edificio variante 1, Planta Alta
+                        <br /> Telefono: Nº 0383-4431180, int. 102/120
+                        <br /> San Fernando del Valle de Catamarca</p></div>
+            </div>
+        </h:form>
+    </h:body>
+
+</html>

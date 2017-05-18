@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./templates/loginTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        
+        <p class="parrafoDetalle">
+            <h:outputText value="Ingrese los datos que se indican a continuación y precione el botón registrar. Si todo es correcto volvera a la pantalla principal."
+                          />
+        </p>
+        <center>
+            
+            <p:dialog id="dConfirmacion"
+                      widgetVar="dlgConfirmacion"
+                      modal="true"
+                      closable="false">
+                <h:panelGrid columns="1" cellspacing="5">
+                    <h:outputText value="Se ha registrado de forma exitosa. Presione aceptar para continuar" styleClass="camposDetalles"/>
+                    <p:commandButton value="Aceptar"
+                                     action="login.xhtml?faces-redirect=true"/>
+                </h:panelGrid>
+            </p:dialog>
+            
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputText value="CUIL:" styleClass="camposDetalles"/>
+                <p:inputMask value="#{registroBean.sCuil}"
+                             label="CUIL"
+                             mask="99-99999999-9"
+                             required="true"/>
+                
+                <h:outputText value="Contraseña:" styleClass="camposDetalles"/>         
+                <p:password promptLabel="Por favor ingrese la contraseña"
+                                                 weakLabel="Mala"
+                                                 goodLabel="Buena"
+                                                 strongLabel="Muy buena"
+                                                 feedback="true"
+                                                 id="pContrasena"
+                                                 label="Contraseña"
+                                                 value="#{registroBean.sContrasena}"
+                                                 size="30"
+                                                 maxlength="30"/>
+                
+                <h:outputText value="Confirmar contraseña:" styleClass="camposDetalles"/>         
+                <p:password promptLabel="Por favor ingrese la contraseña"
+                                                 id="pContrasenaConf"
+                                                 label="Contraseña"
+                                                 value="#{registroBean.sContrasenaConf}"
+                                                 size="30"
+                                                 maxlength="30"/>
+            </h:panelGrid>
+
+            
+        
+            
+            
+            <p:messages autoUpdate="true"/><br/><br/>
+            <p:commandButton value="Registrar" 
+                             action="#{registroBean.create()}"
+                             style="padding: 10px 20px;"
+                             >
+
+            </p:commandButton>
+        </center>
+    </ui:define>
+
+</ui:composition>

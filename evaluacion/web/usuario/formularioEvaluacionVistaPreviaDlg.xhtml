@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <p:dialog id="dFormularioEvaluacionVistaPrevia" 
+              widgetVar="dlgFormularioEvaluacionVistaPrevia"
+              modal="true"
+              width="700"
+              height="500"
+              position="top"
+              style="margin-top: 30px;"
+              resizable="false">
+        
+        <f:facet name="header">
+            <h:outputText value="Vista Previa" styleClass="subTitulo"/>
+        </f:facet>
+        
+        <p:panel id="pDlgFormularioEvaluacionVistaPrevia">
+
+            <p:focus context="pDlgFormularioEvaluacionVistaPrevia"/> 
+            
+            
+            <p:dataTable value="#{bloqueEvaluadoLstBean.lstBloqueEvaluado}" 
+                        var="be">
+                
+                
+                <p:subTable value="#{be.detallesEvaluados}" 
+                                 var="de">
+                    <f:facet name="header">  
+                        <h:outputText value="#{be.bloque.descripcion}" 
+                                      style="font-weight: bold; size: 1.5px; color: chocolate;"/>  
+                    </f:facet>  
+
+                    <p:column>
+                        <h:outputText value="#{de.contenidoBloque.descripcion}"/>
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{de.calificacion.nombre}"/>
+                    </p:column>
+
+                    <p:columnGroup type="footer">  
+                        <p:row> 
+                             <p:column footerText="Calificación Global del bloque"  
+                                       style="font-weight: bold; size: 1.2px;"/> 
+                             <p:column footerText="#{be.calificacion.nombre}"  
+                                       style="font-weight: bold; size: 1.2px;"/> 
+                        </p:row>
+                    </p:columnGroup>   
+                    
+                </p:subTable>
+                
+            </p:dataTable> <br/>
+            
+            <h:outputText value="Calificación Global Total del Proyecto #{evaluacionWebBean.evaluacionWeb.calificacionGlobal.name}"  
+                                       style="font-weight: bold; size: 1.2px;"/> 
+            
+
+                
+                
+
+ 
+            
+
+        </p:panel>
+
+    </p:dialog>
+</html>

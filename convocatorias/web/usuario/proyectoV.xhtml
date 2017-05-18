@@ -1,0 +1,1288 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../templates/userTemplate.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+
+        <ui:include src="/recursos/mensajesDlg.xhtml"/>
+
+        <ui:include src="presupuestoFindDlg.xhtml" />
+
+        <ui:include src="recursoSubsidioFindDlg.xhtml" />
+
+        <ui:include src="presupuestoAnioUnoFindDlg.xhtml" />
+
+        <div style="margin-left: auto;
+             margin-right: auto;
+             padding: 0px; width: 1004px;">
+
+            <div align="left">
+                <h:commandLink id="clMenuPrincipal"
+                                value="Menu Proyecto"
+                               action="#{navegarBean.entrarPagProyecto(0)}"
+                               style="margin-left: 20px;"
+                               rendered="#{proyectoWebBean.proyectoWeb.id != null}"
+                               immediate="true"/>
+            </div>
+
+            <div align="center">
+                <div>
+                    <h:outputText value="Postulación: #{proyectoWebBean.proyectoWeb.convocatoria.nombre} " 
+                                  styleClass="titulo"/>
+
+                    <h:outputText value="#{proyectoWebBean.proyectoWeb.convocatoria.fechaIni}"
+                                  styleClass="titulo">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                    </h:outputText>
+                    <h:outputText value=" a " 
+                                  styleClass="titulo"/>
+                    <h:outputText value="#{proyectoWebBean.proyectoWeb.convocatoria.fechaFin}"
+                                  styleClass="titulo">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                    </h:outputText>
+                </div>
+
+                <div>
+                    <h:outputText value="V. Plan de Ejecución Financiera" 
+                                  styleClass="titulo"/><br/>
+                        <h:outputText value="(Recuerde que solo podrá cargar montos hasta #{proyectoWebBean.proyectoWeb.convocatoria.montoMaximo})" 
+                                      styleClass="aclaraciones"
+                                      style="font-size: 1.5em;"/>
+                </div>
+            </div>
+
+
+
+            <div style="padding: 10px 10px 10px 10px;">
+
+                <h:outputText value="Debe ingresar correctamente la fecha inicial y 
+                              final del proyecto para completar estos datos"
+                              style="color: red;"
+                              rendered="#{proyectoWebBean.activarBotonPresupuesto() eq 0}"/><br/>
+                <ol>
+
+                    <!--PRIMER AÑO -->       
+
+                    <h:panelGroup rendered="#{proyectoWebBean.activarBotonAnio() eq 2 or
+                                              proyectoWebBean.activarBotonAnio()  eq 4}">
+                        <li class="listaTitulo">
+                            <div>
+                                <h:outputText value="Plan de ejecución financiera para el primer año: "/>
+
+
+                            </div>
+                        </li>
+                        <div class="listaTitulo">
+                            <h:outputText value="Bienes de Capital"/>
+                        </div>
+
+                        <div>
+                            <p:commandButton id="cbBienUsoAU" 
+                                             icon="ui-icon-search"
+                                             action="#{presupuestoFindDlgBean.cargarTabla(1)}"
+                                             actionListener="#{presupuestoAnioUnoFindDlgBean.setTipo(12)}"
+                                             oncomplete="dlgPresupuestoAnioUno.show();"
+                                             process="@this"
+                                             update=":frmUser:ihTipoPAUFD"
+                                             title="Agregar"
+                                             style="margin-bottom: 5px;"/>
+
+                            <p:dataTable id="dtBienUsoAU"
+                                         value="#{proyectoWebBean.proyectoWeb.presupuestoWebAnioUno.bienUsoWeb}"
+                                         var="buau"
+                                         style="width: 900px;">
+                                <p:column style="word-wrap:break-word;">
+                                    <f:facet name="header">
+                                        <h:outputText value="Gasto"/>
+                                    </f:facet>
+
+                                    <h:outputText value="#{buau.descripcion}"/>
+                                </p:column>
+
+                                <p:column style="word-wrap:break-word;">
+                                    <f:facet name="header">
+                                        <h:outputText value="Monto"/>
+                                    </f:facet>
+
+                                    <h:outputText value="#{buau.valor}"/>
+                                </p:column>
+
+                                <p:column style="word-wrap:break-word;">
+                                    <f:facet name="header">
+                                        <h:outputText value="Quitar"/>
+                                    </f:facet>
+
+                                    <p:commandButton icon="ui-icon-circle-close"
+                                                     actionListener="#{proyectoVPagBean.quitarBienUsoAnios(buau,1)}"
+                                                     update="dtBienUsoAU"
+                                                     process="@this, dtBienUsoAU"/>
+                                </p:column>
+                            </p:dataTable>
+
+                        </div>
+
+                        <div>
+                            <h:outputText id="otSubTotalBienUso"
+                                          value="Sub Total: $ #{proyectoVPagBean.obtenerSubTotalBienUso(1)}"
+                                          style="color: darkkhaki; font-size: 1.5em;"/>
+                        </div>
+                        <div >
+                            <div class="listaTitulo">
+                                <h:outputText value="Bienes de Consumo"/><br/>
+                            </div>
+
+                            <div>
+                                <p:commandButton id="cbtBienConsumoAU" 
+                                                 icon="ui-icon-search"
+                                                 action="#{presupuestoFindDlgBean.cargarTabla(1)}"
+                                                 actionListener="#{presupuestoAnioUnoFindDlgBean.setTipo(10)}"
+                                                 oncomplete="dlgPresupuestoAnioUno.show();"
+                                                 process="@this"
+                                                 update=":frmUser:ihTipoPAUFD"
+                                                 title="Agregar"
+                                                 style="margin-bottom: 5px;"
+                                                 />
+
+                                <p:dataTable id="dtBienConsumoAU"
+                                             value="#{proyectoWebBean.proyectoWeb.presupuestoWebAnioUno.bienConsumoWeb}"
+                                             var="bcau"
+                                             style="width: 900px;">
+                                    <p:column style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Gasto"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{bcau.descripcion}"/>
+                                    </p:column>
+
+                                    <p:column style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Monto"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{bcau.valor}"/>
+                                    </p:column>
+
+                                    <p:column style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Quitar"/>
+                                        </f:facet>
+
+                                        <p:commandButton icon="ui-icon-circle-close"
+                                                         actionListener="#{proyectoVPagBean.quitarBienConsumoAnios(bcau,1)}"
+                                                         update="dtBienConsumoAU"
+                                                         process="@this, dtBienConsumoAU"/>
+                                    </p:column>
+                                </p:dataTable>
+
+
+                            </div>
+                            <div>
+                                <h:outputText id="otSubTotalBienConsumo"
+                                              value="Sub Total: $ #{proyectoVPagBean.obtenerSubTotalBienConsumo(1)}"
+                                              style="color: darkkhaki; font-size: 1.5em;"/>
+                            </div>
+
+
+
+                            <div class="listaTitulo">
+                                <h:outputText value="Gastos de viaje"/>
+
+                            </div>
+
+                            <div>
+                                <p:commandButton id="cbGastoViajeAU" 
+                                                 icon="ui-icon-search"
+                                                 action="#{presupuestoFindDlgBean.cargarTabla(1)}"
+                                                 actionListener="#{presupuestoAnioUnoFindDlgBean.setTipo(13)}"
+                                                 oncomplete="dlgPresupuestoAnioUno.show();"
+                                                 process="@this"
+                                                 update=":frmUser:ihTipoPAUFD"
+                                                 title="Agregar"
+                                                 style="margin-bottom: 5px;"/>
+
+                                <p:dataTable id="dtGastoViajeAU"
+                                             value="#{proyectoWebBean.proyectoWeb.presupuestoWebAnioUno.gastosViajeWeb}"
+                                             var="gvau"
+                                             style="width: 900px;">
+                                    <p:column style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Gasto"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{gvau.descripcion}"/>
+                                    </p:column>
+
+                                    <p:column style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Monto"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{gvau.valor}"/>
+                                    </p:column>
+
+                                    <p:column style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Quitar"/>
+                                        </f:facet>
+
+                                        <p:commandButton icon="ui-icon-circle-close"
+                                                         actionListener="#{proyectoVPagBean.quitarGastoViajeAnios(gvau,1)}"
+                                                         update="dtGastoViajeAU"
+                                                         process="@this, dtGastoViajeAU"/>
+                                    </p:column>
+                                </p:dataTable>
+
+
+                            </div>
+                            <div>
+                                <h:outputText id="otSubTotalGastoViaje"
+                                              value="Sub Total: $ #{proyectoVPagBean.obtenerSubTotalGastoViajes(1)}"
+                                              style="color: darkkhaki; font-size: 1.5em;"/>
+                            </div>
+
+                            <div class="listaTitulo">
+                                <h:outputText value="Servicios no Personales"/>
+                            </div>
+
+                            <div>
+                                <p:commandButton id="cbBienNoPersonalAU" 
+                                                 icon="ui-icon-search"
+                                                 action="#{presupuestoFindDlgBean.cargarTabla(1)}"
+                                                 actionListener="#{presupuestoAnioUnoFindDlgBean.setTipo(11)}"
+                                                 oncomplete="dlgPresupuestoAnioUno.show();"
+                                                 process="@this"
+                                                 update=":frmUser:ihTipoPAUFD"
+                                                 title="Agregar"
+                                                 style="margin-bottom: 5px;"/>
+
+                                <p:dataTable id="dtBienNoPersonalAU"
+                                             value="#{proyectoWebBean.proyectoWeb.presupuestoWebAnioUno.bienNoPersonalWeb}"
+                                             var="bnpau"
+                                             style="width: 900px;">
+                                    <p:column id="cGastoBNP" 
+                                              style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Gasto"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{bnpau.descripcion}"/>
+                                    </p:column>
+
+                                    <p:column id="cMontoBNP" 
+                                              style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Monto"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{bnpau.valor}"/>
+                                    </p:column>
+
+                                    <p:column id="cQuitarBNP" 
+                                              style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Quitar"/>
+                                        </f:facet>
+
+                                        <p:commandButton icon="ui-icon-circle-close"
+                                                         actionListener="#{proyectoVPagBean.quitarBienNoPersonalAnios(bnpau,1)}"
+                                                         update="dtBienNoPersonalAU"
+                                                         process="@this, dtBienNoPersonalAU"/>
+                                    </p:column>
+                                </p:dataTable>
+
+
+                            </div>
+                            <div> 
+                                <h:outputText id="otSubTotalBienNoPersonal"
+                                              value="Sub Total: $ #{proyectoVPagBean.obtenerSubTotalBienNoPersonal(1)}"
+                                              style="color: darkkhaki; font-size: 1.5em;"/>
+                            </div>
+
+                            <div style="margin: 5px 0px 5px 0px;">
+                                <h:outputText id="otTotalGasto"
+                                              value="Total: $ #{proyectoVPagBean.obtenerTotalGastos(1)}"
+                                              style="color: darkkhaki; font-size: 1.8em;"/>
+                            </div>
+                        </div>
+
+
+                        <!--SEGUNDO AÑO -->                     
+                        <li class="listaTitulo">
+                            <div>
+                                <h:outputText value="Plan de ejecución financiera para el segundo año: "/>
+
+
+                            </div>
+                        </li>
+
+                        <div class="listaTitulo">
+                            <h:outputText value="Bienes de Capital"/>
+                        </div>
+
+                        <div>
+                            <p:commandButton id="cbBienUsoAD" 
+                                             icon="ui-icon-search"
+                                             action="#{presupuestoFindDlgBean.cargarTabla(2)}"
+                                             actionListener="#{presupuestoAnioUnoFindDlgBean.setTipo(22)}"
+                                             oncomplete="dlgPresupuestoAnioUno.show();"
+                                             process="@this"
+                                             update=":frmUser:ihTipoPAUFD"
+                                             title="Agregar"
+                                             style="margin-bottom: 5px;"/>
+
+                            <p:dataTable id="dtBienUsoAD"
+                                         value="#{proyectoWebBean.proyectoWeb.presupuestoWebAnioDos.bienUsoWeb}"
+                                         var="buaud"
+                                         style="width: 900px;">
+                                <p:column style="word-wrap:break-word;">
+                                    <f:facet name="header">
+                                        <h:outputText value="Gasto"/>
+                                    </f:facet>
+
+                                    <h:outputText value="#{buaud.descripcion}"/>
+                                </p:column>
+
+                                <p:column style="word-wrap:break-word;">
+                                    <f:facet name="header">
+                                        <h:outputText value="Monto"/>
+                                    </f:facet>
+
+                                    <h:outputText value="#{buaud.valor}"/>
+                                </p:column>
+
+                                <p:column style="word-wrap:break-word;">
+                                    <f:facet name="header">
+                                        <h:outputText value="Quitar"/>
+                                    </f:facet>
+
+                                    <p:commandButton icon="ui-icon-circle-close"
+                                                     actionListener="#{proyectoVPagBean.quitarBienUsoAnios(buaud,2)}"
+                                                     update="dtBienUsoAD"
+                                                     process="@this, dtBienUsoAD"/>
+                                </p:column>
+                            </p:dataTable>
+
+                        </div>
+
+                        <div>
+                            <h:outputText id="otSubTotalBienUsoAD"
+                                          value="Sub Total: $ #{proyectoVPagBean.obtenerSubTotalBienUso(2)}"
+                                          style="color: darkkhaki; font-size: 1.5em;"/>
+                        </div>
+                        <div >
+                            <div class="listaTitulo">
+                                <h:outputText value="Bienes de Consumo"/><br/>
+                            </div>
+
+                            <div>
+                                <p:commandButton id="cbtBienConsumoAD" 
+                                                 icon="ui-icon-search"
+                                                 action="#{presupuestoFindDlgBean.cargarTabla(2)}"
+                                                 actionListener="#{presupuestoAnioUnoFindDlgBean.setTipo(20)}"
+                                                 oncomplete="dlgPresupuestoAnioUno.show();"
+                                                 process="@this"
+                                                 update=":frmUser:ihTipoPAUFD"
+                                                 title="Agregar"
+                                                 style="margin-bottom: 5px;"/>
+
+                                <p:dataTable id="dtBienConsumoAD"
+                                             value="#{proyectoWebBean.proyectoWeb.presupuestoWebAnioDos.bienConsumoWeb}"
+                                             var="bcaud"
+                                             style="width: 900px;">
+                                    <p:column style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Gasto"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{bcaud.descripcion}"/>
+                                    </p:column>
+
+                                    <p:column style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Monto"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{bcaud.valor}"/>
+                                    </p:column>
+
+                                    <p:column style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Quitar"/>
+                                        </f:facet>
+
+                                        <p:commandButton icon="ui-icon-circle-close"
+                                                         actionListener="#{proyectoVPagBean.quitarBienConsumoAnios(bcaud,2)}"
+                                                         update="dtBienConsumoAD"
+                                                         process="@this, dtBienConsumoAD"/>
+                                    </p:column>
+                                </p:dataTable>
+
+
+                            </div>
+                            <div>
+                                <h:outputText id="otSubTotalBienConsumoAD"
+                                              value="Sub Total: $ #{proyectoVPagBean.obtenerSubTotalBienConsumo(2)}"
+                                              style="color: darkkhaki; font-size: 1.5em;"/>
+                            </div>
+
+
+
+
+                            <div class="listaTitulo">
+                                <h:outputText value="Gastos de viaje"/>
+
+                            </div>
+
+                            <div>
+                                <p:commandButton id="cbGastoViajeAD" 
+                                                 icon="ui-icon-search"
+                                                 action="#{presupuestoFindDlgBean.cargarTabla(2)}"
+                                                 actionListener="#{presupuestoAnioUnoFindDlgBean.setTipo(23)}"
+                                                 oncomplete="dlgPresupuestoAnioUno.show();"
+                                                 process="@this"
+                                                 update=":frmUser:ihTipoPAUFD"
+                                                 title="Agregar"
+                                                 style="margin-bottom: 5px;"/>
+
+                                <p:dataTable id="dtGastoViajeAD"
+                                             value="#{proyectoWebBean.proyectoWeb.presupuestoWebAnioDos.gastosViajeWeb}"
+                                             var="gvaud"
+                                             style="width: 900px;">
+                                    <p:column style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Gasto"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{gvaud.descripcion}"/>
+                                    </p:column>
+
+                                    <p:column style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Monto"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{gvaud.valor}"/>
+                                    </p:column>
+
+                                    <p:column style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Quitar"/>
+                                        </f:facet>
+
+                                        <p:commandButton icon="ui-icon-circle-close"
+                                                         actionListener="#{proyectoVPagBean.quitarGastoViajeAnios(gvaud,2)}"
+                                                         update="dtGastoViajeAD"
+                                                         process="@this, dtGastoViajeAD"/>
+                                    </p:column>
+                                </p:dataTable>
+
+
+                            </div>
+                            <div>
+                                <h:outputText id="otSubTotalGastoViajeAD"
+                                              value="Sub Total: $ #{proyectoVPagBean.obtenerSubTotalGastoViajes(2)}"
+                                              style="color: darkkhaki; font-size: 1.5em;"/>
+                            </div>
+
+                            <div class="listaTitulo">
+                                <h:outputText value="Servicios no Personales"/>
+                            </div>
+
+                            <div>
+                                <p:commandButton id="cbBienNoPersonalAD" 
+                                                 icon="ui-icon-search"
+                                                 action="#{presupuestoFindDlgBean.cargarTabla(2)}"
+                                                 actionListener="#{presupuestoAnioUnoFindDlgBean.setTipo(21)}"
+                                                 oncomplete="dlgPresupuestoAnioUno.show();"
+                                                 process="@this"
+                                                 update=":frmUser:ihTipoPAUFD"
+                                                 title="Agregar"
+                                                 style="margin-bottom: 5px;"/>
+
+                                <p:dataTable id="dtBienNoPersonalAD"
+                                             value="#{proyectoWebBean.proyectoWeb.presupuestoWebAnioDos.bienNoPersonalWeb}"
+                                             var="bnpaud"
+                                             style="width: 900px;">
+                                    <p:column 
+                                        style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Gasto"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{bnpaud.descripcion}"/>
+                                    </p:column>
+
+                                    <p:column  
+                                        style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Monto"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{bnpaud.valor}"/>
+                                    </p:column>
+
+                                    <p:column  
+                                        style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Quitar"/>
+                                        </f:facet>
+
+                                        <p:commandButton icon="ui-icon-circle-close"
+                                                         actionListener="#{proyectoVPagBean.quitarBienNoPersonalAnios(bnpaud,2)}"
+                                                         update="dtBienNoPersonalAD"
+                                                         process="@this, dtBienNoPersonalAD"/>
+                                    </p:column>
+                                </p:dataTable>
+
+
+                            </div>
+                            <div> 
+                                <h:outputText id="otSubTotalBienNoPersonalAD"
+                                              value="Sub Total: $ #{proyectoVPagBean.obtenerSubTotalBienNoPersonal(2)}"
+                                              style="color: darkkhaki; font-size: 1.5em;"/>
+                            </div>
+
+                            <div style="margin: 5px 0px 5px 0px;">
+                                <h:outputText id="otTotalGastoAD"
+                                              value="Total: $ #{proyectoVPagBean.obtenerTotalGastos(2)}"
+                                              style="color: darkkhaki; font-size: 1.8em;"/>
+                            </div>
+                        </div>
+                    </h:panelGroup>
+
+                    <!--TERMINA AÑO DOS-->  
+
+                    <h:panelGroup rendered="#{proyectoWebBean.activarBotonAnio()  eq 4}">
+<!--TERCER AÑO -->                     
+                        <li class="listaTitulo">
+                            <div>
+                                <h:outputText value="Plan de ejecución financiera para el tercer año: "/>
+
+
+                            </div>
+                        </li>
+                        <div class="listaTitulo">
+                            <h:outputText value="Bienes de Capital"/>
+                        </div>
+
+                        <div>
+                            <p:commandButton id="cbBienUsoAT" 
+                                             icon="ui-icon-search"
+                                             action="#{presupuestoFindDlgBean.cargarTabla(3)}"
+                                             actionListener="#{presupuestoAnioUnoFindDlgBean.setTipo(32)}"
+                                             oncomplete="dlgPresupuestoAnioUno.show();"
+                                             process="@this"
+                                             update=":frmUser:ihTipoPAUFD"
+                                             title="Agregar"
+                                             style="margin-bottom: 5px;"/>
+
+                            <p:dataTable id="dtBienUsoAT"
+                                         value="#{proyectoWebBean.proyectoWeb.presupuestoWebAnioTres.bienUsoWeb}"
+                                         var="buaud"
+                                         style="width: 900px;">
+                                <p:column style="word-wrap:break-word;">
+                                    <f:facet name="header">
+                                        <h:outputText value="Gasto"/>
+                                    </f:facet>
+
+                                    <h:outputText value="#{buaud.descripcion}"/>
+                                </p:column>
+
+                                <p:column style="word-wrap:break-word;">
+                                    <f:facet name="header">
+                                        <h:outputText value="Monto"/>
+                                    </f:facet>
+
+                                    <h:outputText value="#{buaud.valor}"/>
+                                </p:column>
+
+                                <p:column style="word-wrap:break-word;">
+                                    <f:facet name="header">
+                                        <h:outputText value="Quitar"/>
+                                    </f:facet>
+
+                                    <p:commandButton icon="ui-icon-circle-close"
+                                                     actionListener="#{proyectoVPagBean.quitarBienUsoAnios(buaud,3)}"
+                                                     update="dtBienUsoAT"
+                                                     process="@this, dtBienUsoAT"/>
+                                </p:column>
+                            </p:dataTable>
+
+                        </div>
+
+                        <div>
+                            <h:outputText id="otSubTotalBienUsoAT"
+                                          value="Sub Total: $ #{proyectoVPagBean.obtenerSubTotalBienUso(3)}"
+                                          style="color: darkkhaki; font-size: 1.5em;"/>
+                        </div>
+                        <div >
+                            <div class="listaTitulo">
+                                <h:outputText value="Bienes de Consumo"/><br/>
+                            </div>
+
+                            <div>
+                                <p:commandButton id="cbtBienConsumoAT" 
+                                                 icon="ui-icon-search"
+                                                 action="#{presupuestoFindDlgBean.cargarTabla(3)}"
+                                                 actionListener="#{presupuestoAnioUnoFindDlgBean.setTipo(30)}"
+                                                 oncomplete="dlgPresupuestoAnioUno.show();"
+                                                 process="@this"
+                                                 update=":frmUser:ihTipoPAUFD"
+                                                 title="Agregar"
+                                                 style="margin-bottom: 5px;"
+                                                 />
+
+                                <p:dataTable id="dtBienConsumoAT"
+                                             value="#{proyectoWebBean.proyectoWeb.presupuestoWebAnioTres.bienConsumoWeb}"
+                                             var="bcaud"
+                                             style="width: 900px;">
+                                    <p:column style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Gasto"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{bcaud.descripcion}"/>
+                                    </p:column>
+
+                                    <p:column style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Monto"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{bcaud.valor}"/>
+                                    </p:column>
+
+                                    <p:column style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Quitar"/>
+                                        </f:facet>
+
+                                        <p:commandButton icon="ui-icon-circle-close"
+                                                         actionListener="#{proyectoVPagBean.quitarBienConsumoAnios(bcaud,3)}"
+                                                         update="dtBienConsumoAT"
+                                                         process="@this, dtBienConsumoAT"/>
+                                    </p:column>
+                                </p:dataTable>
+
+
+                            </div>
+                            <div>
+                                <h:outputText id="otSubTotalBienConsumoAT"
+                                              value="Sub Total: $ #{proyectoVPagBean.obtenerSubTotalBienConsumo(3)}"
+                                              style="color: darkkhaki; font-size: 1.5em;"/>
+                            </div>                       
+
+
+
+                            <div class="listaTitulo">
+                                <h:outputText value="Gastos de viaje"/>
+
+                            </div>
+
+                            <div>
+                                <p:commandButton id="cbGastoViajeAT" 
+                                                 icon="ui-icon-search"
+                                                 action="#{presupuestoFindDlgBean.cargarTabla(3)}"
+                                                 actionListener="#{presupuestoAnioUnoFindDlgBean.setTipo(33)}"
+                                                 oncomplete="dlgPresupuestoAnioUno.show();"
+                                                 process="@this"
+                                                 update=":frmUser:ihTipoPAUFD"
+                                                 title="Agregar"
+                                                 style="margin-bottom: 5px;"/>
+
+                                <p:dataTable id="dtGastoViajeAT"
+                                             value="#{proyectoWebBean.proyectoWeb.presupuestoWebAnioTres.gastosViajeWeb}"
+                                             var="gvaud"
+                                             style="width: 900px;">
+                                    <p:column style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Gasto"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{gvaud.descripcion}"/>
+                                    </p:column>
+
+                                    <p:column style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Monto"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{gvaud.valor}"/>
+                                    </p:column>
+
+                                    <p:column style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Quitar"/>
+                                        </f:facet>
+
+                                        <p:commandButton icon="ui-icon-circle-close"
+                                                         actionListener="#{proyectoVPagBean.quitarGastoViajeAnios(gvaud,3)}"
+                                                         update="dtGastoViajeAT"
+                                                         process="@this, dtGastoViajeAT"/>
+                                    </p:column>
+                                </p:dataTable>
+
+
+                            </div>
+                            <div>
+                                <h:outputText id="otSubTotalGastoViajeAT"
+                                              value="Sub Total: $ #{proyectoVPagBean.obtenerSubTotalGastoViajes(3)}"
+                                              style="color: darkkhaki; font-size: 1.5em;"/>
+                            </div>
+
+                            <div class="listaTitulo">
+                                <h:outputText value="Servicios no Personales"/>
+                            </div>
+
+                            <div>
+                                <p:commandButton id="cbBienNoPersonalAT" 
+                                                 icon="ui-icon-search"
+                                                 action="#{presupuestoFindDlgBean.cargarTabla(3)}"
+                                                 actionListener="#{presupuestoAnioUnoFindDlgBean.setTipo(31)}"
+                                                 oncomplete="dlgPresupuestoAnioUno.show();"
+                                                 process="@this"
+                                                 update=":frmUser:ihTipoPAUFD"
+                                                 title="Agregar"
+                                                 style="margin-bottom: 5px;"/>
+
+                                <p:dataTable id="dtBienNoPersonalAT"
+                                             value="#{proyectoWebBean.proyectoWeb.presupuestoWebAnioTres.bienNoPersonalWeb}"
+                                             var="bnpaud"
+                                             style="width: 900px;">
+                                    <p:column 
+                                        style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Gasto"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{bnpaud.descripcion}"/>
+                                    </p:column>
+
+                                    <p:column  
+                                        style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Monto"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{bnpaud.valor}"/>
+                                    </p:column>
+
+                                    <p:column  
+                                        style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Quitar"/>
+                                        </f:facet>
+
+                                        <p:commandButton icon="ui-icon-circle-close"
+                                                         actionListener="#{proyectoVPagBean.quitarBienNoPersonalAnios(bnpaud,3)}"
+                                                         update="dtBienNoPersonalAT"
+                                                         process="@this, dtBienNoPersonalAT"/>
+                                    </p:column>
+                                </p:dataTable>
+
+
+                            </div>
+                            <div> 
+                                <h:outputText id="otSubTotalBienNoPersonalAT"
+                                              value="Sub Total: $ #{proyectoVPagBean.obtenerSubTotalBienNoPersonal(3)}"
+                                              style="color: darkkhaki; font-size: 1.5em;"/>
+                            </div>
+
+                            <div style="margin: 5px 0px 5px 0px;">
+                                <h:outputText id="otTotalGastoAT"
+                                              value="Total: $ #{proyectoVPagBean.obtenerTotalGastos(3)}"
+                                              style="color: darkkhaki; font-size: 1.8em;"/>
+                            </div>
+                        </div>
+
+                        <!--TERMINA AÑO TRES-->
+
+                        <!--CUARTO AÑO -->                     
+                        <li class="listaTitulo">
+                            <div>
+                                <h:outputText value="Plan de ejecución financiera para el cuarto año: "/>
+
+
+                            </div>
+                        </li>
+                        <div class="listaTitulo">
+                            <h:outputText value="Bienes de Capital"/>
+                        </div>
+
+                        <div>
+                            <p:commandButton id="cbBienUsoAC" 
+                                             icon="ui-icon-search"
+                                             action="#{presupuestoFindDlgBean.cargarTabla(4)}"
+                                             actionListener="#{presupuestoAnioUnoFindDlgBean.setTipo(42)}"
+                                             oncomplete="dlgPresupuestoAnioUno.show();"
+                                             process="@this"
+                                             update=":frmUser:ihTipoPAUFD"
+                                             title="Agregar"
+                                             style="margin-bottom: 5px;"/>
+
+                            <p:dataTable id="dtBienUsoAC"
+                                         value="#{proyectoWebBean.proyectoWeb.presupuestoWebAnioCuatro.bienUsoWeb}"
+                                         var="buaud"
+                                         style="width: 900px;">
+                                <p:column style="word-wrap:break-word;">
+                                    <f:facet name="header">
+                                        <h:outputText value="Gasto"/>
+                                    </f:facet>
+
+                                    <h:outputText value="#{buaud.descripcion}"/>
+                                </p:column>
+
+                                <p:column style="word-wrap:break-word;">
+                                    <f:facet name="header">
+                                        <h:outputText value="Monto"/>
+                                    </f:facet>
+
+                                    <h:outputText value="#{buaud.valor}"/>
+                                </p:column>
+
+                                <p:column style="word-wrap:break-word;">
+                                    <f:facet name="header">
+                                        <h:outputText value="Quitar"/>
+                                    </f:facet>
+
+                                    <p:commandButton icon="ui-icon-circle-close"
+                                                     actionListener="#{proyectoVPagBean.quitarBienUsoAnios(buaud,4)}"
+                                                     update="dtBienUsoAC"
+                                                     process="@this, dtBienUsoAC"/>
+                                </p:column>
+                            </p:dataTable>
+
+                        </div>
+
+                        <div>
+                            <h:outputText id="otSubTotalBienUsoAC"
+                                          value="Sub Total: $ #{proyectoVPagBean.obtenerSubTotalBienUso(4)}"
+                                          style="color: darkkhaki; font-size: 1.5em;"/>
+                        </div>
+                        <div >
+                            <div class="listaTitulo">
+                                <h:outputText value="Bienes de Consumo"/><br/>
+                            </div>
+
+                            <div>
+                                <p:commandButton id="cbtBienConsumoAC" 
+                                                 icon="ui-icon-search"
+                                                 action="#{presupuestoFindDlgBean.cargarTabla(4)}"
+                                                 actionListener="#{presupuestoAnioUnoFindDlgBean.setTipo(40)}"
+                                                 oncomplete="dlgPresupuestoAnioUno.show();"
+                                                 process="@this"
+                                                 update=":frmUser:ihTipoPAUFD"
+                                                 title="Agregar"
+                                                 style="margin-bottom: 5px;"/>
+
+                                <p:dataTable id="dtBienConsumoAC"
+                                             value="#{proyectoWebBean.proyectoWeb.presupuestoWebAnioCuatro.bienConsumoWeb}"
+                                             var="bcaud"
+                                             style="width: 900px;">
+                                    <p:column style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Gasto"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{bcaud.descripcion}"/>
+                                    </p:column>
+
+                                    <p:column style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Monto"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{bcaud.valor}"/>
+                                    </p:column>
+
+                                    <p:column style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Quitar"/>
+                                        </f:facet>
+
+                                        <p:commandButton icon="ui-icon-circle-close"
+                                                         actionListener="#{proyectoVPagBean.quitarBienConsumoAnios(bcaud,4)}"
+                                                         update="dtBienConsumoAC"
+                                                         process="@this, dtBienConsumoAC"/>
+                                    </p:column>
+                                </p:dataTable>
+
+
+                            </div>
+                            <div>
+                                <h:outputText id="otSubTotalBienConsumoAC"
+                                              value="Sub Total: $ #{proyectoVPagBean.obtenerSubTotalBienConsumo(4)}"
+                                              style="color: darkkhaki; font-size: 1.5em;"/>
+                            </div>
+
+
+
+                            <div class="listaTitulo">
+                                <h:outputText value="Gastos de viaje"/>
+
+                            </div>
+
+                            <div>
+                                <p:commandButton id="cbGastoViajeAC" 
+                                                 icon="ui-icon-search"
+                                                 action="#{presupuestoFindDlgBean.cargarTabla(4)}"
+                                                 actionListener="#{presupuestoAnioUnoFindDlgBean.setTipo(43)}"
+                                                 oncomplete="dlgPresupuestoAnioUno.show();"
+                                                 process="@this"
+                                                 update=":frmUser:ihTipoPAUFD"
+                                                 title="Agregar"
+                                                 style="margin-bottom: 5px;"/>
+
+                                <p:dataTable id="dtGastoViajeAC"
+                                             value="#{proyectoWebBean.proyectoWeb.presupuestoWebAnioCuatro.gastosViajeWeb}"
+                                             var="gvaud"
+                                             style="width: 900px;">
+                                    <p:column style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Gasto"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{gvaud.descripcion}"/>
+                                    </p:column>
+
+                                    <p:column style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Monto"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{gvaud.valor}"/>
+                                    </p:column>
+
+                                    <p:column style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Quitar"/>
+                                        </f:facet>
+
+                                        <p:commandButton icon="ui-icon-circle-close"
+                                                         actionListener="#{proyectoVPagBean.quitarGastoViajeAnios(gvaud,4)}"
+                                                         update="dtGastoViajeAC"
+                                                         process="@this, dtGastoViajeAC"/>
+                                    </p:column>
+                                </p:dataTable>
+
+
+                            </div>
+                            <div>
+                                <h:outputText id="otSubTotalGastoViajeAC"
+                                              value="Sub Total: $ #{proyectoVPagBean.obtenerSubTotalGastoViajes(4)}"
+                                              style="color: darkkhaki; font-size: 1.5em;"/>
+                            </div>
+
+                            <div class="listaTitulo">
+                                <h:outputText value="Servicios no Personales"/>
+                            </div>
+
+                            <div>
+                                <p:commandButton id="cbBienNoPersonalAC" 
+                                                 icon="ui-icon-search"
+                                                 action="#{presupuestoFindDlgBean.cargarTabla(4)}"
+                                                 actionListener="#{presupuestoAnioUnoFindDlgBean.setTipo(41)}"
+                                                 oncomplete="dlgPresupuestoAnioUno.show();"
+                                                 process="@this"
+                                                 update=":frmUser:ihTipoPAUFD"
+                                                 title="Agregar"
+                                                 style="margin-bottom: 5px;"/>
+
+                                <p:dataTable id="dtBienNoPersonalAC"
+                                             value="#{proyectoWebBean.proyectoWeb.presupuestoWebAnioCuatro.bienNoPersonalWeb}"
+                                             var="bnpaud"
+                                             style="width: 900px;">
+                                    <p:column 
+                                        style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Gasto"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{bnpaud.descripcion}"/>
+                                    </p:column>
+
+                                    <p:column  
+                                        style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Monto"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{bnpaud.valor}"/>
+                                    </p:column>
+
+                                    <p:column  
+                                        style="word-wrap:break-word;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Quitar"/>
+                                        </f:facet>
+
+                                        <p:commandButton icon="ui-icon-circle-close"
+                                                         actionListener="#{proyectoVPagBean.quitarBienNoPersonalAnios(bnpaud,4)}"
+                                                         update="dtBienNoPersonalAC"
+                                                         process="@this, dtBienNoPersonalAC"/>
+                                    </p:column>
+                                </p:dataTable>
+
+
+                            </div>
+                            <div> 
+                                <h:outputText id="otSubTotalBienNoPersonalAC"
+                                              value="Sub Total: $ #{proyectoVPagBean.obtenerSubTotalBienNoPersonal(4)}"
+                                              style="color: darkkhaki; font-size: 1.5em;"/>
+                            </div>
+
+                            <div style="margin: 5px 0px 5px 0px;">
+                                <h:outputText id="otTotalGastoAC"
+                                              value="Total: $ #{proyectoVPagBean.obtenerTotalGastos(4)}"
+                                              style="color: darkkhaki; font-size: 1.8em;"/>
+                            </div>
+                        </div>
+
+                    </h:panelGroup>
+
+                    <!--TERMINA AÑO CUATRO-->
+
+                    <li class="listaTitulo">
+
+                        <div>
+                            <h:outputText value="Plan de ejecución financiera para los 
+                                          dos y/o cuatro años: "/>
+                        </div>
+                    </li>
+
+                    <div>
+                        <p:panel id="dtPresupuesto">
+                            <table border="4" cellspacing="10" cellpadding="10">
+                                <ui:repeat value="#{proyectoWebBean.proyectoWeb.presupuestoWeb}"
+                                           var="pres">
+                                    <tr>
+                                        <th>
+                                            <h:outputText value="Gastos"/>
+                                        </th>
+
+                                        <ui:repeat value="#{proyectoWebBean.lstAniosPresupuesto}"
+                                                   var="a">
+                                            <th>
+
+                                                <h:outputText value="#{a}"/>
+                                            </th>
+
+                                        </ui:repeat>
+
+                                        <th>
+                                            <h:outputText value="Totales"/>
+                                        </th>
+
+                                    </tr>
+
+                                    <tr>
+                                        <th>
+                                            <h:outputText value="Bienes de Capital"/>
+                                        </th>
+                                        <ui:repeat value="#{pres.bienUso}"
+                                                   var="bu">
+                                            <td>
+
+
+                                                <h:outputText value="$ #{bu.valor}"
+                                                              rendered="#{bu.anio > 0}"/>
+
+                                            </td>
+                                        </ui:repeat>
+                                        <th>
+                                            <h:outputText value="$ #{proyectoVPagBean.calcularTotalFila(pres.bienUso, 2)}"
+                                                          rendered="#{not empty pres.bienUso}"/>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <h:outputText value="Bienes de Consumo"/>
+                                        </th>
+                                        <ui:repeat value="#{pres.bienConsumo}"
+                                                   var="bc">
+                                            <td>
+                                                <h:outputText value="$ #{bc.valor}"
+                                                              rendered="#{bc.anio > 0}"/>
+                                            </td>
+                                        </ui:repeat>
+                                        <th>
+                                            <h:outputText value="$ #{proyectoVPagBean.calcularTotalFila(pres.bienConsumo, 0)}"
+                                                          rendered="#{not empty pres.bienConsumo}"/>
+                                        </th>
+                                    </tr>
+
+                                    <tr>
+                                        <th>
+                                            <h:outputText value="Gastos de Viajes"/>
+                                        </th>
+                                        <ui:repeat value="#{pres.gastosViaje}"
+                                                   var="gv">
+                                            <td>
+
+
+                                                <h:outputText value="$ #{gv.valor}"
+                                                              rendered="#{gv.anio > 0}"/>
+
+
+
+                                            </td>
+                                        </ui:repeat>
+                                        <th>
+                                            <h:outputText value="$ #{proyectoVPagBean.calcularTotalFila(pres.gastosViaje, 3)}"
+                                                          rendered="#{not empty pres.gastosViaje}"/>
+                                        </th>
+                                    </tr>
+
+                                    <tr>
+                                        <th>
+                                            <h:outputText value="Servicios no Personales"/>
+                                        </th>
+                                        <ui:repeat value="#{pres.bienNoPersonal}"
+                                                   var="bnp">
+                                            <td>
+
+
+                                                <h:outputText value="$ #{bnp.valor}"
+                                                              rendered="#{bnp.anio > 0}"/>
+
+
+
+                                            </td>
+                                        </ui:repeat>
+                                        <th>
+                                            <h:outputText value="$ #{proyectoVPagBean.calcularTotalFila(pres.bienNoPersonal, 1)}"
+                                                          rendered="#{not empty pres.bienNoPersonal}"/>
+                                        </th>
+                                    </tr>
+
+                                    <tr>
+                                        <th>
+                                            <h:outputText value="Totales"/>
+                                        </th>
+
+                                        <ui:repeat value="#{pres.bienNoPersonal}"
+                                                   var="bnp">
+                                            <th>
+
+                                                <h:outputText value="$ #{proyectoVPagBean.calcularTotalColumna(pres)}"/>
+                                            </th>
+
+                                        </ui:repeat>
+                                        <th>
+                                            <h:outputText value="$ #{proyectoVPagBean.calcularTotal(pres)}"/>
+                                        </th>
+
+                                    </tr>
+
+
+                                </ui:repeat>
+                            </table>
+                        </p:panel>
+
+                    </div>
+
+                    <li class="listaTitulo">
+                        <div>
+                            <h:outputText value="Recursos provistos por otras instituciones para el proyecto: "/>
+                        </div>
+                    </li>
+                    <div>
+                        <p:commandButton id="cbRecursoSubsidio" 
+                                         icon="ui-icon-search"
+                                         actionListener="#{recursoSubsidioFindDlgBean.init(0)}"
+                                         oncomplete="dlgFindRecursoSubsidio.show();"
+                                         process="@this"
+                                         update=":frmUser:ihTipoRSFD, :frmUser:somEntidadRS"
+                                         title="Agregar"/>
+
+                        <p:dataTable id="dtRecursoSubsidio"
+                                     value="#{proyectoWebBean.proyectoWeb.recursosSubsidios}"
+                                     var="rs"
+                                     style="width: 900px; overflow: auto;">
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Año"/>
+                                </f:facet>
+
+                                <h:outputText value="#{rs.anio}"/>
+                            </p:column>
+
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Nombre y Apellido"/>
+                                </f:facet>
+
+                                <h:outputText value="#{rs.nombreApellido}"/>
+                            </p:column>
+
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Entidad"/>
+                                </f:facet>
+
+                                <h:outputText value="#{rs.entidadSubsidio.descripcion}"/>
+                            </p:column>
+
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Monto"/>
+                                </f:facet>
+
+                                <h:outputText value="$ #{rs.monto}"/>
+                            </p:column>
+
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Quitar"/>
+                                </f:facet>
+
+                                <p:commandButton icon="ui-icon-circle-close"
+                                                 actionListener="#{proyectoVPagBean.quitarRecursoSubsidio(rs)}"
+                                                 update="dtRecursoSubsidio"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>              
+
+                </ol>
+
+
+
+                <!--<p:commandButton value="Guardar"
+                                 actionListener="{proyectoWebBean.create()}"/>-->
+
+            </div>
+
+            <div align="center">
+                <p:commandButton value="Anterior"
+                                 icon="ui-icon-arrowthick-1-w"
+                                 style="margin: 20px 100px 20px 100px "
+                                 action="#{navegarBean.entrarPagProyecto(4)}"
+                                 ajax="false"
+                                 rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+
+                <p:commandButton value="Siguiente"
+                                 icon="ui-icon-arrowthick-1-e"
+                                 action="#{navegarBean.entrarPagProyecto(6)}"
+                                 ajax="false"
+                                 rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+
+                <p:commandButton value="Guardar"
+                                 icon="ui-icon-disk"
+                                 style="margin: 20px 100px 20px 100px "
+                                 action="#{proyectoWebBean.guardar(5)}"
+                                 update="dMensaje, clMenuPrincipal"
+                                 rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+
+            </div>
+        </div>
+
+
+    </ui:define>
+
+</ui:composition>

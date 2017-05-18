@@ -1,0 +1,103 @@
+27-13653026-2  (id persona  163)
+
+ABBIATTI Nidia Nora 27-11041782-4
+
+3-17112013-57 (tiene datos las ultimas 3 solapas)
+
+
+
+
+sacar codigos listo
+
+sector prioritario
+
+cambiar telefonos listo
+
+reporte sacar codigo secyt listo
+
+reporte cambiar a 2016 listo
+
+cambiar vista mapa a mapa por defecto listo
+
+cambiar en el mapa con un click listo
+
+
+//PARA EVALUACION
+
+27-21658383-9
+ID 457
+
+ARIEL SECO
+23-22043794-9
+ID 2007
+
+
+todas las web cambiar
+
+telefono: 383-4431180 int 102/120
+
+
+
+Cuil: 20-11982992-6
+Clave: 240656
+
+
+//SE ESTIRA EL TEXTO  (para evaluacion)
+CUIL: 20-12513342-9
+
+CLAVE:123456
+
+uno
+Bienes de Capital 
+Bibliografia	1000.00
+Equipamiento	7500.00
+Bienes de Consumo
+Bienes de Consumo	2500.00
+Gastos de viaje 
+viajes y biaticos	1500.00
+Servicios no Personales 
+otros	1000.00
+Servicio de Terceros	2500.00
+
+dos
+Bienes de Capital 
+Equipamiento	5000.00
+
+Bienes de Consumo
+Bienes de Consumo	5000.00
+
+Gastos de viaje 
+viajes y biaticos	2000.00
+
+Gastos de viaje 
+Servicios de Terceros	3000.00
+Otros gastos	1000.00
+
+select * from secyt.proyectoweb where titulo = 'Estudio y Catarizacion de Electrocatalizadores para Celdas de Combustibles'
+222
+select * from secyt.proyectoweb_presupuesto where proyectoweb_id = 222
+506
+
+select * from secyt.proyectoweb_presupuesto_economico_bien_uso where presupuestoweb_id = 506
+select * from economico_bien_uso where id in (3809, 3819, 3820)
+
+delete from secyt.proyectoweb_presupuesto_economico_bien_uso where bienUso_id in (3809, 3819, 3820)
+delete from economico_bien_uso where id in (3809, 3819, 3820)
+
+select * from secyt.proyectoweb_presupuesto_economico_bien_no_personal where presupuestoweb_id = 506
+select * from economico_bien_no_personal where id in (3721, 3724)
+delete from secyt.proyectoweb_presupuesto_economico_bien_no_personal where  bienNoPersonal_id in (3721, 3724)
+delete from economico_bien_no_personal where id in (3721, 3724)
+
+select * from secyt.proyectoweb_presupuesto_economico_gasto_viaje where presupuestoweb_id = 506
+select * from economico_gasto_viaje where id in (3914, 3915)
+
+delete from secyt.proyectoweb_presupuesto_economico_gasto_viaje where  gastosViaje_id in (3914, 3915)
+delete from economico_gasto_viaje where id in (3914, 3915)
+
+
+select * from secyt.proyectoweb_presupuesto_economico_bien_consumo where presupuestoweb_id = 506
+select * from economico_bien_consumo where id in (3956, 3957, 3960)
+
+delete from secyt.proyectoweb_presupuesto_economico_bien_consumo where  bienConsumo_id in (3956, 3957, 3960)
+delete from economico_gasto_viaje where id in (3956, 3957, 3960)

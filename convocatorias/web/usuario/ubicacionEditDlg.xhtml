@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <p:dialog id="dUbicacionEditDlg" 
+              widgetVar="dlgUbicacionEditDlg"
+              modal="true"
+              width="750"
+              height="450"
+              position="top"
+              style="margin-top: 10px;"
+              resizable="false">
+
+        <f:facet name="header">
+            <h:outputText value="Ubicación" styleClass="titulo"/>
+
+            <h:inputHidden id="ihUbicacionId" value="#{ubicacionBean.ubicacion.id}"/>
+        </f:facet>
+
+        <p:panel id="pDlgUbicacionEdit"
+                 style="margin-bottom: 15px;">
+
+
+            <p:focus context="pDlgUbicacionEdit"/> 
+
+            <h:panelGrid columns="2" cellpadding="5">
+
+                <h:outputText value="Provincia: "
+                              styleClass="texto"/>
+
+                <p:selectOneMenu id="somProvinciaUbi"
+                                 converter="ConversorGenerico"
+                                 value="#{ubicacionDlgBean.provinciaSelect}"
+                                 >
+                    <f:selectItem itemLabel="Seleccionar" noSelectionOption="true"/>
+                    <f:selectItems value="#{provinciaLstBean.lstSIProvincia}"/>
+                    <p:ajax                                    
+                        listener="#{ubicacionDlgBean.cargarDepartamentos()}"
+                        update=":frmUser:somDepartamentoUbi"/> 
+
+                </p:selectOneMenu>
+
+
+                <h:outputText value="Departamento: "
+                              styleClass="texto"/>
+
+                <p:selectOneMenu id="somDepartamentoUbi"
+                                 converter="ConversorGenerico"
+                                 value="#{ubicacionDlgBean.departamentoSelect}"
+                                 >
+                    <f:selectItem itemLabel="Seleccionar" noSelectionOption="true"/>
+                    <f:selectItems value="#{departamentoLstBean.lstSIDepartamento}"/>
+
+                    <p:ajax  
+                        update=":frmUser:somLocalidadUbi"
+                        listener="#{ubicacionDlgBean.cargarLocalidades()}"/>
+                </p:selectOneMenu>
+
+
+                <h:outputText value="Localidad: "
+                              styleClass="texto"/>
+
+                <p:selectOneMenu id="somLocalidadUbi"
+                                 converter="ConversorGenerico"
+                                 value="#{ubicacionBean.ubicacion.localidad}">
+                    <f:selectItem itemLabel="Seleccionar" noSelectionOption="true"/>
+                    <f:selectItems value="#{localidadLstBean.lstSILocalidad}"/>
+                </p:selectOneMenu>
+
+                <h:outputText value="Latitud: "
+                              styleClass="texto"/>
+                <h:inputText id="itLatitudUbi"
+                             value="#{ubicacionBean.ubicacion.latitud}"/>
+
+                <h:outputText value="Longitud: "
+                              styleClass="texto"/>
+                <h:inputText id="itLongitudUb"
+                             value="#{ubicacionBean.ubicacion.longitud}"/>
+
+            </h:panelGrid>
+            <!--AGREGADO POR HUGO- PARA QUE CARGUEN CON EL MAPA LA LATITUD Y LOGITUD-->
+            <div align="center">             
+            <p:gmap id="gmap2" 
+
+                    center="-28.46890823359409,-65.77899905009463"
+                    zoom="13"  
+                    model="#{posicionMapaBean.draggableModel}" 
+                    style="width:500px;height:300px"                    
+                    type="ROADMAP">
+                <p:ajax event="markerDrag" listener="#{posicionMapaBean.onMarkerDragUbicacion}" update="itLatitudUbi, itLongitudUb" />
+                <p:ajax event="pointSelect" listener="#{posicionMapaBean.onPointSelectUbicacion}" update="itLatitudUbi, itLongitudUb, gmap2" />
+
+            </p:gmap>
+                </div>
+        </p:panel>
+
+        <div style="text-align: center;">
+            <p:commandButton id="cbUbicacionCMD"
+                             value="Agregar"
+                             actionListener="#{ubicacionEditDlgBean.agregar()}"                                       
+                             process="@this,pDlgUbicacionEdit"
+                             />
+
+
+            <p:commandButton id="cbSalirTTED"
+                             value="Salir"
+                             oncomplete="dlgUbicacionEditDlg.hide()"
+                             styleClass="botonSalir"
+                             process="@this"/>
+        </div>
+
+    </p:dialog>
+</html>

@@ -1,0 +1,244 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/UserTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <div style="float:left;overflow-wrap: break-word; width: 55%; margin-left: 60px;margin-top: 30px;">
+            <!--COMENTARIOS-->               
+
+            <div>
+                <h:outputText value="Puede enviarnos su dudas, sugerencias "
+                              style="padding-left: 0px;font-size: 0.8em;"/>
+            </div>
+
+            <p:tabView id="tabView" 
+                       dynamic="true" 
+                       cache="true"
+                       style="width: 630px;"
+                       >
+
+                <p:tab id="tba1" title="Enviar Mensajes">
+                    <table cellpadding="5" style="margin-bottom: 40px; margin-top: 40px;">
+
+
+                        <tr>
+                            <td>
+                                <h:outputText value="Área"/>
+                                <h:selectOneMenu label="Área"
+                                                 title="Área"
+                                                 value="#{mensajeBean.mensaje.areaSecyt}"
+                                                 converter="ConversorGenerico">
+                                    <f:selectItems value="#{areaSecytLstBean.lstSIAreaSecyt}"/>
+                                </h:selectOneMenu>
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <p:inputTextarea id="eComentario"
+                                                 label="*Comentario"
+                                                 value="#{mensajeBean.mensaje.descripcion}"
+                                                 rows="13" 
+                                                 cols="100"
+                                                 maxlength="2000"
+                                                 style="background-color: #CCCCCC; width: 478px;"/><br/>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td>
+                                <p:messages autoUpdate="true"/>
+                            </td>
+                        </tr>
+
+                        <tr align="center">
+                            <td>
+                                <p:commandButton id="cbEnviar" 
+                                                 value="Enviar"
+                                                 actionListener="#{mensajeBean.create()}"
+                                                 style="padding: 10px 30px;"
+                                                 update="eComentario,:frmUser:tabView:dtMensajesEnviados">
+                                </p:commandButton>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <hr size="5" style="margin-left: 0px; width: 485px; background-color: #BC2C71; " />
+                            </td>
+                        </tr>
+
+                    </table>
+                </p:tab>
+                <p:tab id="tba2" title="Mensajes Recibidos">
+                    <p:dataTable id="dtMensajesRecibidos"
+                                 value="#{mensajeLstBean.lstMensajesRecibidos}"
+                                 var="m"
+                                 paginator="true" rows="10"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15"
+                                 emptyMessage="No se encontraron Mensajes con la busqueda" 
+                                 filteredValue="#{mensajeLstBean.lstMensajesFiltrados}"
+                                 style="width: 80%;"
+                                 >
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Area Secyt"
+                                              styleClass="textoEtiqueta"/>
+                            </f:facet>
+                            <h:outputText value="#{m.areaSecyt.descripcion}"
+                                          styleClass="textoValue">
+
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column width="230"
+                                  filterBy="#{m.descripcion}"
+                                  filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="Mensaje"
+                                              styleClass="textoEtiqueta"/>
+                            </f:facet>
+                            <h:outputText value="#{mensajeBean.mensajeResumen(m)}"
+                                          styleClass="textoValue"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Fecha Envio"
+                                              styleClass="textoEtiqueta"/>
+                            </f:facet>
+                            <h:outputText value="#{m.fechaEnvio}"
+                                          styleClass="textoValue">
+                                <f:convertDateTime pattern="dd/MM/yyyy"  timeZone="GMT-03:00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Estado"
+                                              styleClass="textoEtiqueta"/>
+                            </f:facet>
+                            <h:outputText value="#{mensajeBean.strLeido(m)}"
+                                          styleClass="textoValue"
+                                          >
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Ver Mensaje"
+                                              styleClass="textoEtiqueta"/>
+                            </f:facet>
+                            <p:commandButton actionListener="#{mensajeBean.cambiarEstadoMje(m)}"
+                                             oncomplete="dlgDetalleMensaje.show()"
+                                             value="Ver" styleClass="textoValue"
+                                             update=":frmUser:dDetalleMensaje"/>
+
+                        </p:column>
+
+
+                    </p:dataTable>
+                </p:tab>
+                <p:tab id="tba3" title="Mensajes Enviados">
+                    <p:dataTable id="dtMensajesEnviados"
+                                 value="#{mensajeLstBean.lstMensajesEnviados}"
+                                 var="m"
+                                 paginator="true" rows="10"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15"
+                                 emptyMessage="No se encontraron Mensajes con la busqueda" 
+                                 filteredValue="#{mensajeLstBean.lstMensajesFiltrados}"
+                                 style="width: 100%;">
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Area Secyt"
+                                              styleClass="textoEtiqueta"/>
+                            </f:facet>
+                            <h:outputText value="#{m.areaSecyt.descripcion}"
+                                          styleClass="textoValue">
+
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column width="250"
+                                  filterBy="#{m.descripcion}"
+                                  filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="Mensaje"
+                                              styleClass="textoEtiqueta"/>
+                            </f:facet>
+                            <h:outputText value="#{mensajeBean.mensajeResumen(m)}"
+                                          styleClass="textoValue"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Fecha Envio"
+                                              styleClass="textoEtiqueta"/>
+                            </f:facet>
+                            <h:outputText value="#{m.fechaEnvio}"
+                                          styleClass="textoValue">
+                                <f:convertDateTime pattern="dd/MM/yyyy"  timeZone="GMT-03:00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Ver Mensaje"
+                                              styleClass="textoEtiqueta"/>
+                            </f:facet>
+                            <p:commandButton actionListener="#{mensajeBean.setMensaje(m)}"
+                                             oncomplete="dlgDetalleMensaje.show()"
+                                             value="Ver"
+                                             update=":frmUser:dDetalleMensaje"/>
+
+                        </p:column>
+
+
+                    </p:dataTable>
+                </p:tab>
+
+            </p:tabView>
+        </div>
+        <p:dialog id="dDetalleMensaje"
+                  widgetVar="dlgDetalleMensaje"
+                  modal="true"
+                  width="600"
+                  height="350">
+
+            <f:facet name="header">
+                <h:outputText value="Mensaje" style="font-size: 1.5em; font-weight: bold;"/>
+            </f:facet>
+            <h:panelGrid columns="2" width="100px">
+                <h:outputText value="Area:      "/>
+                <h:outputText value="#{mensajeBean.mensaje.areaSecyt.descripcion}"/>
+                <h:outputText value="Fecha:      "/>
+                <h:outputText value="#{mensajeBean.mensaje.fechaEnvio}">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+            </h:panelGrid><br/>
+            <p:panel header="Mensaje">
+                <pre> <h:outputLabel value="#{mensajeBean.mensaje.descripcion}"
+                               style="word-wrap: break-word;"/></pre>
+            </p:panel><br/><br/>
+            <div align="center">
+            <p:commandButton actionListener="#{mensajeLstBean.cargarMensajesRecibidosPorInvestigador()}"
+                                             oncomplete="dlgDetalleMensaje.hide()"
+                                             value="Cerrar"
+                                             update=":frmUser:tabView:dtMensajesRecibidos"
+                                             />
+                
+            
+                
+            </div><br/><br/>
+            <hr size="5" style="alignment-adjust: central; width: 485px; background-color: #BC2C71; " />
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>

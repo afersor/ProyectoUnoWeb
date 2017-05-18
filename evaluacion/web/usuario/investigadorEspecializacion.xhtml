@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../templates/userTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="content">
+         
+ 
+        <ui:include src="/recursos/mensajesDlg.xhtml"/>
+        
+        <ui:include src="especializacionDeleteDlg.xhtml"/>
+        
+        <ui:include src="especializacionCreateDlg.xhtml"/>
+        
+        <ui:include src="especialidadInvestigacionFindDlg.xhtml"/>
+        
+        <ui:include src="especialidadActividadAcademicaFindDlg.xhtml"/>
+        
+         <div class="encabezado">
+             <h:outputText value="Especialización"/>
+         </div>
+
+        <div style="clear: both;"/>
+ 
+        <div style="margin-top: 20px;">
+            
+            <p:commandButton 
+                icon="ui-icon-circle-plus"
+                title="Nueva"
+                label="Nueva"
+                oncomplete="dlgCreateEspecializacion.show()"
+                update=":frmUser:dCreateEspecializacion"
+                process="@this"
+                rendered="#{evaluadorLoginBean.idUniversidad != 1}"
+                />
+            
+             <p:dataTable id="dtEspecializacion"
+                          value="#{especializacionLstBean.lstEspecializacion}"
+                          var="esp"
+                         >
+                 
+                 <p:column 
+                           sortBy="#{esp.año}"
+                           rendered="#{evaluadorLoginBean.idUniversidad != 1}">
+                     <f:facet name="header">
+                         <h:outputText value="Eliminar"/> 
+                     </f:facet>
+                     
+                     <p:commandButton 
+                            icon="ui-icon-circle-close"
+                            label="Eliminar"
+                            oncomplete="dlgDeleteEspecializacion.show()"
+                            update=":frmUser:dDeleteEspecializacion"
+                            process="@this"
+                            >
+                         <f:setPropertyActionListener value="#{esp}" target="#{especializacionBean.especializacion}"/>
+                     </p:commandButton>
+                     
+                 </p:column>  
+
+                 <p:column 
+                           sortBy="#{esp.año}">
+                     <f:facet name="header">
+                         <h:outputText value="Año"/>
+                     </f:facet>
+                     <h:outputText value="#{esp.año}"/>
+                     
+                 </p:column>                
+                 
+                 <p:column style="overflow-x: auto;">
+                     <f:facet name="header">
+                         <h:outputText value="Especialidad Investigación"/>
+                     </f:facet>
+                     <h:outputText value="#{esp.especialidadInvestigacion.descripcion}"/>
+                     
+                 </p:column>
+                 
+                 <p:column style="overflow-x: auto;">
+                     <f:facet name="header">
+                         <h:outputText value="Especialidad Actividad Academica"/>
+                     </f:facet>
+                     <h:outputText value="#{esp.especialidadActividadAcademica.descripcion}"/>
+                     
+                 </p:column>
+                 
+             </p:dataTable>
+         </div>
+ 
+    </ui:define>
+
+</ui:composition>

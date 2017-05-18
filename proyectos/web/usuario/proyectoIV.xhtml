@@ -1,0 +1,200 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../templates/userTemplate.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        
+         <ui:include src="/recursos/mensajesDlg.xhtml"/>
+         
+         <ui:include src="investigadorFindDlg.xhtml" />
+         
+         <ui:include src="investigadorEditDlg.xhtml" />
+         
+      <!--   <ui:include src="telefonoFindDlg.xhtml" /> -->
+         
+         <ui:include src="correoElectronicoFindDlg.xhtml" />
+         
+         <ui:include src="participacionWebFindDlg.xhtml"/>
+         
+         <div style="margin-left: auto;
+                margin-right: auto;
+                 width: 1004px;
+                 padding: 10px 10px 10px 10px;">
+             
+             <div align="left">
+                 <h:commandLink id="clMenuPrincipal"
+                                value="Menu Proyecto"
+                                action="#{navegarBean.entrarPagProyecto(0)}"
+                                style="margin-left: 20px;"
+                                rendered="#{proyectoWebBean.proyectoWeb.id != null}"
+                                immediate="true"/>
+             </div>
+             
+        <div align="center">
+            <div>
+                <h:outputText value="Postulación: #{proyectoWebBean.proyectoWeb.convocatoria.nombre} " 
+                              styleClass="titulo"/>
+                <h:outputText value="#{proyectoWebBean.proyectoWeb.convocatoria.fechaIni}"
+                              styleClass="titulo">
+                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                </h:outputText>
+                <h:outputText value=" a " 
+                              styleClass="titulo"/>
+                <h:outputText value="#{proyectoWebBean.proyectoWeb.convocatoria.fechaFin}"
+                              styleClass="titulo">
+                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                </h:outputText>
+            </div>
+            
+            <div>
+                <h:outputText value="IV. Datos personales del personal afectado al proyecto" 
+                              styleClass="titulo"/>
+            </div>
+        </div>
+        
+        <div style="padding: 10px 10px 10px 10px;">
+            <ol>
+                <li class="listaTitulo">
+                    <div>
+                        <h:outputText value="Personal: "/>
+                    </div>
+               </li>
+                <div>
+                        <p:commandButton id="cbBuscarPersonal" 
+                             icon="ui-icon-search"
+                             actionListener="#{participacionWebFindDlgBean.setTipo(0)}"
+                             oncomplete="dlgFindParticipacionWeb.show();"
+                             process="@this"
+                             update=":frmUser:ihTipoPWFD"
+                             style="margin-right: 5px;"/>
+                        
+                        <p:commandButton id="cbNuevoInv" 
+                             icon="ui-icon-plusthick"
+                             actionListener="#{investigadorEditDlgBean.ini()}"
+                             oncomplete="dlgEditInvestigador.show();"
+                             process="@this, dMensaje"
+                             update="somTipoDocumentoInv, somSexoInv, somProvinciaInv"
+                             title="Nuevo"/>
+                    </div>
+                    <div>
+                        <p:dataTable id="dtPersonal"
+                                     value="#{proyectoWebBean.proyectoWeb.participacionesWeb}"
+                                     var="p"
+                                     style="width: 900px;">
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Apellido"/>
+                                </f:facet>
+
+                                <h:outputText value="#{p.investigador.persona.apellido}"/>
+                            </p:column>
+                            
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Nombre"/>
+                                </f:facet>
+
+                                <h:outputText value="#{p.investigador.persona.nombre}"/>
+                            </p:column>
+                            
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="CUIL"/>
+                                </f:facet>
+
+                                <h:outputText value="#{p.investigador.persona.cuil}"/>
+                            </p:column>
+                            
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Categoría"
+                                                  rendered="#{not empty p.investigador.formacionesAcademicasGrado}"/>
+                                </f:facet>
+                                
+                                <ul>
+                                    <ui:repeat value="#{p.investigador.categorizaciones}"
+                                           var="cat">
+                                    <li type="circle">
+                                        <h:outputText value="#{cat}"/>
+                                    </li>
+                                </ui:repeat>
+                                </ul>
+                            </p:column>
+                            
+                        
+                            
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Función en el proyecto "/>
+                                </f:facet>
+
+                                <h:outputText value="#{p.rol.descripcion}"/>
+                            </p:column>
+                            
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Dedicación semanal "/>
+                                </f:facet>
+
+                                <h:outputText value="#{p.dedicacionSemanal}"/>
+                            </p:column>
+
+                            <p:column style="word-wrap:break-word;">
+                                <f:facet name="header">
+                                    <h:outputText value="Quitar"/>
+                                </f:facet>
+
+                                <p:commandButton icon="ui-icon-circle-close"
+                                                 actionListener="#{proyectoIVPagBean.quitarParticipacionWeb(p)}"
+                                                 update="dtPersonal"
+                                                 rendered="#{p.rol.id > 2}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                
+                
+                
+                
+                
+            </ol>
+            
+            
+            
+            <!--<p:commandButton value="Guardar"
+                             actionListener="{proyectoWebBean.create()}"/>-->
+            
+        </div>
+         
+         <div align="center">
+             <p:commandButton value="Anterior"
+                              icon="ui-icon-arrowthick-1-w"
+                              style="margin: 20px 100px 20px 100px "
+                              action="#{navegarBean.entrarPagProyecto(3)}"
+                              ajax="false"
+                              rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+             
+             <p:commandButton value="Siguiente"
+                              icon="ui-icon-arrowthick-1-e"
+                              action="#{navegarBean.entrarPagProyecto(5)}"
+                              ajax="false"
+                              rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+             
+             <p:commandButton value="Guardar"
+                              icon="ui-icon-disk"
+                              style="margin: 20px 100px 20px 100px "
+                              action="#{proyectoWebBean.guardar(4)}"
+                              update="dMensaje,clMenuPrincipal"
+                              rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+             
+         </div>
+         </div>
+        
+         
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <p:dialog id="dCreateEspecializacion" 
+              widgetVar="dlgCreateEspecializacion"
+              modal="true"
+              width="600"
+              height="400"
+              position="top"
+              style="margin-top: 30px;"
+              resizable="false">
+        
+        <f:facet name="header">
+            <h:outputText value="Nuevo Especialización" styleClass="subTitulo"/>
+        </f:facet>
+        
+        <p:panel id="pDlgCreateEspecialidad">
+
+            <p:focus context="pDlgCreateEspecialidad"/> 
+            
+            <div class="separador">
+                <h:outputText value="Año*: "/>
+                <p:inputText id="itAnio"
+                             value="#{especializacionBean.especializacion.año}"/>
+            </div>
+            
+            <div style="clear: both;"/>
+            
+            <div class="separador">
+                <h:outputText value="Especialidad investigación*: "/>
+                <h:inputHidden id="ihIdEspecialidadInvC"
+                               value="#{especializacionBean.especializacion.especialidadInvestigacion.id}"/>
+                <h:inputHidden id="ihDescripcionEspecialidadInvC"
+                               value="#{especializacionBean.especializacion.especialidadInvestigacion.descripcion}"/>
+                <p:commandButton icon="ui-icon-search"
+                                 process="@this"
+                                 oncomplete="dlgFindEspecialidadInvestigacion.show()"
+                                 title="Buscar"/>
+                <h:outputText id="otEspInvC"
+                              value="#{especializacionBean.especializacion.especialidadInvestigacion.descripcion}"/>
+            </div>
+            
+            <div style="clear: both;"/>
+            
+            <div class="separador"> 
+               <h:outputText value="Especialidad actividad académica*: "/>
+               <h:inputHidden id="ihIdEspActAcaC"
+                              value="#{especializacionBean.especializacion.especialidadActividadAcademica.id}"/>
+               <h:inputHidden id="ihDescripcionEspActAcaC"
+                              value="#{especializacionBean.especializacion.especialidadActividadAcademica.descripcion}"/>
+                <p:commandButton icon="ui-icon-search"
+                                 process="@this"
+                                 oncomplete="dlgFindEspecialidadActividadAcademica.show()"
+                                 title="Buscar"/>
+               <h:outputText id="otEspActAcaC"
+                             value="#{especializacionBean.especializacion.especialidadActividadAcademica.descripcion}"/>
+             </div>   
+            
+            
+           <div style="clear: both;"/>
+                    
+
+                    <div style="text-align: center;">
+                        <p:commandButton id="cbGuardarEC"
+                                         value="Guardar"
+                                         actionListener="#{especializacionDlgBean.create()}"
+                                         icon="ui-icon-disk"
+                                         style="margin-right: 10px;"
+                                         update="dMensaje"/>
+                        
+                        
+                        <p:commandButton id="cbSalirEC"
+                                         value="Salir"
+                                         icon="ui-icon-cancel"
+                                         oncomplete="dlgCreateEspecializacion.hide()"
+                                         process="@this"/>
+                    </div>
+            
+            
+
+        </p:panel>
+
+    </p:dialog>
+</html>

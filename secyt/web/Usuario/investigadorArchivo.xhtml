@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/UserTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+        <div style="float: left;">
+            <div class="encabezado">
+                <h:outputText value="Archivos"/>
+            </div>
+
+            <div class="divGeneral">
+
+                <p:dataTable id="dtArchivos"
+                             value="#{investigadorLoginBean.investigador.resoluciones}"
+                             var="resol"
+                             paginator="true"
+                             rows="10"
+                             style="float: left;">
+
+                 
+                    <p:column style="word-wrap:break-word;"
+                              width="300">
+                        <f:facet name="header">
+                            <h:outputText value="Nombre"/>
+                        </f:facet>
+                        <h:outputText value="#{resol.documento.nombreArchivo}"/>
+                    </p:column>
+
+                    <p:column style="word-wrap:break-word;"
+                              width="200">
+                        <f:facet name="header">
+                            <h:outputText value="Descargar"/>
+                        </f:facet>
+                        <p:commandLink value="Descargar"
+                                       action="#{investigadorArchivoBean.descargarArchivo()}"
+                                       ajax="false">
+                            <f:setPropertyActionListener value="#{resol.documento}" target="#{investigadorArchivoBean.documento}"/>
+                        </p:commandLink>
+                    </p:column>
+                    
+                    <p:column style="word-wrap:break-word;"
+                              width="200">
+                        <f:facet name="header">
+                            <h:outputText value="Eliminar"/>
+                        </f:facet>
+                        <p:commandButton icon="ui-icon-circle-close"
+                                         action="#{investigadorArchivoBean.eliminarArchivo(resol)}"
+                                         process="dtArchivos"
+                                         update="dtArchivos"/>
+                    </p:column>
+                </p:dataTable>
+
+            </div>
+
+            <div style="clear: left;"/>
+
+            <div class="divGeneral">
+
+
+                <p:fileUpload fileUploadListener="#{investigadorArchivoBean.handleFileUpload}"  
+                              mode="advanced"  
+                              multiple="true"  
+                              sizeLimit="8388608"
+                              cancelLabel="Cancelar"
+                              uploadLabel="Subir archivos"
+                              label="Seleccionar"
+                              style="float: left;"
+                              update="dtArchivos"/> 
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>

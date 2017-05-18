@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../templates/userTemplate.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+
+        <ui:include src="/recursos/mensajesDlg.xhtml"/>
+
+        <ui:include src="confirmacionMensajeDlg.xhtml"/>
+
+
+        <div style="margin-left: auto;
+             margin-right: auto;
+             padding: 0px; width: 1004px;">          
+
+            <div align="center">
+                <div>
+                    <h:outputText value="Postulación: #{proyectoWebBean.proyectoWeb.convocatoria.nombre} " 
+                                  styleClass="titulo"/>
+                    <h:outputText value="#{proyectoWebBean.proyectoWeb.convocatoria.fechaIni}" 
+                                  styleClass="titulo">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                    </h:outputText>
+                    <h:outputText value=" a " 
+                                  styleClass="titulo"/>
+                    <h:outputText value="#{proyectoWebBean.proyectoWeb.convocatoria.fechaFin}"
+                                  styleClass="titulo">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                    </h:outputText>
+                </div>
+
+                <div>
+                    <h:outputText value="VII. Declaración Jurada" 
+                                  styleClass="titulo"/>
+                </div>
+            </div>
+
+            <div style="padding: 10px 10px 10px 10px;">
+
+                <div>
+                    <p style="text-indent: 30px; letter-spacing: 1px; text-align:justify; text-justify:inter-word;
+                       padding: 15px 5px 15px 5px;">
+                        Por la presente me responsabilizo de la exactitud 
+                        de la información suministrada y declaro conocer y aceptar 
+                        los términos de la convocatoria, la constitución de instancia 
+                        de seguimiento de la Secretaría de Ciencia y Tecnología, 
+                        la evaluación académica por Jueces externos e institucional por 
+                        parte del Consejo de Investigación y toda otra reglamentación 
+                        sobre Investigación de la Universidad Nacional de Catamarca. 
+                        La aprobación del proyecto no compromete a la Universidad 
+                        Nacional de Catamarca ha financiar el mismo, en caso de hacerlo, 
+                        podrá discontinuarlo o suspenderlo por razones presupuestarias, 
+                        reglamentarias, administrativas y/o por decisión fundada de las 
+                        autoridades Universitarias.
+                    </p>
+
+                    <p><strong> Nota: cuando el proyecto este finalizado, listo para imprimir, Presione el Botón si. Recuerde que una vez presionado no podrá hacer ninguna modificación en el proyecto</strong></p>
+
+
+                </div>
+
+
+
+
+                <div align="center"  style="margin-bottom: 20px;">
+                    <p:commandButton value="Si"
+                                     style="margin: 20px 100px 20px 100px "                                     
+                                     oncomplete="dlgConfirmacionMensaje.show();"
+                                     update="dMensaje"
+                                     process="@this"/>
+
+                    <p:commandButton value="Vista previa"
+                                     icon="ui-icon-print"
+                                     onclick="this.form.target='_blank'"
+                                     onblur="this.form.target='_self'"
+                                     actionListener="#{proyectoWebBean.generarReporte(0)}"   
+                                     label="Vista previa"
+                                     update=":frmUser:dMensaje"
+                                     ajax="false"
+                                     disabled="#{proyectoWebBean.proyectoWeb.id == null}"/>
+
+                    <p:commandButton value="Menu Principal"
+                                     action="#{navegarBean.entrarPagConvocatoriasOcho()}"
+                                     process="@this"/>
+
+                </div>
+
+                <div align="center" >
+                    <p:commandButton value="Anterior"
+                                     icon="ui-icon-arrowthick-1-w"
+                                     style="margin: 20px 100px 20px 100px "
+                                     action="#{navegarBean.entrarPagProyecto(7)}"
+                                     ajax="false"/>
+
+                    <p:commandButton value="Siguiente"
+                                     icon="ui-icon-arrowthick-1-e"
+                                     ajax="false"
+                                     disabled="true"/>
+
+                </div>
+            </div>
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>

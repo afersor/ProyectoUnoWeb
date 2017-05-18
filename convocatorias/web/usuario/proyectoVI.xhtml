@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../templates/userTemplate.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <ui:define name="content">
+        
+        <ui:include src="/recursos/mensajesDlg.xhtml"/>
+        
+        <ui:include src="confirmacionMensajeDlg.xhtml"/>
+
+
+        <div style="margin-left: auto;
+            margin-right: auto;
+            padding: 0px; width: 1004px;">
+            
+          
+            <div align="left">
+                 <h:commandLink id="clMenuPrincipal"
+                                value="Menu Proyecto"
+                                action="#{navegarBean.entrarPagProyecto(0)}"
+                                style="margin-left: 20px;"
+                                rendered="#{proyectoWebBean.proyectoWeb.id != null}"
+                                immediate="true"/>
+             </div>
+            
+            <div align="center">
+                <div>
+                    <h:outputText value="Postulación: #{proyectoWebBean.proyectoWeb.convocatoria.nombre} " 
+                                  styleClass="titulo"/>
+                    <h:outputText value="#{proyectoWebBean.proyectoWeb.convocatoria.fechaIni}" 
+                                  styleClass="titulo">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                    </h:outputText>
+                    <h:outputText value=" a " 
+                                  styleClass="titulo"/>
+                    <h:outputText value="#{proyectoWebBean.proyectoWeb.convocatoria.fechaFin}"
+                                  styleClass="titulo">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                    </h:outputText>
+                </div>
+
+                <div>
+                    <h:outputText value="VI. Programa de capacitación y formación de recursos humanos. (Para todos los integrantes)" 
+                                  styleClass="titulo"/>
+                </div>
+            </div>
+
+            <div style="padding: 10px 10px 10px 10px;">
+
+
+                <div>
+                    <p:inputTextarea rows="10" cols="100" 
+                                     value="#{proyectoWebBean.proyectoWeb.proyectoWebFGP.capacitacionFormacionRH}" 
+                                    id="textEditorCapacitacion"                                                         
+                                    />
+                 
+                </div>
+                
+                
+                <div align="center" >
+             <p:commandButton value="Anterior"
+                              icon="ui-icon-arrowthick-1-w"
+                              style="margin: 20px 100px 20px 100px "
+                              action="#{navegarBean.entrarPagProyecto(5)}"
+                              ajax="false"
+                              rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+             
+             <p:commandButton value="Siguiente"
+                              icon="ui-icon-arrowthick-1-e"
+                              ajax="false"
+                              action="#{navegarBean.entrarPagProyecto(7)}"
+                              rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+             
+             <p:commandButton value="Guardar"
+                              icon="ui-icon-disk"
+                              style="margin: 20px 100px 20px 100px "
+                              action="#{proyectoWebBean.guardar(6)}"
+                              update="dMensaje, clMenuPrincipal"
+                              rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+             
+         </div>
+            </div>
+
+        </div>
+        
+    </ui:define>
+
+</ui:composition>

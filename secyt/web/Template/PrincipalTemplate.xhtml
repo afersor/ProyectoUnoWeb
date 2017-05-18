@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="./resources/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+        <title>Secretaría de Ciencia y Tecnología</title>
+    </h:head>
+
+    <h:body>
+        <p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>  
+              
+        <p:dialog modal="true" widgetVar="statusDialog" header="Estado"   
+                draggable="false" closable="true">  
+            <p:graphicImage value="./resources/imagenes/load.gif" />  
+        </p:dialog> 
+
+        <h:form id="frmPrincipal">
+            <div class="cuerpoPagina">
+                <div id="top" class="top">
+
+                    <div style="float: right;">
+                        <h:outputText value="#{fechaActualBean.fechaActual}" styleClass="fecha"/><br/><br/>
+                        
+                    </div>
+                    <div style="clear:both;"></div>
+                    <div style="float: right; margin-top: 30px; margin-right: 20px;">
+
+                        
+                        <h:commandLink id="clIngresar"
+                                       value="Ingresar" 
+                                       style="color: #fff; font-size: 1.5em;"
+                                       action="login.xhtml"
+                                       />
+                    </div>
+
+                </div>
+                <div style="clear:both;"></div>
+
+                <div id="content" class="center_content">
+                    <ui:insert name="content">Content</ui:insert>
+                </div>
+                <div class="footer"><p><strong>Secretaría de Ciencia y Tecnología - Universidad Nacional de Catamarca</strong><br />Avda Belgrano Nº 300 Edificio variante 1, Planta Alta
+                        <br /> Telefono: Nº 0383-4437997, int. 145/146
+                        <br /> San Fernando del Valle de Catamarca</p></div>
+            </div>        </h:form>
+
+    </h:body>
+
+</html>

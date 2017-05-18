@@ -1,0 +1,224 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/MapaTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="content">         <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
+
+
+        <f:metadata>
+            <f:viewParam name="titulo" value="#{mapaBean.titulo}" />
+            <f:viewParam name="areaTematicaL" value="#{mapaBean.areaTematicaL}" />
+            <f:viewParam name="disciplinaCientificaL" value="#{mapaBean.disciplinaCientificaL}" />
+            <f:viewParam name="localidadL" value="#{mapaBean.localidadL}" />
+            <f:viewParam name="departamentoL" value="#{mapaBean.departamentoL}" />
+            <f:event listener="#{mapaBean.onload()}" type="preRenderView" />
+
+        </f:metadata> 
+
+
+
+
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <h2>BUSCAR PROYECTOS</h2>
+            <p:inputText value="#{mapaBean.titulo}" style="width: 328px" placeholder="Ingrese una palabra a buscar" />
+            <h2>Área Temática</h2>
+            <p:selectOneMenu id="areaTematica"
+                             value="#{mapaBean.areaTematica}"
+                             converter="ConversorGenerico"
+                             style="width: 300px"
+                             >
+                <f:selectItem  itemLabel="Seleccionar" noSelectionOption="true"/>
+                <f:selectItems value="#{mapaBean.areaTematicas}"/>
+                <p:ajax  
+                    update=":frmPrincipal:disciplinaCientifica"
+                    listener="#{mapaBean.cargarDisciplinasCientificas()}"
+                    process="@this"/>
+            </p:selectOneMenu>   
+
+            <h2>Disciplina Científica</h2>
+
+            <p:selectOneMenu id="disciplinaCientifica"
+                             value="#{mapaBean.disciplinaCientifica}"
+                             converter="ConversorGenerico"
+                             style="width: 300px"
+                             >
+                <f:selectItem  itemLabel="Seleccionar" noSelectionOption="true"/>
+                <f:selectItems value="#{mapaBean.disciplinaCientificas}"/>
+
+            </p:selectOneMenu>
+
+            <h2>  <h:outputText value="Departamento: "/></h2>
+
+            <p:selectOneMenu id="somDepartamento"
+                             converter="ConversorGenerico"
+                             value="#{mapaBean.departamento}"
+                             style="width: 300px"
+                             >
+                <f:selectItem  itemLabel="Seleccionar" noSelectionOption="true"/>
+                <f:selectItems value="#{mapaBean.listaDepartamentos}"/>
+
+                <p:ajax  
+                    update=":frmPrincipal:somLocalidad"
+                    listener="#{mapaBean.cargarLocalidades()}"
+                    process="@this"/>
+            </p:selectOneMenu>
+
+            <h2><h:outputText value="Localidad: "/></h2>
+            <p:selectOneMenu id="somLocalidad"
+                             converter="ConversorGenerico"
+                             style="width: 300px"
+                             value="#{mapaBean.localidad}">
+                <f:selectItem  itemLabel="Seleccionar" noSelectionOption="true"/>
+                <f:selectItems value="#{mapaBean.listaLocalidades}"/>
+            </p:selectOneMenu>
+            <p>&nbsp;</p>
+            <p:commandButton update=":frmPrincipal:mapa" style="width: 328px" styleClass="button" value="Filtrar" action="#{mapaBean.cargarFiltros()}"/>
+
+
+        </div>
+
+        <!-- Use any element to open the sidenav -->
+        <span class="button" onclick="openNav()">Filtrar Proyectos</span>
+
+        <h3>Localización Física de Proyectos</h3>
+        <p:gmap center="-27.58416, -66.56610" zoom="7"  id="mapa" widgetVar="gmapa"
+                type="ROADMAP" fitBounds="false" style="width:100%;height:400px" 
+                model="#{mapaBean.simpleModel}"  > 
+            <p:ajax event="overlaySelect" listener="#{mapaBean.onMarkerSelect}" />
+            <p:gmapInfoWindow>
+                <pre>  <h:outputText value="#{mapaBean.marker.title}" /></pre>
+            </p:gmapInfoWindow>
+        </p:gmap>
+        <p:commandButton value="Referencias" type="button" onclick="PF('dlg1').show();" />
+
+        <p:dialog header="Referencias" widgetVar="dlg1" minHeight="40" height="500">
+            <table border="0" cellpadding="0" cellspacing="0" class="ui-datatable" >
+                <colgroup>
+                    <col />
+                    <col />
+                </colgroup>
+                <tbody>
+                    <tr class="ui-outputlabel">
+                        <td>
+                            Agronom&iacute;a</td>
+                        <td>
+                            <img src="http://maps.google.com/mapfiles/ms/micons/yellow.png" /></td>
+                    </tr>
+                    <tr class="ui-outputlabel">
+                        <td>
+                            Antropolog&iacute;a Sociolog&iacute;a y Ciencias Pol&iacute;ticas</td>
+                        <td>
+                            <img src="http://maps.google.com/mapfiles/ms/micons/yellow-dot.png" /> </td>
+                    </tr>
+                    <tr class="ui-outputlabel">
+                        <td>
+                            Arquitectura</td>
+                        <td>
+                            <img src="http://maps.google.com/mapfiles/ms/micons/blue.png" />    </td>
+                    </tr>
+                    <tr class="ui-outputlabel">
+                        <td>
+                            Biolog&iacute;a</td>
+                        <td>
+                            <img src="http://maps.google.com/mapfiles/ms/micons/blue-dot.png" />   </td>
+                    </tr>
+                    <tr class="ui-outputlabel">
+                        <td>
+                            Ciencia de la Tierra, el Mar y la Atmosfera</td>
+                        <td>
+                            <img src="http://maps.google.com/mapfiles/ms/micons/green.png" />   </td>
+                    </tr>
+                    <tr class="ui-outputlabel">
+                        <td>
+                            Derecho y Jurisprudencia</td>
+                        <td>
+                            <img src="http://maps.google.com/mapfiles/ms/micons/green-dot.png" />   </td>
+                    </tr>
+                    <tr class="ui-outputlabel">
+                        <td>
+                            Econom&iacute;a, Administraci&oacute;n y Contabilidad</td>
+                        <td>
+                            <img src="http://maps.google.com/mapfiles/ms/micons/lightblue.png" />  </td>
+                    </tr>
+                    <tr class="ui-outputlabel">
+                        <td>
+                            Literatura, Ling&uuml;&iacute;stica y Bellas Artes</td>
+                        <td>
+                            <img src="http://maps.google.com/mapfiles/ms/micons/ltblue-dot.png" />   </td>
+                    </tr>
+                    <tr class="ui-outputlabel">
+                        <td>
+                            Matem&aacute;tica</td>
+                        <td>
+                            <img src="http://maps.google.com/mapfiles/ms/micons/orange.png" />  </td>
+                    </tr>
+                    <tr class="ui-outputlabel">
+                        <td>
+                            Medicina, Odontolog&iacute;a y Ciencia de la Salud</td>
+                        <td>
+                            <img src="http://maps.google.com/mapfiles/ms/micons/orange-dot.png" />  </td>
+                    </tr>
+                    <tr class="ui-outputlabel">
+                        <td>
+                            Psicolog&iacute;a</td>
+                        <td>
+                            <img src="http://maps.google.com/mapfiles/ms/micons/pink.png" />  </td>
+                    </tr>
+                    <tr class="ui-outputlabel">
+                        <td>
+                            Qu&iacute;mica, Bioqu&iacute;mica y Farmacia</td>
+                        <td>
+                            <img src="http://maps.google.com/mapfiles/ms/micons/pink-dot.png" />  </td>
+                    </tr>
+                    <tr class="ui-outputlabel">
+                        <td>
+                            Veterinaria</td>
+                        <td>
+                            <img src="http://maps.google.com/mapfiles/ms/micons/purple.png" />     </td>
+                    </tr>
+                    <tr class="ui-outputlabel">
+                        <td>
+                            Educaci&oacute;n</td>
+                        <td>
+                            <img src="http://maps.google.com/mapfiles/ms/micons/purple-dot.png" />    </td>
+                    </tr>
+                    <tr class="ui-outputlabel">
+                        <td>
+                            Filosof&iacute;a</td>
+                        <td>
+                            <img src="http://maps.google.com/mapfiles/ms/micons/red.png" />   </td>
+                    </tr>
+                    <tr class="ui-outputlabel">
+                        <td>
+                            F&iacute;sica, Astronom&iacute;a y Geof&iacute;sica</td>
+                        <td>
+                            <img src="http://maps.google.com/mapfiles/ms/micons/red-dot.png" />     </td>
+                    </tr>
+                    <tr class="ui-outputlabel">
+                        <td>
+                            Historia, Geograf&iacute;a y Demograf&iacute;a</td>
+                        <td>
+                            <img src="http://maps.google.com/mapfiles/ms/micons/ylw-pushpin.png" />    </td>
+                    </tr>
+                    <tr class="ui-outputlabel">
+                        <td>
+                            Ingenier&iacute;a</td>
+                        <td>
+                            <img src="http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png" />   </td>
+                    </tr>
+                    <tr class="ui-outputlabel">
+                        <td>
+                            Otras</td>
+                        <td>
+                                <img src="http://maps.google.com/mapfiles/ms/micons/grn-pushpin.png" />     </td>
+                    </tr>
+                </tbody>
+            </table></p:dialog>
+    </ui:define>
+</ui:composition>

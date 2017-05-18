@@ -1,0 +1,211 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../templates/userTemplate.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <ui:define name="content">
+        
+        <ui:include src="/recursos/mensajesDlg.xhtml"/>
+        
+        <ui:include src="confirmacionMensajeDlg.xhtml"/>
+
+
+        <div style="margin-left: auto;
+            margin-right: auto;
+            padding: 0px; width: 1004px;">
+            
+          
+            <div align="left">
+                 <h:commandLink id="clMenuPrincipal"
+                                value="Menu Proyecto"
+                                action="#{navegarBean.entrarPagProyecto(0)}"
+                                style="margin-left: 20px;"
+                                rendered="#{proyectoWebBean.proyectoWeb.id != null}"
+                                immediate="true"/>
+             </div>
+            
+            <div align="center">
+                <div>
+                    <h:outputText value="Postulación: #{proyectoWebBean.proyectoWeb.convocatoria.nombre} " 
+                                  styleClass="titulo"/>
+                    <h:outputText value="#{proyectoWebBean.proyectoWeb.convocatoria.fechaIni}" 
+                                  styleClass="titulo">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                    </h:outputText>
+                    <h:outputText value=" a " 
+                                  styleClass="titulo"/>
+                    <h:outputText value="#{proyectoWebBean.proyectoWeb.convocatoria.fechaFin}"
+                                  styleClass="titulo">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                    </h:outputText>
+                </div>
+
+                <div>
+                    <h:outputText value="IX. Aspectos Éticos" 
+                                  styleClass="titulo"/>
+                </div>
+            </div>
+
+            <div style="padding: 10px 10px 10px 10px;">
+
+                <ol>
+                    <li class="listaTitulo">
+                        <h:outputText value="¿Usted considera que la propuesta o plan de trabajo además de 
+                                      ser evaluado desde el punto de vista académico debe ser analizado desde 
+                                      el punto de vista ético o de seguridad?"/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio value="#{proyectoWebBean.proyectoWeb.proyectoWebAspEti.eticoSeguridad}">
+                            <f:selectItem itemValue="True" itemLabel="Si" />
+                            <f:selectItem itemValue="False" itemLabel="No"/>
+                        </p:selectOneRadio>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <h:outputText value="¿La propuesta comprende alguno de los objetos y 
+                                      usos identificados en la investigación humana?"/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio value="#{proyectoWebBean.proyectoWeb.proyectoWebAspEti.comprendeInvestigacionHumana}">
+                            <f:selectItem itemValue="True" itemLabel="Si" />
+                            <f:selectItem itemValue="False" itemLabel="No"/>
+                        </p:selectOneRadio>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <h:outputText value="Estudios farmacológicos y tecnológicos:"/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio value="#{proyectoWebBean.proyectoWeb.proyectoWebAspEti.estudioFarmaTecno}">
+                            <f:selectItem itemValue="True" itemLabel="Si" />
+                            <f:selectItem itemValue="False" itemLabel="No"/>
+                        </p:selectOneRadio>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <h:outputText value="Estudios clínicos, quirúrgicos y básicos:"/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio value="#{proyectoWebBean.proyectoWeb.proyectoWebAspEti.estudioClinQuiruBasi}">
+                            <f:selectItem itemValue="True" itemLabel="Si" />
+                            <f:selectItem itemValue="False" itemLabel="No"/>
+                        </p:selectOneRadio>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <h:outputText value="Estudios epidemiológicos, sociales y psicológicos: "/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio value="#{proyectoWebBean.proyectoWeb.proyectoWebAspEti.estudioEpideSociaPsico}">
+                            <f:selectItem itemValue="True" itemLabel="Si" />
+                            <f:selectItem itemValue="False" itemLabel="No"/>
+                        </p:selectOneRadio>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <h:outputText value="Uso de equipamiento médico:"/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio value="#{proyectoWebBean.proyectoWeb.proyectoWebAspEti.equipamientoMedico}">
+                            <f:selectItem itemValue="True" itemLabel="Si" />
+                            <f:selectItem itemValue="False" itemLabel="No"/>
+                        </p:selectOneRadio>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <h:outputText value="Uso de equipamiento de diagnóstico por imágenes y de radiación:"/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio value="#{proyectoWebBean.proyectoWeb.proyectoWebAspEti.equipamientoImgRadia}">
+                            <f:selectItem itemValue="True" itemLabel="Si" />
+                            <f:selectItem itemValue="False" itemLabel="No"/>
+                        </p:selectOneRadio>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <h:outputText value="Uso de historias clínicas:"/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio value="#{proyectoWebBean.proyectoWeb.proyectoWebAspEti.usoHistoClinica}">
+                            <f:selectItem itemValue="True" itemLabel="Si" />
+                            <f:selectItem itemValue="False" itemLabel="No"/>
+                        </p:selectOneRadio>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <h:outputText value="Uso de muestras biológicas:"/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio value="#{proyectoWebBean.proyectoWeb.proyectoWebAspEti.usoMuestBiolog}">
+                            <f:selectItem itemValue="True" itemLabel="Si" />
+                            <f:selectItem itemValue="False" itemLabel="No"/>
+                        </p:selectOneRadio>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <h:outputText value="Estudio de comunidades aborígenes:"/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio value="#{proyectoWebBean.proyectoWeb.proyectoWebAspEti.estudioComunAborig}">
+                            <f:selectItem itemValue="True" itemLabel="Si" />
+                            <f:selectItem itemValue="False" itemLabel="No"/>
+                        </p:selectOneRadio>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <h:outputText value="Dispone de informes del comité de ética acerca del plan de investigación:"/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio value="#{proyectoWebBean.proyectoWeb.proyectoWebAspEti.informePlanInv}">
+                            <f:selectItem itemValue="True" itemLabel="Si" />
+                            <f:selectItem itemValue="False" itemLabel="No"/>
+                        </p:selectOneRadio>
+                    </div>
+                </ol>
+
+                              
+                <div align="center" >
+             <p:commandButton value="Anterior"
+                              icon="ui-icon-arrowthick-1-w"
+                              style="margin: 20px 100px 20px 100px "
+                              action="#{navegarBean.entrarPagProyecto(8)}"
+                              ajax="false"
+                              rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+             
+             <p:commandButton value="Siguiente"
+                              icon="ui-icon-arrowthick-1-e"
+                              ajax="false"
+                              action="#{navegarBean.entrarPagProyecto(11)}"
+                              rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+             
+             <p:commandButton value="Guardar"
+                              icon="ui-icon-disk"
+                              style="margin: 20px 100px 20px 100px "
+                              action="#{proyectoWebBean.guardar(9)}"
+                              update="dMensaje, clMenuPrincipal"
+                              rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+             
+         </div>
+            </div>
+
+        </div>
+        
+    </ui:define>
+
+</ui:composition>

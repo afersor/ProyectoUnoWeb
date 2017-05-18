@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/PrincipalTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="content">
+
+        
+
+           <!--  <h:outputText value="Seleccione el año de los proyectos a consultar"/><br/>
+              <h:selectOneMenu id="selectAnio"  value="#{preyectoPTBean.anio}">
+                <f:selectItem itemLabel="Todos los años" itemValue="" /> 
+
+                <f:selectItems value="#{proyectoLstBean.aniosDeProyecto}"/>              
+                <f:convertNumber/>
+            </h:selectOneMenu>&nbsp;
+            
+         <h:outputText value="Codigo: "/>
+            <p:inputText id="iTCodigo" value="#{preyectoPTBean.codigo}"/>&nbsp;
+
+            <h:outputText value="Título: "/>
+            <p:inputText id="iTProyecto" value="#{preyectoPTBean.nombre}"/>&nbsp;
+            
+            
+            <h:outputText value="Resumen: "/>-->
+           <p:inputText placeholder="Ingrese una palabra a buscar" id="iTResumen" value="#{preyectoPTBean.resumen}"/>&nbsp;
+            
+
+            <p:commandButton value="Buscar" 
+                             actionListener="#{preyectoPTBean.findByAñoCodigoNombreResumen()}"
+                             icon="ui-icon-search"
+                             />
+                                        <!-- update="selectAnio,dtProyecto, otDetalle,iTProyecto,iTResumen,iTCodigo" -->
+
+            <p:messages autoUpdate="true"/>
+
+
+        <div style="margin-top: 20px; margin-bottom: 10px;">
+            <h:outputText id="otDetalle" 
+                          value="#{preyectoPTBean.detalle}"
+                          style="color: cadetblue; font-size: 2em;"/>
+        </div>
+
+        <div style="clear: both"/>
+
+        <p:dataTable id="dtProyecto"
+                     value="#{proyectoLstBean.lstProyecto}"
+                     paginator="true" 
+                     rows="20" 
+                     filterEvent="enter"
+                     var="p"
+                     filteredValue="#{proyectoLstBean.proyectosFiltrados}"
+                     >
+
+            <!-->    <f:facet name="header">
+                     <h:outputText value="(Puede buscar ingresando parte del código o nombre del proyecto y presionando la tecla enter)"/>
+                 </f:facet>  <-->
+            <!-->  <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Código"
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                <h:outputText value="#{p.codigoIncentivos}"
+                              styleClass="textoValue" />
+            </p:column>
+<-->
+            <p:column >
+                <f:facet name="header">
+                    <h:outputText value="Proyecto"
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                <h:outputText value="#{p.titulo}"
+                              styleClass="textoValue"/> <br />   <p:commandButton  icon="ui-icon-carat-r"  iconPos="right" actionListener="#{proyectoBean.setProyecto(p)}"
+                                 value="Ver" 
+                                 action="proyectoview.xhtml"/>
+            </p:column>
+
+           
+        </p:dataTable>
+          
+        
+    </ui:define>
+
+</ui:composition>

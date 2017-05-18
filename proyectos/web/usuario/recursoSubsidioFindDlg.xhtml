@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <p:dialog id="dFindRecursoSubsidio" 
+              widgetVar="dlgFindRecursoSubsidio"
+              modal="true"
+              width="600"
+              height="250"
+              position="top"
+              style="margin-top: 30px;"
+              resizable="false">
+        <f:facet name="header">
+            <h:outputText value="Recursos provistos" styleClass="subTitulo"/>
+        </f:facet>
+        <p:panel id="pDialogRecursoSubsidio">
+
+            <p:focus context="pDialogRecursoSubsidio"/> 
+            
+            <h:inputHidden id="ihTipoRSFD"
+                           value="#{recursoSubsidioFindDlgBean.tipo}"/>
+            
+            <div class="separador">
+                
+                <h:outputText value="Año: "/>
+                <p:spinner id="spAnioRS"   
+                    value="#{recursoSubsidioFindDlgBean.recursoSubsidio.anio}"/> 
+                               
+            </div>
+            
+            <div class="separador">
+                
+                <h:outputText value="Nombre y Apellido del beneficiario: "/>
+                <p:inputText id="itNombreApellidoRS"
+                             value="#{recursoSubsidioFindDlgBean.recursoSubsidio.nombreApellido}"
+                             size="60"/>
+                
+                
+            </div>
+            
+            <div class="separador">
+                
+                <h:outputText value="Entidad: "/>
+                <p:selectOneMenu id="somEntidadRS"
+                                 value="#{recursoSubsidioFindDlgBean.recursoSubsidio.entidadSubsidio}"
+                                 panelStyle="width:150px"
+                                 converter="ConversorGenerico"
+                                 style="padding-right: 5px;">
+                    <f:selectItems value="#{entidadSubsidioLstBean.lstSIEntidadSubsidio}"/>
+
+                </p:selectOneMenu>
+                
+                
+            </div>
+            
+            <div class="separador">
+                
+                <h:outputText value="Monto: "/>
+                <p:inputText id="itMontoRS"
+                             value="#{recursoSubsidioFindDlgBean.recursoSubsidio.monto}">
+                    <f:validator validatorId="validarNumeroDosDecimales" />
+                </p:inputText>
+                <h:outputText value="Ej. 12.03"
+                                      styleClass="aclaraciones"/>
+                <p:message id="msgMontoRS"
+                               for="itMontoRS"/>
+                
+                
+            </div>
+            
+            <div align="center">
+                
+                <p:commandButton icon="ui-icon-check"
+                                 value="Agregar"
+                                 actionListener="#{recursoSubsidioFindDlgBean.definirComponentesActualizar()}"
+                                 process="dFindRecursoSubsidio, @this"
+                                 update="msgMontoRS"
+                                 style="margin: 30px 20px 30px 20px;"/>
+                
+                <p:commandButton icon="ui-icon-cancel"
+                                 value="Salir"
+                                 oncomplete="dlgFindRecursoSubsidio.hide()"
+                                 process="@this"/>
+            </div>
+            
+
+        </p:panel>
+
+    </p:dialog>
+</html>

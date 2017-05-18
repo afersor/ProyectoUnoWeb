@@ -1,0 +1,299 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../templates/userTemplate.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <ui:define name="content">
+        
+        <ui:include src="/recursos/mensajesDlg.xhtml"/>
+        
+        <ui:include src="confirmacionMensajeDlg.xhtml"/>
+
+
+        <div style="margin-left: auto;
+            margin-right: auto;
+            padding: 0px; width: 1004px;">
+            
+          
+            <div align="left">
+                 <h:commandLink id="clMenuPrincipal"
+                                value="Menu Proyecto"
+                                action="#{navegarBean.entrarPagProyecto(0)}"
+                                style="margin-left: 20px;"
+                                rendered="#{proyectoWebBean.proyectoWeb.id != null}"
+                                immediate="true"/>
+             </div>
+            
+            <div align="center">
+                <div>
+                    <h:outputText value="Postulación: #{proyectoWebBean.proyectoWeb.convocatoria.nombre} " 
+                                  styleClass="titulo"/>
+                    <h:outputText value="#{proyectoWebBean.proyectoWeb.convocatoria.fechaIni}" 
+                                  styleClass="titulo">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                    </h:outputText>
+                    <h:outputText value=" a " 
+                                  styleClass="titulo"/>
+                    <h:outputText value="#{proyectoWebBean.proyectoWeb.convocatoria.fechaFin}"
+                                  styleClass="titulo">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                    </h:outputText>
+                </div>
+
+                <div>
+                    <h:outputText value="X. Declaración Relativa a Seguridad, Salud Ocupacional y Bioseguridad." 
+                                  styleClass="titulo"/>
+                </div>
+            </div>
+
+            <div style="padding: 10px 10px 10px 10px;">
+
+                <ol>
+                    <li class="listaTitulo">
+                        <h:outputText value="¿El proyecto incluye la realización de tareas de campo 
+                                      (exposición a insectos vectores o contaminación, 
+                                      captura de animales silvestres, relevamientos, búsqueda y
+                                      recolección de especímenes, recorrido en zonas agrestes, etc.)?"/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio 
+                                          value="#{proyectoWebBean.proyectoWeb.proyectoWebSegSaludBioseg.incluyeTareaCampo}">
+                            <f:selectItems value="#{tipoRespuestaLstBean.lstSITipoRespuesta}"/>
+                        </p:selectOneRadio>
+                    </div>
+                    
+                     <li class="listaTitulo">
+                        <h:outputText value="¿La institución donde realiza su trabajo 
+                                      cuenta con un profesional o Técnico Matriculado en 
+                                      Higiene y Seguridad Laboral?"/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio 
+                                          value="#{proyectoWebBean.proyectoWeb.proyectoWebSegSaludBioseg.cuentraProfesional}">
+                            <f:selectItems value="#{tipoRespuestaLstBean.lstSITipoRespuesta}"/>
+                        </p:selectOneRadio>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <h:outputText value="En su lugar de trabajo ¿existe un 
+                                      Comité de Seguridad o Bioseguridad?"/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio  
+                                          value="#{proyectoWebBean.proyectoWeb.proyectoWebSegSaludBioseg.existeComiteSegBioseg}">
+                            <f:selectItems value="#{tipoRespuestaLstBean.lstSITipoRespuesta}"/>
+                        </p:selectOneRadio>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <h:outputText value="¿Ud. O el personal relacionado con el 
+                                      proyecto puede estar expuesto a Riesgos Físicos 
+                                      (electricidad, radiaciones, y laser, cortes, 
+                                      atrapamientos con maquinas, etc.)"/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio 
+                                          value="#{proyectoWebBean.proyectoWeb.proyectoWebSegSaludBioseg.riesgosFisicos}">
+                            <f:selectItems value="#{tipoRespuestaLstBean.lstSITipoRespuesta}"/>
+                        </p:selectOneRadio>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <h:outputText value="¿En su proyecto su utilizan sustancias 
+                                      químicas (inflamables, cancerígenas, mutagenicas, 
+                                      teratogenicas, irritantes, corrosivas, combustibles, 
+                                      etc.)? "/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio  
+                                          value="#{proyectoWebBean.proyectoWeb.proyectoWebSegSaludBioseg.sustanciasQuimicas}">
+                            <f:selectItems value="#{tipoRespuestaLstBean.lstSITipoRespuesta}"/>
+                        </p:selectOneRadio>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <h:outputText value="En caso afirmativo, ¿Cuáles son esas sustancias químicas?"/>
+                    </li>
+
+                    <div>
+                        <p:inputTextarea rows="2" cols="100"
+                                         value="#{proyectoWebBean.proyectoWeb.proyectoWebSegSaludBioseg.sustancias}"/>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <h:outputText value="¿El manejo de sustancias químicas 
+                                      peligrosas se realiza utilizando 
+                                      campanas de extracción?"/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio  
+                                          value="#{proyectoWebBean.proyectoWeb.proyectoWebSegSaludBioseg.campanaExtraccion}">
+                            <f:selectItems value="#{tipoRespuestaLstBean.lstSITipoRespuesta}"/>
+                        </p:selectOneRadio>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <h:outputText value="¿Su proyecto involucra manipulación o exposición a 
+                                      riesgos biológicos (animales, sangre u otros tejidos, fluidos o 
+                                      células humanos o animales, microorganismos, organismos o 
+                                      microorganismos genéticamente modificados, insectos vectores, etc.)? 
+                                      Considere que la exposición puede ser involuntaria por contaminación 
+                                      de la muestra en estudio (biopsias, restos, piezas arqueológicas, etc.)"/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio  
+                                          value="#{proyectoWebBean.proyectoWeb.proyectoWebSegSaludBioseg.riesgosBiologicos}">
+                            <f:selectItems value="#{tipoRespuestaLstBean.lstSITipoRespuesta}"/>
+                        </p:selectOneRadio>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <h:outputText value="En Caso afirmativo, ¿Cuál es el nivel 
+                                      de Bioseguridad de las Instalaciones donde trabaja?"/>
+                    </li>
+
+                    <div>
+                        <p:inputTextarea rows="2" cols="100"
+                                         value="#{proyectoWebBean.proyectoWeb.proyectoWebSegSaludBioseg.nivelSeguridadInstalaciones}"/>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <h:outputText value="Si su proyecto implica exposición a 
+                                      riesgo Biológicos, involucra estudios con 
+                                      pacientes o animales, o puede generar algún 
+                                      tipo de impacto ambiental ¿ha sido aprobado 
+                                      por el comité por el Comité de Seguridad o 
+                                      Bioseguridad de su institución?"/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio 
+                                          value="#{proyectoWebBean.proyectoWeb.proyectoWebSegSaludBioseg.aprobadoComite}">
+                            <f:selectItems value="#{tipoRespuestaLstBean.lstSITipoRespuesta}"/>
+                        </p:selectOneRadio>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <h:outputText value="Se realiza la Inmunización o Vacunación 
+                                      para todo el Personal de su proyecto que 
+                                      guarda relación con las tareas que en 
+                                      este se desarrolla (hepatitis B, Tétanos, 
+                                      otra vacunación especifica, etc.)?"/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio 
+                                          value="#{proyectoWebBean.proyectoWeb.proyectoWebSegSaludBioseg.realizaInmunizacion}">
+                            <f:selectItems value="#{tipoRespuestaLstBean.lstSITipoRespuesta}"/>
+                        </p:selectOneRadio>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <h:outputText value="Se realizan advertencias o trabajos 
+                                      diferenciados y segregados de los distintos 
+                                      riesgos a mujeres embarazadas o en periodos 
+                                      de lactancia o inclusive en edad fértil?"/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio 
+                                          value="#{proyectoWebBean.proyectoWeb.proyectoWebSegSaludBioseg.advertenciaRiesgoMujeres}">
+                            <f:selectItems value="#{tipoRespuestaLstBean.lstSITipoRespuesta}"/>
+                        </p:selectOneRadio>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <h:outputText value="¿Existe un sistema de gestión de residuos 
+                                      (peligrosos de riesgos químicos –solventes, 
+                                      colorantes, ácidos, metales pesados, compuestos 
+                                      clorados, etc.-, patogénicos y domésticos?"/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio  
+                                          value="#{proyectoWebBean.proyectoWeb.proyectoWebSegSaludBioseg.existeGestionResiduos}">
+                            <f:selectItems value="#{tipoRespuestaLstBean.lstSITipoRespuesta}"/>
+                        </p:selectOneRadio>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <h:outputText value="¿El personal involucrado en el proyecto 
+                                      ha recibido capacitación en materia Prevención 
+                                      (accidentes y enfermedades profesionales, 
+                                      uso de elementos de seguridad)?"/>
+                    </li>
+
+                    <div>
+                        <p:selectOneRadio 
+                                          value="#{proyectoWebBean.proyectoWeb.proyectoWebSegSaludBioseg.personalCapacitadoPrevencion}">
+                            <f:selectItems value="#{tipoRespuestaLstBean.lstSITipoRespuesta}"/>
+                        </p:selectOneRadio>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <h:outputText value="¿Cuántas personas (de su proyecto o de otros) 
+                                      desarrollan sus actividades en su espacio de 
+                                      trabajo (laboratorio/s, oficina/s, etc.)?"/>
+                    </li>
+
+                    <div>
+                        <p:spinner  
+                                   value="#{proyectoWebBean.proyectoWeb.proyectoWebSegSaludBioseg.cantPersEspacioTrabajo}" min="0"/>
+                    </div>
+                    
+                    <li class="listaTitulo">
+                        <h:outputText value="¿De cuantos metros cuadrados se 
+                                      dispone para la cantidad de personas que 
+                                      indico en el punto anterior? "/>
+                    </li>
+
+                    <div>
+                        <p:spinner  
+                                   value="#{proyectoWebBean.proyectoWeb.proyectoWebSegSaludBioseg.mtsCantPersonas}" min="0"/>
+                    </div>
+                    
+                    
+                </ol>
+
+                              
+                <div align="center" >
+             <p:commandButton value="Anterior"
+                              icon="ui-icon-arrowthick-1-w"
+                              style="margin: 20px 100px 20px 100px "
+                              action="#{navegarBean.entrarPagProyecto(9)}"
+                              ajax="false"
+                              rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+             
+             <p:commandButton value="Siguiente"
+                              icon="ui-icon-arrowthick-1-e"
+                              ajax="false"
+                              action="#{navegarBean.entrarPagProyecto(11)}"
+                              rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+             
+             <p:commandButton value="Guardar"
+                              icon="ui-icon-disk"
+                              style="margin: 20px 100px 20px 100px "
+                              action="#{proyectoWebBean.guardar(10)}"
+                              update="dMensaje, clMenuPrincipal"
+                              rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+             
+         </div>
+            </div>
+
+        </div>
+        
+    </ui:define>
+
+</ui:composition>

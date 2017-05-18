@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <p:dialog id="dFindParticipacionWeb" 
+              widgetVar="dlgFindParticipacionWeb"
+              modal="true"
+              width="600"
+              height="300"
+              position="top"
+              style="margin-top: 30px;"
+              resizable="false">
+        <f:facet name="header">
+            <h:outputText value=" Participantes" styleClass="subTitulo"/>
+        </f:facet>
+        <p:panel id="pDialogParticipacionWeb">
+
+            <p:focus context="pDialogParticipacionWeb"/> 
+            
+            <h:inputHidden id="ihTipoPWFD"
+                           value="#{participacionWebFindDlgBean.tipo}"/>
+            
+            <div class="separador">
+                <h:outputText value="Investigador: "/>
+                <p:commandButton id="cbBuscarInvestigador" 
+                                 icon="ui-icon-search"
+                                 actionListener="#{investigadorFindDlgBean.setTipo(2)}"
+                                 oncomplete="dlgFindInvestigador.show();"
+                                 process="@this"
+                                 update=":frmUser:ihTipoIFD"
+                                 title="Buscar"/>
+            </div>
+            
+            <div class="separador">
+                <h:panelGroup id="pgInvestigador">
+                    
+                    <h:inputHidden id="ihIdInv" value="#{participacionWebFindDlgBean.participacionWeb.investigador.id}"/>
+                    <h:inputHidden id="ihIdPersona" value="#{participacionWebFindDlgBean.participacionWeb.investigador.persona.id}"/>
+                    <h:inputHidden id="ihApellidoInv" value="#{participacionWebFindDlgBean.participacionWeb.investigador.persona.apellido}"/>
+                    <h:inputHidden id="ihNombreInv" value="#{participacionWebFindDlgBean.participacionWeb.investigador.persona.nombre}"/>
+                    <h:inputHidden  id="ihCuilInv" value="#{participacionWebFindDlgBean.participacionWeb.investigador.persona.cuil}"/>
+                    <!--<h:inputText id="ihGrado" value="{participacionWebFindDlgBean.participacionWeb.investigador.formacionesAcademicasGrado}"/>
+                    <h:inputText  id="ihPostGrado" value="{participacionWebFindDlgBean.participacionWeb.investigador.formacionesAcademicasPosgrado}"/>
+                    <h:inputText  id="ihOtras" value="{participacionWebFindDlgBean.participacionWeb.investigador.formacionesAcademicasOtras}"/>-->
+
+
+                    
+                    
+                    <h:outputText id="otInvestigador" 
+                              value="#{participacionWebFindDlgBean.participacionWeb.investigador.persona.apellido} 
+                                     #{participacionWebFindDlgBean.participacionWeb.investigador.persona.nombre} 
+                                     #{participacionWebFindDlgBean.participacionWeb.investigador.persona.cuil}"
+                                     style="border: 1px solid #000; width: 50px;"
+                                     />
+                </h:panelGroup>
+                
+            </div>
+            
+            <div >
+                <h:outputText value="Función: "/>
+            </div>
+            
+            <div class="separador">
+                <p:selectOneMenu id="somRol"
+                                 value="#{participacionWebFindDlgBean.participacionWeb.rol}"
+                                 converter="ConversorGenerico"
+                                 style="width:400px;">
+                    <f:selectItems value="#{rolLstBean.lstSIRol}"/>
+                </p:selectOneMenu>
+            </div>
+            
+            <div>
+                <h:outputText value="Dedicación semanal: "/>
+            </div>
+            
+            <div class="separador">
+                <h:inputText id="itDedicacionSemanal"
+                             value="#{participacionWebFindDlgBean.participacionWeb.dedicacionSemanal}"/>
+            </div>
+            
+            <div align="center">
+                
+                <p:commandButton id="cbSelectParticipacion"
+                                         value="Agregar" 
+                                         icon="ui-icon-check"  
+                                         actionListener="#{participacionWebFindDlgBean.definirComponentesActualizar()}"
+                                         process="dFindParticipacionWeb"
+                                         style="margin: 30px 20px 30px 20px;"
+                                         />  
+                
+                <p:commandButton value="Salir"
+                                 icon="ui-icon-cancel"
+                                 oncomplete="dlgFindParticipacionWeb.hide();"
+                                 process="@this"/>
+
+            </div>
+            
+
+        </p:panel>
+
+    </p:dialog>
+</html>

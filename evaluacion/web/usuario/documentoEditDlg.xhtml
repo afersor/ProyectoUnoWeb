@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <p:dialog id="dDocumentoEditDlg" 
+              widgetVar="dlgDocumentoEditDlg"
+              modal="true"
+              width="600"
+              height="300"
+              position="top"
+              style="margin-top: 30px;"
+              resizable="false">
+        <f:facet name="header">
+            <h:outputText value="Documento" styleClass="subTitulo"/>
+            
+        </f:facet>
+        
+        
+        <p:panel id="pDlgDocumentoEdit"
+                 style="margin-bottom: 15px;">
+            
+            <h:inputHidden id="ihDocumentoAccionBtn" 
+                           value="#{documentoEditDlgBean.accionBtn}"
+                           />
+            
+            <h:inputHidden id="ihIdEvaluacionWebDE" 
+                           value="#{evaluacionWebBean.evaluacionWeb.id}"
+                           />
+            <p:focus context="pDlgDocumentoEdit"/> 
+            <h:form id="frmArchivo" enctype="multipart/form-data">
+                            
+
+            
+            
+           
+            <h:panelGrid id="pgILE" columns="2" style="border-style:none !important;">
+
+
+                <h:outputText value="Evaluación:"/>
+                <h:outputText value="#{evaluacionWebBean.evaluacionWeb.proyecto.codigoIncentivos} - #{evaluacionWebBean.evaluacionWeb.proyecto.titulo} " />
+
+                <p:fileUpload 
+                    fileUploadListener="#{documentoEditDlgBean.handleFileUpload}"
+                              auto="true"
+                              disabled="#{documentoEditDlgBean.campoEditable}"
+                              update="pgDocumentoAF"
+                              />
+
+                <h:panelGroup id="pgDocumentoAF">
+                    <h:outputText value="#{documentoLstBean.documento.nombreArchivo}"
+                                  rendered="#{documentoLstBean.documento != null}"/>
+                    <h:inputHidden value="#{documentoLstBean.documento.nombreArchivo}"
+                                   rendered="#{documentoLstBean.documento != null}"/>
+                </h:panelGroup>
+
+
+            </h:panelGrid>
+            
+            </h:form> 
+            
+        </p:panel>
+            
+            
+            
+                    <div style="text-align: center;">
+                                               
+                        
+                        <p:commandButton id="cbDocumentoTAF"
+                                         value="#{documentoEditDlgBean.textBoton}"
+                                         icon="#{documentoEditDlgBean.icono}"
+                                         actionListener="#{documentoEditDlgBean.actionBtn()}"
+                                         style="margin-right: 10px;"
+                                         
+                                         update="frmUser:dMensaje"/>
+                        
+                        <p:commandButton id="cbSalirTAF"
+                                         value="Salir"
+                                         icon="ui-icon-cancel"
+                                         oncomplete="dlgDocumentoEditDlg.hide();"
+                                         process="@this"/>
+                    </div>
+            
+           
+
+        
+
+    </p:dialog>
+</html>

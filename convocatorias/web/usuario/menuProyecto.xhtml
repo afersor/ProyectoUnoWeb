@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../templates/userTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="content">
+        
+        <ui:include src="/recursos/mensajesDlg.xhtml"/>
+        
+        <div style="clear: both;"/>
+        
+            <div style="margin-left: auto;
+    margin-right: auto;
+    padding: 0px; width: 1004px;">
+                
+                
+                <div align="center"
+                     style="margin-bottom: 15px;">
+                    <h:outputText value="PROGRAMA DE DESARROLLO CIENTIFICO Y TECNOLOGICO"
+                                  styleClass="titulo"/><br/>
+                    <h:outputText value="FORMULARIO DE PROYECTO DE INVESTIGACION Y DESARROLLO - PID 2016"
+                                  styleClass="titulo"/><br/>
+                    <h:outputText value="Proyecto #{proyectoWebBean.proyectoWeb.titulo}" 
+                                  styleClass="titulo"/><br/>
+                    <h:outputText value=" Fecha limite de presentación " 
+                                  styleClass="titulo"/>
+                    <h:outputText value="#{proyectoWebBean.proyectoWeb.convocatoria.fechaFin}"
+                                  styleClass="titulo">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                    </h:outputText>
+                </div>
+                
+            <div align="center"
+                 style="margin-bottom: 10px;">
+                <p:panel style="width: 900px;">
+                    <f:facet name="header">
+                        <h:outputText value="Formularios a completar"/>
+                    </f:facet>
+                    
+                    <h:panelGrid columns="2"
+                                 cellspacing="10px;">
+                        <h:commandLink value="I. Identificación del proyecto"
+                                       action="#{navegarBean.entrarPagProyecto(1)}"
+                                       rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+                        <h:outputText value="Con Datos"  styleClass="resaltarLinkConDatos" 
+                                      rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+                        
+                        <h:commandLink value="II. Resumen del Proyecto"
+                                       action="#{navegarBean.entrarPagProyecto(2)}"
+                                       rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+                        <h:outputText value="#{menuProyectoPagBean.obtenerEstadoPagII()}"
+                                      styleClass="#{menuProyectoPagBean.obtenerEstadoPagII() eq 'Con Datos'  ? 'resaltarLinkConDatos' : 'resaltarLinkSinDatos'}"
+                                      rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+                        
+                        <h:commandLink value="III. Formulación General del Proyecto"
+                                       action="#{navegarBean.entrarPagProyecto(3)}"
+                                       rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+                        <h:outputText value="#{menuProyectoPagBean.obtenerEstadoPagIII()}"
+                                      styleClass="#{menuProyectoPagBean.obtenerEstadoPagIII() eq 'Con Datos'  ? 'resaltarLinkConDatos' : 'resaltarLinkSinDatos'}"
+                                      rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+                        
+                        <h:commandLink value="IV. Datos personales del Personal Afectado al Proyecto"
+                                       action="#{navegarBean.entrarPagProyecto(4)}"
+                                       rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+                        <h:outputText value="#{menuProyectoPagBean.obtenerEstadoPagIV()}"
+                                      styleClass="#{menuProyectoPagBean.obtenerEstadoPagIV() eq 'Con Datos'  ? 'resaltarLinkConDatos' : 'resaltarLinkSinDatos'}"
+                                      rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+                        
+                        <h:commandLink value="V. Plan de Ejecución Financiera."
+                                       action="#{navegarBean.entrarPagProyecto(5)}"
+                                       rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+                        <h:outputText value="#{menuProyectoPagBean.obtenerEstadoPagV()}"
+                                      styleClass="#{menuProyectoPagBean.obtenerEstadoPagV() eq 'Con Datos'  ? 'resaltarLinkConDatos' : 'resaltarLinkSinDatos'}"
+                                      rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+                        
+                        <h:commandLink value="VI. Programa de capacitación y formación de recursos humanos."
+                                       action="#{navegarBean.entrarPagProyecto(6)}"
+                                       rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+                        <h:outputText value="#{menuProyectoPagBean.obtenerEstadoPagVI()}"
+                                      styleClass="#{menuProyectoPagBean.obtenerEstadoPagVI() eq 'Con Datos'  ? 'resaltarLinkConDatos' : 'resaltarLinkSinDatos'}"
+                                      rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+                        
+                        <h:commandLink value="VII. Archivos adjuntos."
+                                       action="#{navegarBean.entrarPagProyecto(7)}"/>
+                        <h:outputText value="#{menuProyectoPagBean.obtenerEstadoPagVII()}"
+                                      styleClass="#{menuProyectoPagBean.obtenerEstadoPagVII() eq 'Con Datos'  ? 'resaltarLinkConDatos' : 'resaltarLinkSinDatos'}"/>
+                        
+                        <h:commandLink value="VIII. Bibliografía."
+                                       action="#{navegarBean.entrarPagProyecto(8)}"/>
+                        <h:outputText value="#{menuProyectoPagBean.obtenerEstadoPagVIII()}"
+                                      styleClass="#{menuProyectoPagBean.obtenerEstadoPagVIII() eq 'Con Datos'  ? 'resaltarLinkConDatos' : 'resaltarLinkSinDatos'}"/>
+                        
+                        <h:commandLink value="IX. Aspectos Éticos."
+                                       action="#{navegarBean.entrarPagProyecto(9)}"/>
+                        <h:outputText value="#{menuProyectoPagBean.obtenerEstadoPagIX()}"
+                                      styleClass="#{menuProyectoPagBean.obtenerEstadoPagIX() eq 'Con Datos'  ? 'resaltarLinkConDatos' : 'resaltarLinkSinDatos'}"/>
+                        
+                        
+                        <h:commandLink value="X. Declaración Jurada - Convocatoria SECyT – UNCa 2014."
+                                       action="#{navegarBean.entrarPagProyecto(11)}"  rendered="#{not proyectoWebBean.proyectoWeb.finalizado}"/>
+                        <h:outputText value="Sin Datos" styleClass="resaltarLinkSinDatos" rendered="#{not proyectoWebBean.proyectoWeb.finalizado}"/>
+                    </h:panelGrid>
+                </p:panel>
+            </div>
+                
+            <div align="center"
+                 style="margin-bottom: 10px;">
+              <p:commandButton value="Menu Principal"
+                                     action="#{navegarBean.entrarPagConvocatoriasOnce()}"
+                                     process="@this"/>
+
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>

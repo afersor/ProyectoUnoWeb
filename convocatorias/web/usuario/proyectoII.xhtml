@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../templates/userTemplate.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        
+        <ui:include src="/recursos/mensajesDlg.xhtml"/>
+
+         
+         <div style="margin-left: auto;
+                margin-right: auto;
+                 width: 1004px;
+                 padding: 10px 10px 10px 10px;">
+             
+             <div align="left">
+                 <h:commandLink id="clMenuPrincipal"
+                                value="Menu Proyecto"
+                                action="#{navegarBean.entrarPagProyecto(0)}"
+                                style="margin-left: 20px;"
+                                rendered="#{proyectoWebBean.proyectoWeb.id != null}"
+                                immediate="true"/>
+             </div>
+             
+        <div align="center">
+            <div>
+            <h:outputText value="Postulación: #{proyectoWebBean.proyectoWeb.convocatoria.nombre} " 
+                          styleClass="titulo"/>
+            <h:outputText value="#{proyectoWebBean.proyectoWeb.convocatoria.fechaIni}" 
+                          styleClass="titulo">
+                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+            </h:outputText>
+            <h:outputText value=" a " 
+                          styleClass="titulo"/>
+            <h:outputText value="#{proyectoWebBean.proyectoWeb.convocatoria.fechaFin}"
+                          styleClass="titulo">
+                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+            </h:outputText>
+            </div>
+            
+            <div>
+                <h:outputText value="II. Resumen del proyecto" 
+                              styleClass="titulo"/>
+            </div>
+        </div>
+        
+        <div style="padding: 10px 10px 10px 10px;">
+            <ol>
+                <li class="listaTitulo">
+                    <div>
+                        <h:outputText value="Resumen: "/>
+                    </div>
+                </li>
+                    <div>
+                        <p:inputTextarea rows="10" cols="100"
+                                         autoResize="false"
+                                         value="#{proyectoWebBean.proyectoWeb.resumen}"
+                                         maxlength="3000" counter="counter1"    
+    counterTemplate="{0} caracteres restantes (3000 máx)"/><br /><h:outputText id="counter1" /> 
+                    </div>
+                
+                
+                <li class="listaTitulo">
+                    <div>
+                        <h:outputText value="Palabras claves: "/>
+                    </div>
+                </li>
+                    <div>
+                        <h:inputText value="#{proyectoIIPagBean.palabraClaveUno}"
+                                     style="margin-right: 5px;"
+                                     maxlength="30"/>
+                        
+                        <h:inputText value="#{proyectoIIPagBean.palabraClaveDos}"
+                                     style="margin-right: 5px;"
+                                     maxlength="30"/>
+                        
+                        <h:inputText value="#{proyectoIIPagBean.palabraClaveTres}"
+                                     style="margin-right: 5px;"
+                                     maxlength="30"/>
+                        
+                        <h:inputText value="#{proyectoIIPagBean.palabraClaveCuatro}"
+                                     style="margin-right: 5px;"
+                                     maxlength="30"/>
+                        
+                        <h:inputText value="#{proyectoIIPagBean.palabraClaveCinco}"
+                                     style="margin-right: 5px;"
+                                     maxlength="30"/>
+                    </div>
+                
+                
+                <li class="listaTitulo">
+                    <div>
+                        <h:outputText value="Proyect title: "/>
+                    </div>
+                </li>
+                    <div>
+                        <p:inputTextarea rows="10" cols="100"
+                                         autoResize="false"
+                                         value="#{proyectoWebBean.proyectoWeb.title}"/>
+                    </div>
+                
+                
+                <li class="listaTitulo">
+                    <div>
+                        <h:outputText value="Summary: "/>
+                    </div>
+                </li>
+                    <div>
+                        <p:inputTextarea rows="10" cols="100"
+                                         autoResize="false"
+                                         value="#{proyectoWebBean.proyectoWeb.summary}"
+                                         maxlength="3000" counter="counter2"    
+    counterTemplate="{0} caracteres restantes (3000 máx)"/><br /><h:outputText id="counter2" /> 
+                    </div>
+                
+                
+                <li class="listaTitulo">
+                    <div>
+                        <h:outputText value="Keywords: "/>
+                    </div>
+                </li>
+                    <div>
+                        <h:inputText value="#{proyectoIIPagBean.keywordUno}"
+                                     style="margin-right: 5px;"
+                                     maxlength="30"/>
+                        
+                        <h:inputText value="#{proyectoIIPagBean.keywordDos}"
+                                     style="margin-right: 5px;"
+                                     maxlength="30"/>
+                        
+                        <h:inputText value="#{proyectoIIPagBean.keywordTres}"
+                                     style="margin-right: 5px;"
+                                     maxlength="30"/>
+                        
+                        <h:inputText value="#{proyectoIIPagBean.keywordCuatro}"
+                                     style="margin-right: 5px;"
+                                     maxlength="30"/>
+                        
+                        <h:inputText value="#{proyectoIIPagBean.keywordCinco}"
+                                     style="margin-right: 5px;"
+                                     maxlength="30"/>
+                    </div>
+                
+                
+            </ol>          
+            
+        </div>
+         
+         <div align="center">
+             <p:commandButton value="Anterior"
+                              icon="ui-icon-arrowthick-1-w"
+                              style="margin: 20px 100px 20px 100px "
+                              action="#{navegarBean.entrarPagProyecto(1)}"
+                             rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+             
+             <p:commandButton value="Siguiente"
+                              icon="ui-icon-arrowthick-1-e"
+                              action="#{navegarBean.entrarPagProyecto(3)}"
+                              style="margin: 20px 100px 20px 100px "
+                              rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+             
+             <p:commandButton value="Guardar"
+                              icon="ui-icon-disk"
+                              style="margin: 20px 100px 20px 100px "
+                              action="#{proyectoWebBean.guardar(2)}"
+                              update="dMensaje, clMenuPrincipal"
+                              rendered="#{proyectoWebBean.mostrarBotonASG()}"/>
+             
+         </div>
+             
+             </div>
+        
+    </ui:define>
+
+</ui:composition>

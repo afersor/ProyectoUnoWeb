@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/UserTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+        <h3>
+            <h:outputText value="Becas"/>
+        </h3>
+
+
+        <div class="divGeneral">
+
+            <h:outputText value="No registra becas" 
+                          rendered="#{empty postulacionBecasLstBean.lstPostulacionBeca}"
+                          styleClass="textoValue"/>
+        </div>
+
+        <div style="clear: both"/>
+
+        <div>
+
+            <p:dataTable value="#{postulacionBecasLstBean.lstPostulacionBeca}"
+                         var="pb"
+                         rendered="#{not empty postulacionBecasLstBean.lstPostulacionBeca}"
+                         >
+
+                <p:column style="word-wrap:break-word;"
+                          width="200">
+                    <f:facet name="header">
+                        <h:outputText value="Beca (Proyecto-Nombre)"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <h:outputText value="#{pb.proyecto} - #{pb.beca.descripcion}"
+                                  styleClass="textoValue"/>
+                </p:column>
+
+                
+               
+            </p:dataTable>
+
+        </div>
+
+        <!-- Becas que dirige -->
+        <div>
+            <h3><h:outputText 
+                    rendered="#{not empty postulacionBecasLstBean.lstPostulacionBecasDirector}"
+                    value="Becas de Proyectos que dirige"/></h3> 
+
+            <p:dataTable value="#{postulacionBecasLstBean.lstPostulacionBecasDirector}"
+                         var="pbd"
+                         rendered="#{not empty postulacionBecasLstBean.lstPostulacionBecasDirector}"
+                         >
+
+                <p:column style="word-wrap:break-word;"
+                          width="200">
+                    <f:facet name="header">
+                        <h:outputText value="Beca (Proyecto-Postulante-Nombre)"
+                                      styleClass="textoEtiqueta"/>
+                    </f:facet>
+                    <h:outputText value="#{pbd.proyecto} - #{pbd.postulante} - #{pbd.beca.descripcion}"
+                                  styleClass="textoValue"/>
+                </p:column>
+              
+            </p:dataTable>
+
+        </div>
+    </ui:define>
+
+
+
+</ui:composition>
