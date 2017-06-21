@@ -24,9 +24,6 @@ import jxl.read.biff.BiffException;
  */
 public class ImportarExcel {
 
-   
-    
-   // EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoUnoPU",ConexionFacade.PROPIEDADES);
     private static ImportarExcel instancia=null;
     private RendicionDeCuentas rendiciondecuentas;
     private Resumen resumen;
