@@ -62,7 +62,7 @@
                         id="btnSelect"
                         value="Seleccionar. " 
                         action="#{investigadorProduccionBean.limpiar()}"
-                        update=":frmUser:pgProyectoSelect, :frmUser:apProduccion, :frmUser:revistas:dArticuloRevistaCreateDlg,:frmUser:congresos:dCongresoCreateDlg,:frmUser:capitulos:dCapituloCreateDlg"
+                        update=":frmUser:pgProyectoSelect, :frmUser:apProduccion, :frmUser:revistas:dArticuloRevistaCreateDlg,:frmUser:congresos:dCongresoCreateDlg,:frmUser:capitulos:dCapituloCreateDlg,:frmUser:contrato:dContratoCreateDlg"
                         style="font-size: 1.3em;">
                         <f:setPropertyActionListener value="#{pro}" target="#{investigadorProduccionBean.proyecto}"/>
                         <f:setPropertyActionListener value="#{pro}" target="#{publicacionLstBean.proyecto}"/>
@@ -223,11 +223,11 @@
                                  id="cbCreate3"
                                  title="Nuevo Capitulo Libro"
                                  actionListener="#{investigadorProduccionBean.setBtnSelect}"
-                                  update=":frmUser:capitulos:dCapituloCreateDlg"
+                                 update=":frmUser:capitulos:dCapituloCreateDlg"
                                  oncomplete="PF('dlgCapituloCreateDlg').show();"
 
                                  ></p:commandButton>
-             
+
                 <p:dataTable id="dtCapitulosDeLibro"
                              value="#{publicacionLstBean.lstPublicacion}"
                              var="cl"
@@ -254,7 +254,7 @@
                             <f:setPropertyActionListener value="#{cl}" target="#{investigadorProduccionBean.capituloLibro}"/> 
                             <f:setPropertyActionListener value="#{cl.proyectos.get(0)}" target="#{investigadorProduccionBean.proyecto}"/> 
                         </p:commandButton> 
-                       <p:commandButton id="cbDelete"
+                        <p:commandButton id="cbDelete"
                                          title="Eliminar"
                                          icon="ui-icon-circle-close"
                                          action="#{pickListView.cargarTargetDePublicacion(cl)}"
@@ -266,7 +266,7 @@
                             <f:setPropertyActionListener value="#{cl}" target="#{investigadorProduccionBean.capituloLibro}"/> 
                             <f:setPropertyActionListener value="#{cl.proyectos.get(0)}" target="#{investigadorProduccionBean.proyecto}"/> 
                         </p:commandButton>
-                       
+
                     </p:column>
                     <p:column style="word-wrap:break-word;"
                               width="50">
@@ -339,7 +339,7 @@
                              rows="10"
                              paginator="true"
                              scrollable="true"
-                           
+
 
                              >
                     <p:column width="75"  headerText="Operaciones" > 
@@ -358,7 +358,7 @@
                             <f:setPropertyActionListener value="#{con}" target="#{investigadorProduccionBean.congreso}"/> 
                             <f:setPropertyActionListener value="#{con.proyectos.get(0)}" target="#{investigadorProduccionBean.proyecto}"/> 
                         </p:commandButton> 
-                        
+
                         <p:commandButton id="cbDelete"
                                          title="Eliminar"
                                          icon="ui-icon-circle-close"
@@ -371,7 +371,7 @@
                             <f:setPropertyActionListener value="#{con}" target="#{investigadorProduccionBean.congreso}"/> 
                             <f:setPropertyActionListener value="#{con.proyectos.get(0)}" target="#{investigadorProduccionBean.proyecto}"/> 
                         </p:commandButton>
-                       
+
 
 
 
@@ -450,8 +450,8 @@
                              var="cont"
                              rows="10"
                              paginator="true"
-                            >
-                    
+                             >
+
                     <p:column width="75"  headerText="Operaciones" > 
 
 
@@ -460,8 +460,8 @@
                                          title="Editar"
                                          icon="ui-icon-pencil"  
                                          actionListener="#{investigadorProduccionBean.setBtnSelect}"
-                                      
-                                         update=":frmUser:contrato:dContratoCreateDlg"
+
+                                         update="dtContratos,:frmUser:contrato:dContratoCreateDlg"
 
                                          oncomplete="PF('dlgContratoCreateDlg').show();"
 
@@ -474,10 +474,10 @@
                         <p:commandButton id="cbDelete"
                                          title="Eliminar"
                                          icon="ui-icon-circle-close"
-                                         
+
                                          oncomplete="PF('dlgContratoCreateDlg').show();"
                                          actionListener="#{investigadorProduccionBean.setBtnSelect}"
-                                         update=":frmUser:contrato:dContratoCreateDlg"
+                                         update="dtContratos,:frmUser:contrato:dContratoCreateDlg"
                                          >
 
                             <f:setPropertyActionListener value="#{cont}" target="#{investigadorProduccionBean.contrato}"/> 
@@ -486,7 +486,7 @@
 
 
                     </p:column>
-                    
+
                     <p:column style="word-wrap:break-word;"
                               width="50">
                         <f:facet name="header">
@@ -540,9 +540,11 @@
                     </p:column>
                 </p:dataTable>
             </p:tab>
+
             <!--CFORMACION RRHH-->             
-            <p:tab title="Formación RRHH" id="tFormacionRRHH"> 
-                 <div  style="text-align: center;">
+
+            <p:tab title="FormaciÃ³n RRHH" id="tFormacionRRHH"> 
+                <div  style="text-align: center;">
                     <p:commandButton 
                         id="cbCreate5"
                         title="Nueva Formacion RRHH"
@@ -571,9 +573,7 @@
                                          title="Editar"
                                          icon="ui-icon-pencil"  
                                          actionListener="#{investigadorProduccionBean.setBtnSelect}"
-                                      
                                          update=":frmUser:formacion:dFormacionCreateDlg"
-
                                          oncomplete="PF('dlgFormacionCreateDlg').show();"
 
                                          >
@@ -585,10 +585,10 @@
                         <p:commandButton id="cbDelete"
                                          title="Eliminar"
                                          icon="ui-icon-circle-close"
-                                         
-                                         oncomplete="PF('dlgFormacionCreateDlg').show();"
+
                                          actionListener="#{investigadorProduccionBean.setBtnSelect}"
                                          update=":frmUser:formacion:dFormacionCreateDlg"
+                        oncomplete="PF('dlgFormacionCreateDlg').show();"
                                          >
 
                             <f:setPropertyActionListener value="#{fr}" target="#{investigadorProduccionBean.formacionRRHH}"/> 
@@ -597,8 +597,8 @@
 
 
                     </p:column>
-                    
-                    
+
+
                     <p:column style="word-wrap:break-word;"
                               width="50">
                         <f:facet name="header">
@@ -627,7 +627,7 @@
 
                         <h:outputText value="#{fr.becariosAlumnos}"/>
                     </p:column>
-                    
+
 
                     <p:column style="word-wrap:break-word;"
                               width="50">
@@ -650,7 +650,7 @@
                     <p:column style="word-wrap:break-word;"
                               width="50">
                         <f:facet name="header">
-                            <h:outputText value="Tesis aprobadas Maestría"
+                            <h:outputText value="Tesis aprobadas MaestrÃ­a"
                                           style="word-wrap:break-word;"/>
                         </f:facet>
                         <h:outputText value="#{fr.tesisAprobadasMaestria}"/>
@@ -676,6 +676,7 @@
 
                 </p:dataTable>
             </p:tab>
+
             <!--LIBROS-->             
             <p:tab title="Libros" id="tLibros">  
                 <div  style="text-align: center;">
@@ -692,7 +693,7 @@
                         >
 
                     </p:commandButton>
-                
+
                 </div>
                 <p:dataTable id="dtLibros"
                              value="#{publicacionLstBean.lstPublicacion}"

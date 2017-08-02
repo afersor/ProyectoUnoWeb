@@ -976,7 +976,7 @@ this.getLibrosLstBean().cargar_libros();
                 contrato.setProyectosVinculacion(null);
 
                 contratoRNLocal.create(contrato);
-                this.getContratoLstBean().getLstContrato().add(this.contrato);
+                //this.getContratoLstBean().getLstContrato().add(this.contrato);
                 context.execute("PF('dlgContratoCreateDlg').hide();");
 
             }

@@ -80,7 +80,6 @@ private Libro libroSelect;
     
       public void cargar_libros() {
         try {
-            
               this.setLstLibros(publicacionFacadeLocal.getLibros());
               System.out.println("trae libros" + lstLibros);
         } catch (Exception ex) {

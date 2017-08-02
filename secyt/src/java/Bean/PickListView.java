@@ -10,6 +10,7 @@ import DAO.ProyectoFacadeLocal;
 import entidades.persona.investigador.Investigador;
 import entidades.proyecto.Proyecto;
 import entidades.proyecto.resultado.ArticuloRevista;
+import entidades.proyecto.resultado.Propiedad;
 import entidades.proyecto.resultado.Publicacion;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +37,7 @@ import org.primefaces.model.DualListModel;
 @ViewScoped
 public class PickListView {
 
-    @EJB
+     @EJB
     private InvestigadorFacadeLocal investigadorFacadeLocal;
     @EJB
     private ProyectoFacadeLocal proyectoFacadeLocal;
@@ -110,7 +111,6 @@ public class PickListView {
     public void submit(Proyecto proyecto) {
          System.out.println("ENTROOO AL SUBMIT PICKLISTVIEW ::!:!:!:");
         try {
-            System.out.println("proyecto?" + proyecto.getTitulo());
             this.setTarget(this.proyectoFacadeLocal.getTodosIntegrantes(proyecto));
             this.investigadorDualListModel = new DualListModel<>(this.source, this.target);
         } catch (Exception ex) {
@@ -130,6 +130,19 @@ public class PickListView {
         }
            
     }
+    
+     public void cargarTargetDePropiedad(Propiedad propiedad) {
+         System.out.println("ENTROOO AL cargarTargetDePropiedad de  propiedad ::!:!:!:");
+        try {
+            
+            this.setTarget(propiedad.getInvestigadores());
+            this.investigadorDualListModel.setTarget(target);
+        } catch (Exception ex) {
+            Logger.getLogger(PickListView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           
+    }
+     
     /*
      public void displayTargetList() {
      System.out.println("Entering function");
@@ -168,5 +181,4 @@ public class PickListView {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "List Reordered", null));
     }
-
 }

@@ -8,7 +8,7 @@ package Bean;
 import entidades.proyecto.RN.FormacionRNLocal;
 import entidades.proyecto.resultado.FormacionRRHH;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
