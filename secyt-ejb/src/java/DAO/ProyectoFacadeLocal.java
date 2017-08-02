@@ -65,4 +65,7 @@ public interface ProyectoFacadeLocal {
     public List<Proyecto> findByAnioResumen(Integer anio, String resumen)throws Exception;
 
     public List<Proyecto> findByResumen(String resumen)throws Exception;
+    
+    public List<Investigador> getTodosIntegrantes(Proyecto proyecto)throws Exception;
+    
 }

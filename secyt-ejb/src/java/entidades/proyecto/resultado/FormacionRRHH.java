@@ -17,6 +17,11 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "resultado_formacionrrhh")
+@NamedQueries({
+    @NamedQuery(name="FormacionRRHH.findByInvestigador", 
+        query="SELECT  p FROM FormacionRRHH p ,IN(p.proyecto.participaciones) par WHERE  p.proyecto.id =:idProyecto AND par.investigador.id = :idInvestigador")
+})
+
 public class FormacionRRHH implements Serializable {
 
     private static final long serialVersionUID = 1L;

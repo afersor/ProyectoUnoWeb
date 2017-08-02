@@ -16,6 +16,10 @@ import javax.persistence.*;
 @Inheritance(strategy= InheritanceType.JOINED)
 @Entity
 @Table(name = "resultado_libro")
+@NamedQueries({
+    @NamedQuery(name="Libro.findByLibro", 
+        query="SELECT p FROM Libro p")
+})
 public class Libro extends Publicacion implements Serializable {
     @OneToMany(mappedBy = "libro")
     private List<CapituloLibro> capitulos;

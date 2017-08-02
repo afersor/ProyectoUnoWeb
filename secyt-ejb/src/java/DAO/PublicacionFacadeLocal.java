@@ -4,6 +4,8 @@
  */
 package DAO;
 
+import entidades.proyecto.Proyecto;
+import entidades.proyecto.resultado.Libro;
 import entidades.proyecto.resultado.Publicacion;
 import java.util.List;
 import javax.ejb.Local;
@@ -31,4 +33,11 @@ public interface PublicacionFacadeLocal {
     
     public List<Publicacion> findByInvestigador(Long idProyecto, Long idInvestigador, Class tipo) throws Exception;
     
+    public void activate(Publicacion al, Boolean bEstado) throws Exception;
+    
+    public List<Libro> getLibros() throws Exception;
+    
+    
+    public List<Libro> getLibrosTodos(String texto) throws Exception;
+    public List<Libro> getLibrosProyecto(Proyecto proyecto) throws Exception;
 }

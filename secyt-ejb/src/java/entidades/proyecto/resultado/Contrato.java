@@ -19,6 +19,11 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "resultado_contrato")
+@NamedQueries({
+    @NamedQuery(name="Contrato.findByInvestigador", 
+        query="SELECT  p FROM Contrato p, IN (p.proyectos) pr, IN (pr.participaciones) par WHERE  pr.id =:idProyecto AND par.investigador.id = :idInvestigador")
+})
+
 public class Contrato implements Serializable {
 
     private static final long serialVersionUID = 1L;

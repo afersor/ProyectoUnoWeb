@@ -9,6 +9,7 @@ import entidades.economico.Rendicion;
 import entidades.persona.investigador.Investigador;
 import entidades.proyecto.Participacion;
 import entidades.proyecto.Proyecto;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -233,5 +234,20 @@ public class ProyectoFacade extends AbstractFacade<Proyecto> implements Proyecto
         Query q = em.createNamedQuery("Proyecto.findByResumen");
         q.setParameter("resumen", "%" + resumen + "%");
         return q.getResultList();
+    }
+
+    @Override
+    public List<Investigador> getTodosIntegrantes(Proyecto proyecto) throws Exception {
+        Query quParticipaciones = em.createQuery("SELECT pa FROM Participacion pa "
+                + "WHERE pa.proyecto.id=" + proyecto.getId());
+        List<Participacion> participaciones = quParticipaciones.getResultList();
+        List<Investigador> integrantes = new ArrayList<Investigador>();
+        for (Participacion participacion : participaciones) {
+            if (!integrantes.contains(participacion.getInvestigador())) {
+                integrantes.add(participacion.getInvestigador());
+            }
+        }
+        return integrantes;
+
     }
 }
