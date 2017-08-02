@@ -1,0 +1,110 @@
+<ui:component id="formacion"  
+              xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:f="http://java.sun.com/jsf/core"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:cc="http://java.sun.com/jsf/composite"
+
+              xmlns:p="http://primefaces.org/ui">
+    <p:dialog id="dFormacionCreateDlg" 
+              widgetVar="dlgFormacionCreateDlg"
+              modal="true"
+              width="900" 
+
+              height="600"
+              position="top"
+
+              resizable="false">
+
+
+
+
+        <f:facet name="header">
+            <h:outputText value="#{investigadorProduccionBean.cbAction.value} Datos del Proyecto" styleClass="subTitulo"/>
+        </f:facet>
+        <p:panel id="pDlgFormacionCreate" header="Datos del Proyecto">
+            <h:panelGrid columns="2" cellpadding="2">
+                <br/><br/>
+                <h:inputHidden />
+                <h:inputHidden value="#{investigadorProduccionBean.proyecto.id}"/>
+                <h:inputHidden value="#{investigadorProduccionBean.formacionRRHH.id}"/>
+                <h:outputText value="Proyecto: "    />
+                <h:outputText value="#{publicacionLstBean.proyecto.titulo}"/> 
+              
+            </h:panelGrid>
+        </p:panel>
+       
+        <p:panel id="pDlgFormacionRRHHCreate" header="Formacion de RRHH">
+          
+            <h:panelGrid columns="2" cellpadding="2">
+                
+                 <h:outputText value="n° de Becarios Alumnos: "/>
+                 <p:inputText  value="#{investigadorProduccionBean.formacionRRHH.becariosAlumnos}"/>
+                 <h:outputText value="n° de Becarios Graduados: "/>
+                 <p:inputText  value="#{investigadorProduccionBean.formacionRRHH.becariosGraduados}"/>
+                   <h:outputText value="n° de Tesis Dirigidas "/>
+                   <p:inputText  value="#{investigadorProduccionBean.formacionRRHH.tesisDirigidas}"/>
+            </h:panelGrid>
+        </p:panel>
+        <p:panel id="pDlgFormacionRRHHFecha" >
+           
+            <h:panelGrid columns="2" cellpadding="2">
+          
+                  <h:outputText value="Fecha: "/>
+                  <p:calendar  value="#{investigadorProduccionBean.formacionRRHH.fecha}"/>
+            </h:panelGrid>
+        </p:panel>
+         
+        <p:panel id="pDlgFormaciontesisCreate" header="Numero de Tesis Aprobadas:">
+            <h:panelGrid columns="2" cellpadding="2">
+              
+                 <h:outputText value="De Maestria: "/>
+                 <p:inputText  value="#{investigadorProduccionBean.formacionRRHH.tesisAprobadasMaestria}"/>
+                 <h:outputText value="De Doctorado: "/>
+                 <p:inputText  value="#{investigadorProduccionBean.formacionRRHH.tesisAprobadasDoctorado}"/>
+                 <h:outputText value="n° de Tesinas de Grado Aprobadas: "/>
+                 <p:inputText  value="#{investigadorProduccionBean.formacionRRHH.tesinasGradoAprobadas}"/>
+            </h:panelGrid>
+        </p:panel>
+        <div>
+            <p:messages autoUpdate="true"/>
+        </div>
+
+
+
+
+        <div  style="float: left; margin: 10px;
+              width: 100%;
+              text-align: center;">
+
+            <p:growl id="message5" showDetail="true"  />
+            <div style="clear: both;"/>
+
+
+            <p:commandButton id="btnActiones"
+                             icon="ui-icon-disk"
+                             value="#{investigadorProduccionBean.cbAction.value}" 
+                             actionListener="#{investigadorProduccionBean.actionBtn}"
+
+                             update=":frmUser:apProduccion:dtFormacionRRHH,  pDlgFormacionCreate, message5 @this"
+                             >
+                <p:confirm header="Confirmación" message="¿Seguro?" icon="ui-icon-alert" />
+
+            </p:commandButton>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade"  >
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+            <p:commandButton id="btnSalir"
+                             value="Salir" 
+                             actionListener="#{investigadorProduccionBean.limpiarObjetos()}"
+                             oncomplete="PF('dlgFormacionCreateDlg').hide()"
+
+                             >
+
+
+            </p:commandButton>
+        </div>
+
+    </p:dialog>
+</ui:component>

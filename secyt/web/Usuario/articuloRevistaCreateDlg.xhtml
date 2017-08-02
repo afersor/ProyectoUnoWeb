@@ -1,0 +1,177 @@
+<ui:component id="revistas"  
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:cc="http://java.sun.com/jsf/composite"
+        
+    xmlns:p="http://primefaces.org/ui">
+    <p:dialog id="dArticuloRevistaCreateDlg" 
+              widgetVar="dlgArticuloRevistaCreateDlg"
+              modal="true"
+              width="900" 
+               
+              height="600"
+              position="top"
+              
+              resizable="false">
+
+        
+         
+
+        <f:facet name="header">
+            <h:outputText value="#{investigadorProduccionBean.cbAction.value} Artículo de Revista" styleClass="subTitulo"/>
+        </f:facet>
+        <p:panel id="pDlgArticuloRevistaCreate">
+            <h:panelGrid columns="2" cellpadding="2">
+                <br/><br/>
+                <h:inputHidden />
+                <h:inputHidden value="#{investigadorProduccionBean.proyecto.id}"/>
+                <h:inputHidden value="#{investigadorProduccionBean.articuloRevista.id}"/>
+                <h:outputText value="Proyecto: "    />
+                <h:outputText value="#{publicacionLstBean.proyecto.titulo}"/> 
+
+
+                <h:outputText value="Título Artículo: "/>
+                <p:inputTextarea  value="#{investigadorProduccionBean.articuloRevista.titulo}" autoResize="true" cols="50" rows="2"/>
+
+
+                <h:outputText value="Nombre Revista: "/>
+                <p:inputTextarea  value="#{investigadorProduccionBean.articuloRevista.nombreRevista}" autoResize="true" cols="50" rows="2"/>
+
+            </h:panelGrid>
+        </p:panel>
+        <p:panel id="pAutores">
+
+            <h:form id="formPickList">
+                <p:growl id="msg" showDetail="true" escape="false" />
+                <h3 style="margin-top: 0">Autores</h3>
+
+
+                <p:pickList id="pickList" value="#{pickListView.investigadorDualListModel}" var="invest" effect="bounce"
+                            itemValue="#{invest}" itemLabel="#{invest.persona}" 
+                            showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains"  converter="ConversorGenerico">
+
+                    <f:facet name="sourceCaption">Fuera</f:facet>
+                    <f:facet name="targetCaption">Dentro</f:facet>
+
+                    <p:ajax event="transfer" listener="#{pickListView.onTransfer}" update="msg" />
+
+
+                    <p:column style="width:10%">
+                        <h:outputText styleClass="ui-theme ui-theme-#{invest}" />
+                    </p:column>
+
+                    <p:column style="width:90%;">
+                        <h:outputText value="#{invest}" />
+                    </p:column>
+                </p:pickList>
+
+
+
+
+            </h:form>
+        </p:panel>
+
+
+        <p:panel id="pInfoArticulo">
+
+            <h:panelGrid columns="4" cellpadding="2" >
+                <h:outputText value="Volumen: "/>
+                <p:inputText  value="#{investigadorProduccionBean.articuloRevista.volumen}"/>
+
+                <h:outputText value="Pagina inicial: "/>
+                <p:inputText type="int"  value="#{investigadorProduccionBean.articuloRevista.paginaInicial}"/>
+
+                <h:outputText value="Pagina Final: "/>
+                <p:inputText type="int"  value="#{investigadorProduccionBean.articuloRevista.paginaFinal}"/>
+
+
+                <h:outputText value="Con referato: "/>
+                <h:selectOneMenu id="somReferato"
+                                 converter="ConversorGenerico"
+                                 value="#{investigadorProduccionBean.articuloRevista.referato}"
+                                 >
+                    <f:selectItems value="#{investigadorProduccionBean.tipoReferato}"/>
+
+                </h:selectOneMenu>
+
+
+                <h:outputText value="Enviado: "/>
+                <p:calendar  value="#{investigadorProduccionBean.articuloRevista.fechaEnviado}"/>
+
+                <h:outputText value="Aceptado: "/>
+                <p:calendar  value="#{investigadorProduccionBean.articuloRevista.fechaAceptado}"/>
+
+                <h:outputText value="Publicado: "/>
+                <p:calendar  value="#{investigadorProduccionBean.articuloRevista.fechaPublicado}"/>
+
+
+                <h:outputText value="Ámbito de la Publicación: "/>
+                <h:selectOneMenu id="somAmbito"
+                                 converter="ConversorGenerico"
+                                 value="#{investigadorProduccionBean.articuloRevista.ambitoPublicacion}"
+                                 >
+                    <f:selectItems value="#{investigadorProduccionBean.tipoEdicion}"/>
+                </h:selectOneMenu>
+
+
+
+
+
+
+                <h:outputText value="Código ISBN/ISSN (Ej: 8559871432295): "/>
+                <p:inputText  value="#{investigadorProduccionBean.articuloRevista.ISBN}"/>
+
+                <h:outputText value="año: "/>
+                <p:inputText  value="#{investigadorProduccionBean.articuloRevista.anioEdicion}"/>
+
+            </h:panelGrid>
+
+
+
+        </p:panel>
+
+
+        <div>
+            <p:messages autoUpdate="true"/>
+        </div>
+
+
+       
+
+        <div  style="float: left; margin: 10px;
+              width: 100%;
+              text-align: center;">
+
+            <p:growl id="message" showDetail="true"  />
+            <div style="clear: both;"/>
+
+
+            <p:commandButton id="btnActiones"
+                             icon="ui-icon-disk"
+                             value="#{investigadorProduccionBean.cbAction.value}" 
+                             actionListener="#{investigadorProduccionBean.actionBtn}"
+                          
+                             update=":frmUser:apProduccion:dtArticulosRevistas,  pDlgArticuloRevistaCreate, message @this"
+                             >
+                <p:confirm header="Confirmación" message="¿Seguro?" icon="ui-icon-alert" />
+
+            </p:commandButton>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade"  >
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+            <p:commandButton id="btnSalir"
+                             value="Salir" 
+                             actionListener="#{investigadorProduccionBean.limpiarObjetos()}"
+                             oncomplete="PF('dlgArticuloRevistaCreateDlg').hide()"
+
+                             >
+
+
+            </p:commandButton>
+        </div>
+
+    </p:dialog>
+   </ui:component>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:body>
+        <p:dialog id="dPropiedadIntelectualDlg" 
+                  widgetVar="dlgPropiedadIntelectual"
+                  modal="true"
+                  width="900" 
+
+                  height="600"
+                  position="top"
+                  style="margin-top: 30px;"
+                  resizable="false">
+
+
+
+
+            <f:facet name="header">
+                <h:outputText value="#{investigadorProduccionBean.cbAction.value} Propiedad Intelectual" styleClass="subTitulo"/>
+            </f:facet>
+            <p:panel id="pDlgPropiedadIntelectual">
+                <h:panelGrid columns="2" cellpadding="2">
+                    <br/><br/>
+                    <h:inputHidden />
+                    <h:inputHidden value="#{investigadorProduccionBean.proyecto.id}"/>
+                    <h:inputHidden value="#{investigadorProduccionBean.propiedadIntelectual.id}"/>
+                    <h:outputText value="Proyecto: "    />
+                    <h:outputText value="#{publicacionLstBean.proyecto.titulo}"/> 
+
+
+                    <h:outputText value="Título: "/>
+                    <p:inputTextarea  value="#{investigadorProduccionBean.propiedadIntelectual.titulo}" autoResize="true" cols="50" rows="2"/>
+                    
+                    <h:outputText value="Tipo de Registro: "/>
+                    <h:selectOneMenu id="somTipoRegistro"
+                                     converter="ConversorGenerico"
+                                     value="#{investigadorProduccionBean.propiedadIntelectual.tipoRegistroIntelectual}"
+                                     >
+                        <f:selectItems value="#{investigadorProduccionBean.tipoRegistroIntelectual}"/>
+
+                    </h:selectOneMenu>
+
+                    <h:outputText value="Titular/es del Registro: "/>
+                    <p:inputTextarea  value="#{investigadorProduccionBean.propiedadIntelectual.titulares}" autoResize="true" cols="50" rows="2"/>
+
+                </h:panelGrid>
+            </p:panel>
+            <p:panel id="pAutoresPropiedadIntelectual">
+
+                <h:form id="formPickList">
+                    <p:growl id="msg" showDetail="true" escape="false" />
+                    <h3 style="margin-top: 0">Autores</h3>
+
+
+                    <p:pickList id="pickListPropiedadIntelectual" value="#{pickListView.investigadorDualListModel}" var="invest" effect="bounce"
+                                itemValue="#{invest}" itemLabel="#{invest.persona}" 
+                                showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains"  converter="ConversorGenerico">
+
+                        <f:facet name="sourceCaption">Fuera</f:facet>
+                        <f:facet name="targetCaption">Dentro</f:facet>
+
+                        <p:ajax event="transfer" listener="#{pickListView.onTransfer}" update="msg" />
+
+
+                        <p:column style="width:10%">
+                            <h:outputText styleClass="ui-theme ui-theme-#{invest}" />
+                        </p:column>
+
+                        <p:column style="width:90%;">
+                            <h:outputText value="#{invest}" />
+                        </p:column>
+                    </p:pickList>
+
+
+
+
+                </h:form>
+            </p:panel>
+
+
+            <p:panel id="pInfoPropiedadIntelectual" header="Etapa de Publicación">
+
+                <h:panelGrid columns="4" cellpadding="2" >
+                
+                    <h:outputText value="Registro Nro°: "/>
+                    <p:inputText  value="#{investigadorProduccionBean.propiedadIntelectual.nroRegistro}"/>
+
+                    <h:outputText value="Fecha: "/>
+                    <p:calendar  value="#{investigadorProduccionBean.propiedadIntelectual.fecha}"/>
+                    
+                    <h:outputText value="Pais: "/>
+                    <p:inputText  value="#{investigadorProduccionBean.propiedadIntelectual.pais}"/>
+                   
+                </h:panelGrid>
+
+
+
+            </p:panel>
+
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+
+
+            <div  style="float: left; margin: 10px;
+                  width: 100%;
+                  text-align: center;">
+
+                <p:growl id="message1" showDetail="true"  />
+                <div style="clear: both;"/>
+
+
+                <p:commandButton id="btnActiones"
+                                 icon="ui-icon-disk"
+                                 value="#{investigadorProduccionBean.cbAction.value}" 
+                                 actionListener="#{investigadorProduccionBean.actionBtn}"
+                                 update=":frmUser:apProduccion:dtPropiedadIntelectual,  pDlgPropiedadIntelectual, message1 @this"
+                                 
+                                 
+                                 >
+                     
+                    <p:confirm header="Confirmación" message="¿Seguro?" icon="ui-icon-alert" />
+
+                </p:commandButton>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade"  >
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+                <p:commandButton id="btnSalir"
+                                 value="Salir" 
+                                 actionListener="#{investigadorProduccionBean.limpiarObjetos()}"
+                                 oncomplete="PF('dlgPropiedadIntelectual').hide()"
+
+                                 >
+
+
+                </p:commandButton>
+            </div>
+
+        </p:dialog>
+    </h:body>
+</html>

@@ -14,6 +14,7 @@ import entidades.proyecto.resultado.Intelectual;
 import entidades.proyecto.resultado.Libro;
 import entidades.proyecto.resultado.Publicacion;
 import entidades.proyecto.resultado.RN.PublicacionRNLocal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -21,6 +22,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.component.datatable.DataTable;
 import org.primefaces.event.TabChangeEvent;
 
 /**
@@ -35,8 +37,16 @@ public class PublicacionLstBean {
     private PublicacionRNLocal publicacionRNLocal;
     
     private List<Publicacion> lstPublicacion;
+    
+     private DataTable tablaArticuloRevista;
+     private List<ArticuloRevista> lstArticuloRevista;
+     private int iActionBtnSelect;
+     private String nombreClasePublicacion;
+     private Proyecto proyecto;
   
     public PublicacionLstBean() {
+         lstArticuloRevista = new ArrayList<>();
+         proyecto = new Proyecto();
     }
 
 
@@ -47,8 +57,59 @@ public class PublicacionLstBean {
     public void setLstPublicacion(List<Publicacion> lstPublicacion) {
         this.lstPublicacion = lstPublicacion;
     }
+
+    public PublicacionRNLocal getPublicacionRNLocal() {
+        return publicacionRNLocal;
+    }
+
+    public void setPublicacionRNLocal(PublicacionRNLocal publicacionRNLocal) {
+        this.publicacionRNLocal = publicacionRNLocal;
+    }
+
+    public DataTable getTablaArticuloRevista() {
+        return tablaArticuloRevista;
+    }
+
+    public void setTablaArticuloRevista(DataTable tablaArticuloRevista) {
+        this.tablaArticuloRevista = tablaArticuloRevista;
+    }
+
+    public List<ArticuloRevista> getLstArticuloRevista() {
+        return lstArticuloRevista;
+    }
+
+    public void setLstArticuloRevista(List<ArticuloRevista> lstArticuloRevista) {
+        this.lstArticuloRevista = lstArticuloRevista;
+    }
      
-    
+     public ArticuloRevista getArticuloSeleccionado() {
+        return (ArticuloRevista) this.tablaArticuloRevista.getRowData();
+    }
+
+    public int getiActionBtnSelect() {
+        return iActionBtnSelect;
+    }
+
+    public void setiActionBtnSelect(int iActionBtnSelect) {
+        this.iActionBtnSelect = iActionBtnSelect;
+    }
+
+    public String getNombreClasePublicacion() {
+        return nombreClasePublicacion;
+    }
+
+    public void setNombreClasePublicacion(String nombreClasePublicacion) {
+        this.nombreClasePublicacion = nombreClasePublicacion;
+    }
+
+    public Proyecto getProyecto() {
+        return proyecto;
+    }
+
+    public void setProyecto(Proyecto proyecto) {
+        this.proyecto = proyecto;
+    }
+     
     public void cargarPublicacionesByInvestigador(Long idProyecto, Long idInvestigador, Class tipo){
         
         System.out.println("Entro al cargar por investigador");

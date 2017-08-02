@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    
+    <h:body>
+        <p:dialog id="dCapituloCreateDlg" 
+              widgetVar="dlgCapituloCreateDlg"
+              modal="true"
+              width="900"
+              height="600"
+              position="top"
+              style="margin-top: 30px;"
+              resizable="false">
+        <f:facet name="header">
+            <h:outputText value="Nuevo Capitulo Libro" styleClass="subTitulo"/>
+        </f:facet>
+      
+        <p:panel id="pDlgCapituloCreate">
+            <h:inputHidden value="#{investigadorProduccionBean.proyecto.id}"/>
+            <h:inputHidden value="#{investigadorProduccionBean.capituloLibro.id}"/>
+            <h:panelGrid columns="2" cellpadding="2">
+
+
+                <h:outputText value="Proyecto: "    />
+                <h:outputText value="#{investigadorProduccionBean.proyecto.titulo}"/> 
+              
+                <h:outputText value="Libro:"/>
+                            <p:selectOneMenu id="somCarrera"
+                                             converter="ConversorGenerico"
+                                             filter="true" filterMatchMode="contains" panelStyle="width:280px" style="width:560px"
+                                             value="#{investigadorProduccionBean.capituloLibro.libro}"
+                                            
+                                            >
+                                <f:selectItem itemLabel="Seleccione un Valor..."/>
+                                <f:selectItems 
+                                    value="#{librosLstBean.lstSILibros}"/>
+
+                            </p:selectOneMenu>
+
+                <h:outputText value="Titulo Capitulo: "/>
+                <p:inputTextarea  value="#{investigadorProduccionBean.capituloLibro.titulo}" autoResize="true" cols="50" rows="2"/>
+
+                <h:outputText value="Editor: "/>
+                <p:inputTextarea  value="#{investigadorProduccionBean.capituloLibro.editor}" autoResize="true" cols="50" rows="2"/>
+
+            </h:panelGrid>
+        </p:panel>
+        <p:panel id="pAutoresCapitulo">
+
+            <h:form id="formPickList">
+                <p:growl id="msg" showDetail="true" escape="false" />
+                <h3 style="margin-top: 0">Autores</h3>
+
+
+                <p:pickList id="PickListCapitulo" value="#{pickListView.investigadorDualListModel}" var="invest" effect="bounce"
+                            itemValue="#{invest}" itemLabel="#{invest.persona}" 
+                            showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains"  converter="ConversorGenerico">
+
+                    <f:facet name="sourceCaption">Fuera</f:facet>
+                    <f:facet name="targetCaption">Dentro</f:facet>
+
+                    <p:ajax event="transfer" listener="#{pickListView.onTransfer}" update="msg" />
+
+
+                    <p:column style="width:10%">
+                        <h:outputText styleClass="ui-theme ui-theme-#{invest}" />
+                    </p:column>
+
+                    <p:column style="width:90%;">
+                        <h:outputText value="#{invest}" />
+                    </p:column>
+                </p:pickList>
+
+            </h:form>
+        </p:panel>
+
+
+        <p:panel id="pInfoCapitulo">
+
+            <h:panelGrid columns="4" cellpadding="2" >
+                <h:outputText value="Enviado"/>
+                <p:calendar id="Enviado"
+                            value="#{investigadorProduccionBean.capituloLibro.fechaEnviado}"
+                            pattern="dd/MM/yyyy"
+                            /> 
+                <h:outputText value="Acepatado"/>
+                <p:calendar id="Acepatado"
+                            value="#{investigadorProduccionBean.capituloLibro.fechaAceptado}"
+                            pattern="dd/MM/yyyy"
+                            /> 
+                <h:outputText value="Publicado"/>
+                <p:calendar id="Publicado"
+                            value="#{investigadorProduccionBean.capituloLibro.fechaPublicado}"
+                            pattern="dd/MM/yyyy"
+                            /> 
+
+                <h:outputText value="Edicion: "/>
+                <h:selectOneMenu id="somEdicion"
+                                 converter="ConversorGenerico"
+                                 value="#{investigadorProduccionBean.capituloLibro.tipoEdicion}"
+                                 >
+                    <f:selectItem itemLabel="Seleccione un Valor..."/>
+                    <f:selectItems value="#{investigadorProduccionBean.tipoEdicion}"/>
+
+                </h:selectOneMenu>
+                <h:outputText value="Código ISBN/ISSN (Ej: 8559871432295): "/>
+                <p:inputText  value="#{investigadorProduccionBean.capituloLibro.ISBN}"/>
+
+               
+                <p:outputLabel for="anioPublicacion" value="año: "/>
+                <p:inputMask id="anioPublicacion" value="#{investigadorProduccionBean.capituloLibro.anioPublicacion}" mask="9999"
+                             />
+                <h:outputText value="Lugar: "/>
+                <p:inputTextarea  value="#{investigadorProduccionBean.capituloLibro.lugarPublicacion}" autoResize="true" cols="50" rows="2"/>
+
+            </h:panelGrid>
+
+
+
+        </p:panel>
+        <div>
+            <p:messages autoUpdate="true"/>
+        </div>
+
+
+
+
+        <div  style="float: left; margin: 10px;
+              width: 100%;
+              text-align: center;">
+
+            <p:growl id="message3" showDetail="true"  />
+            <div style="clear: both;"/>
+
+            <p:commandButton id="btnActiones"
+                             icon="ui-icon-disk"
+                             value="#{investigadorProduccionBean.cbAction.value}" 
+                             actionListener="#{investigadorProduccionBean.actionBtn}"
+                             update=":frmUser:apProduccion:dtCapitulosDeLibro,pDlgCapituloCreate, message3 @this"
+
+                             >
+                <p:confirm header="Confirmación" message="¿Seguro?" icon="ui-icon-alert" />
+
+            </p:commandButton>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade"  >
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+            <p:commandButton id="btnSalir"
+                             value="Salir" 
+                             actionListener="#{investigadorProduccionBean.limpiarObjetos()}"
+                             oncomplete="PF('dlgCapituloCreateDlg').hide()"
+
+                             >
+
+
+            </p:commandButton>
+        </div>
+
+
+    </p:dialog>
+    </h:body>
+</html>

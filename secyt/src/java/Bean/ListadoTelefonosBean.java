@@ -21,7 +21,7 @@ import org.primefaces.context.RequestContext;
  *
  * @author hugo
  */
-@ManagedBean(name = "listadoTelefonosBean")
+@ManagedBean
 @SessionScoped
 public class ListadoTelefonosBean {
 
