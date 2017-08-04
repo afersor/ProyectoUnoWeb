@@ -8,14 +8,16 @@ import entidades.Resolucion;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author hugo
  */
 @Entity
-@Table(name="beca_pago")
+@Table(name = "beca_pago")
 public class Pago implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +34,7 @@ public class Pago implements Serializable {
     @OneToOne
     private NumPago numPago;
     private String observaciones;
-    
+
     public Long getId() {
         return id;
     }
@@ -89,6 +91,7 @@ public class Pago implements Serializable {
         this.resolucion = resolucion;
     }
 
+    @XmlTransient
     public PostulacionBeca getPostulacionbeca() {
         return postulacionBeca;
     }
@@ -96,7 +99,7 @@ public class Pago implements Serializable {
     public void setPostulacionbeca(PostulacionBeca postulacionbeca) {
         this.postulacionBeca = postulacionbeca;
     }
-    
+
     public String getObservaciones() {
         return observaciones;
     }
@@ -104,8 +107,7 @@ public class Pago implements Serializable {
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
-    
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -130,5 +132,5 @@ public class Pago implements Serializable {
     public String toString() {
         return "entidades.becas.Pago[ id=" + id + " ]";
     }
-    
+
 }

@@ -17,14 +17,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author huguito
  */
 @Entity
-@Table(name="docencia")
+@Table(name = "docencia")
 public class Docencia implements Serializable, Comparable<Docencia> {
+
     @ManyToOne
     private Investigador investigador;
     private static final long serialVersionUID = 1L;
@@ -45,7 +48,7 @@ public class Docencia implements Serializable, Comparable<Docencia> {
     private ModoObtencionCargo modoObtencionCargo;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaObtencionCargo;
-    
+
     private int horasDedicadasDocenciaPrimerCuatrimestre;
     private int semanasDedicadasDocenciaPrimerCuatrimestre;
     private int horasDedicadasDocenciaSegundoCuatrimestre;
@@ -64,10 +67,12 @@ public class Docencia implements Serializable, Comparable<Docencia> {
         return año;
     }
 
+    @XmlElement(name = "anio")
     public void setAño(int año) {
         this.año = año;
     }
-    
+
+    @XmlTransient
     public Investigador getInvestigador() {
         return investigador;
     }
@@ -163,7 +168,7 @@ public class Docencia implements Serializable, Comparable<Docencia> {
     public void setSemanasDedicadasDocenciaSegundoCuatrimestre(int semanasDedicadasDocenciaSegundoCuatrimestre) {
         this.semanasDedicadasDocenciaSegundoCuatrimestre = semanasDedicadasDocenciaSegundoCuatrimestre;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -188,7 +193,7 @@ public class Docencia implements Serializable, Comparable<Docencia> {
     public String toString() {
         return "entidades.persona.investigador.Docencia[ id=" + id + " ]";
     }
-    
+
     @Override
     public int compareTo(Docencia d) {
         int compareTo = 0;
@@ -206,5 +211,5 @@ public class Docencia implements Serializable, Comparable<Docencia> {
         }
         return compareTo;
     }
-    
+
 }

@@ -18,14 +18,16 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Carlos
  */
 @Entity
-@Table(name="resolucion")
+@Table(name = "resolucion")
 public class Resolucion implements Serializable {
+
     @ManyToMany(mappedBy = "resoluciones")
     private List<Proyecto> proyectos;
     @ManyToMany(mappedBy = "resoluciones")
@@ -77,6 +79,7 @@ public class Resolucion implements Serializable {
         this.numero = numero;
     }
 
+    @XmlTransient
     public Documento getDocumento() {
         return documento;
     }
@@ -85,7 +88,7 @@ public class Resolucion implements Serializable {
         this.documento = documento;
     }
 
-  
+    @XmlTransient
     public List<Evaluador> getEvaluadores() {
         return evaluadores;
     }
@@ -94,6 +97,7 @@ public class Resolucion implements Serializable {
         this.evaluadores = evaluadors;
     }
 
+    @XmlTransient
     public List<Investigador> getInvestigadores() {
         return investigadores;
     }
@@ -102,6 +106,7 @@ public class Resolucion implements Serializable {
         this.investigadores = investigadors;
     }
 
+    @XmlTransient
     public List<Proyecto> getProyectos() {
         return proyectos;
     }

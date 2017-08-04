@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entidades;
 
 import java.io.Serializable;
@@ -15,21 +14,23 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Administrador
  */
 @Entity
-@Table(name="unidadacademica")
+@Table(name = "unidadacademica")
 @NamedQueries({
-    @NamedQuery(name = "UnidadAcademica.findUnidadesAcademicasUnca", 
-        query = "SELECT ua FROM UnidadAcademica ua WHERE ua.id < 9 ORDER BY ua.descripcion"),
-    
-    @NamedQuery(name = "UnidadAcademica.findUnidadesAcademicasByNombre", 
-        query = "SELECT ua FROM UnidadAcademica ua WHERE TRIM(LOWER(ua.descripcion)) = :nombre")
+    @NamedQuery(name = "UnidadAcademica.findUnidadesAcademicasUnca",
+            query = "SELECT ua FROM UnidadAcademica ua WHERE ua.id < 9 ORDER BY ua.descripcion"),
+
+    @NamedQuery(name = "UnidadAcademica.findUnidadesAcademicasByNombre",
+            query = "SELECT ua FROM UnidadAcademica ua WHERE TRIM(LOWER(ua.descripcion)) = :nombre")
 })
 public class UnidadAcademica implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,6 +55,7 @@ public class UnidadAcademica implements Serializable {
         this.descripcion = descripcion;
     }
 
+    @XmlTransient
     public List<UnidadEjecutora> getUnidadesEjecutoras() {
         return unidadesEjecutoras;
     }

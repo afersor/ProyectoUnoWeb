@@ -36,7 +36,7 @@ public class PropiedadRN implements PropiedadRNLocal {
     public void create(Propiedad propiedad, String clase) throws Exception {
         this.validar(propiedad, 0, clase);
        this.propiedadFacadeLocal.create(propiedad);
-    }
+}
 
     @Override
     public void edit(Propiedad propiedad, String clase) throws Exception {

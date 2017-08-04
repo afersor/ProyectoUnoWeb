@@ -14,24 +14,25 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author huguito
  */
 @Entity
-@Table(name="investigador_especializacion")
+@Table(name = "investigador_especializacion")
 @NamedQueries({
-    @NamedQuery(name = "Especializacion.findByInvestigador", 
-        query = "SELECT e FROM Especializacion e WHERE e.investigador.id =:idInvestigador "
-        + "ORDER BY e.año DESC"),
-    
-    @NamedQuery(name = "Especializacion.findByInvestigadorYEspecializacion", 
-        query = "SELECT e FROM Especializacion e WHERE e.investigador.id =:idInvestigador "
-        + " AND e.año = :anio AND e.especialidadInvestigacion = :especialidadInvestigacion AND"
-        + " e.especialidadActividadAcademica = :especialidadActividadAcademica")})
+    @NamedQuery(name = "Especializacion.findByInvestigador",
+            query = "SELECT e FROM Especializacion e WHERE e.investigador.id =:idInvestigador "
+            + "ORDER BY e.año DESC"),
+
+    @NamedQuery(name = "Especializacion.findByInvestigadorYEspecializacion",
+            query = "SELECT e FROM Especializacion e WHERE e.investigador.id =:idInvestigador "
+            + " AND e.año = :anio AND e.especialidadInvestigacion = :especialidadInvestigacion AND"
+            + " e.especialidadActividadAcademica = :especialidadActividadAcademica")})
 public class Especializacion implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,6 +53,7 @@ public class Especializacion implements Serializable {
         this.id = id;
     }
 
+    @XmlTransient
     public Investigador getInvestigador() {
         return investigador;
     }
@@ -67,7 +69,7 @@ public class Especializacion implements Serializable {
     public void setAño(int año) {
         this.año = año;
     }
-    
+
     public EspecialidadInvestigacion getEspecialidadInvestigacion() {
         return especialidadInvestigacion;
     }
@@ -83,7 +85,7 @@ public class Especializacion implements Serializable {
     public void setEspecialidadActividadAcademica(EspecialidadActividadAcademica especialidadActividadAcademica) {
         this.especialidadActividadAcademica = especialidadActividadAcademica;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;

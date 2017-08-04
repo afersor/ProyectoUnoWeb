@@ -33,6 +33,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -259,6 +260,7 @@ public class Proyecto implements Serializable {
         this.formacionRRHHs = formacionRRHHs;
     }
 
+    @XmlTransient
     public List<Publicacion> getPublicaciones() {
         return publicaciones;
     }
@@ -283,6 +285,7 @@ public class Proyecto implements Serializable {
         this.entidadEvaluadora = entidadEvaluadora;
     }
 
+    @XmlTransient
     public List<Evaluacion> getEvaluaciones() {
         return evaluaciones;
     }
@@ -347,6 +350,7 @@ public class Proyecto implements Serializable {
         this.palabrasClaves = palabrasClaves;
     }
 
+    @XmlTransient
     public List<Participacion> getParticipaciones() {
         return participaciones;
     }
@@ -379,6 +383,7 @@ public class Proyecto implements Serializable {
         this.prorrogas = prorrogas;
     }
 
+    @XmlTransient
     public Proyecto getProyectoComplementarioPadre() {
         return proyectoComplementarioPadre;
     }
@@ -387,6 +392,7 @@ public class Proyecto implements Serializable {
         this.proyectoComplementarioPadre = proyectoComplementarioPadre;
     }
 
+    @XmlTransient
     public List<Proyecto> getProyectosComplementarios() {
         return proyectosComplementarios;
     }

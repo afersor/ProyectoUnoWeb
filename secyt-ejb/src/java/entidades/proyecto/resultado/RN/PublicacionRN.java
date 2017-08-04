@@ -24,10 +24,10 @@ public class PublicacionRN implements PublicacionRNLocal {
 
     @EJB
     private PublicacionFacadeLocal publicacionFacadeLocal;
-
+    
     @Override
-    public List<Publicacion> findByInvestigador(Long idProyecto, Long idInvestigador, Class tipo) throws Exception {
-        return publicacionFacadeLocal.findByInvestigador(idProyecto, idInvestigador, tipo);
+    public List<Publicacion> findByInvestigador(Long idProyecto,Long idInvestigador, Class tipo) throws Exception {
+        return publicacionFacadeLocal.findByInvestigador(idProyecto,idInvestigador, tipo);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class PublicacionRN implements PublicacionRNLocal {
     @Override
     public void activate(Publicacion al, Boolean bEstado) throws Exception {
         this.publicacionFacadeLocal.activate(al, bEstado);
-    }
+}
 
     @Override
     public void remove(Publicacion publicacion) throws Exception {

@@ -34,6 +34,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
@@ -43,15 +48,16 @@ import javax.persistence.Temporal;
 @Table(name = "investigador")
 @NamedQueries({
     @NamedQuery(name = "Investigador.findInvestigadorByCUIL",
-    query = "SELECT i FROM Investigador i WHERE i.persona.cuil = :cuil"),
-    
+            query = "SELECT i FROM Investigador i WHERE i.persona.cuil = :cuil"),
+
     @NamedQuery(name = "Investigador.findInvestigadorByCUILID",
-    query = "SELECT i FROM Investigador i WHERE i.id <> :id AND i.persona.cuil = :cuil"),
-    
+            query = "SELECT i FROM Investigador i WHERE i.id <> :id AND i.persona.cuil = :cuil"),
+
     @NamedQuery(name = "Investigador.findLikeNombreyApellido",
-    query = "SELECT i FROM Investigador i WHERE LOWER(i.persona.nombre) LIKE :cadena "
-    + "OR LOWER(i.persona.apellido) LIKE :cadena ORDER BY i.persona.apellido, i.persona.nombre")
+            query = "SELECT i FROM Investigador i WHERE LOWER(i.persona.nombre) LIKE :cadena "
+            + "OR LOWER(i.persona.apellido) LIKE :cadena ORDER BY i.persona.apellido, i.persona.nombre")
 })
+@XmlRootElement(name = "investigador")
 
 public class Investigador implements Serializable {
 
@@ -66,24 +72,6 @@ public class Investigador implements Serializable {
     private Persona persona;
     @OneToMany(mappedBy = "investigador")
     private List<Docencia> docencias;
-   /* @OneToOne
-    private Universidad universidad;
-    @OneToOne
-    private UnidadAcademica unidadAcademica;
-    @OneToOne
-    private DepartamentoDocente departamentoDocente;
-    @OneToOne
-    private CategoriaDocente categoriaDocente;
-    @OneToOne
-    private DedicacionDocente dedicacionDocente;
-    @OneToOne
-    private ModoObtencionCargo modoObtencionCargo;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date fechaObtencionCargo;
-    private int horasDedicadasDocenciaPrimerCuatrimestre;
-    private int semanasDedicadasDocenciaPrimerCuatrimestre;
-    private int horasDedicadasDocenciaSegundoCuatrimestre;
-    private int semanasDedicadasDocenciaSegundoCuatrimestre;*/
     @OneToMany
     private List<CursoDictado> cursosDictados;
     @OneToMany
@@ -175,78 +163,6 @@ public class Investigador implements Serializable {
         this.participacionesProyecto = participacionesProyecto;
     }
 
-   /* public CategoriaDocente getCategoriaDocente() {
-        return categoriaDocente;
-    }
-
-    public void setCategoriaDocente(CategoriaDocente categoriaDocente) {
-        this.categoriaDocente = categoriaDocente;
-    }
-
-    public DedicacionDocente getDedicacionDocente() {
-        return dedicacionDocente;
-    }
-
-    public void setDedicacionDocente(DedicacionDocente dedicacionDocente) {
-        this.dedicacionDocente = dedicacionDocente;
-    }
-
-    public ModoObtencionCargo getModoObtencionCargo() {
-        return modoObtencionCargo;
-    }
-
-    public void setModoObtencionCargo(ModoObtencionCargo modoObtencionCargo) {
-        this.modoObtencionCargo = modoObtencionCargo;
-    }
-
-    public Date getFechaObtencionCargo() {
-        return fechaObtencionCargo;
-    }
-
-    public void setFechaObtencionCargo(Date fechaObtencionCargo) {
-        this.fechaObtencionCargo = fechaObtencionCargo;
-    }
-
-    public int getHorasDedicadasDocenciaPrimerCuatrimestre() {
-        return horasDedicadasDocenciaPrimerCuatrimestre;
-    }
-
-    public void setHorasDedicadasDocenciaPrimerCuatrimestre(int horasDedicadasDocenciaPrimerCuatrimestre) {
-        this.horasDedicadasDocenciaPrimerCuatrimestre = horasDedicadasDocenciaPrimerCuatrimestre;
-    }
-
-    public int getHorasDedicadasDocenciaSegundoCuatrimestre() {
-        return horasDedicadasDocenciaSegundoCuatrimestre;
-    }
-
-    public void setHorasDedicadasDocenciaSegundoCuatrimestre(int horasDedicadasDocenciaSegundoCuatrimestre) {
-        this.horasDedicadasDocenciaSegundoCuatrimestre = horasDedicadasDocenciaSegundoCuatrimestre;
-    }
-
-    public int getSemanasDedicadasDocenciaPrimerCuatrimestre() {
-        return semanasDedicadasDocenciaPrimerCuatrimestre;
-    }
-
-    public void setSemanasDedicadasDocenciaPrimerCuatrimestre(int semanasDedicadasDocenciaPrimerCuatrimestre) {
-        this.semanasDedicadasDocenciaPrimerCuatrimestre = semanasDedicadasDocenciaPrimerCuatrimestre;
-    }
-
-    public int getSemanasDedicadasDocenciaSegundoCuatrimestre() {
-        return semanasDedicadasDocenciaSegundoCuatrimestre;
-    }
-
-    public void setSemanasDedicadasDocenciaSegundoCuatrimestre(int semanasDedicadasDocenciaSegundoCuatrimestre) {
-        this.semanasDedicadasDocenciaSegundoCuatrimestre = semanasDedicadasDocenciaSegundoCuatrimestre;
-    }
-
-    public DepartamentoDocente getDepartamentoDocente() {
-        return departamentoDocente;
-    }
-
-    public void setDepartamentoDocente(DepartamentoDocente departamentoDocente) {
-        this.departamentoDocente = departamentoDocente;
-    }*/
-
     public EspecialidadActividadAcademica getEspecialidadActividadAcademica() {
         return especialidadActividadAcademica;
     }
@@ -262,14 +178,6 @@ public class Investigador implements Serializable {
     public void setEspecialidadInvestigacion(EspecialidadInvestigacion especialidadInvestigacion) {
         this.especialidadInvestigacion = especialidadInvestigacion;
     }
-
-   /* public UnidadAcademica getUnidadAcademica() {
-        return unidadAcademica;
-    }
-
-    public void setUnidadAcademica(UnidadAcademica unidadAcademica) {
-        this.unidadAcademica = unidadAcademica;
-    }*/
 
     public List<ActividadConduccion> getActividadesConduccion() {
         return actividadesConduccion;
@@ -287,6 +195,7 @@ public class Investigador implements Serializable {
         this.cursosDictados = cursosDictados;
     }
 
+    @XmlTransient
     public List<Resolucion> getResoluciones() {
         return resoluciones;
     }
@@ -294,14 +203,6 @@ public class Investigador implements Serializable {
     public void setResoluciones(List<Resolucion> resoluciones) {
         this.resoluciones = resoluciones;
     }
-
-    /*public Universidad getUniversidad() {
-        return universidad;
-    }
-
-    public void setUniversidad(Universidad universidad) {
-        this.universidad = universidad;
-    }*/
 
     public List<FormacionAcademicaGrado> getFormacionesAcademicasGrado() {
         return formacionesAcademicasGrado;

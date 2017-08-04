@@ -7,17 +7,21 @@ package entidades.becas;
 import entidades.Universidad;
 import entidades.persona.investigador.Investigador;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author hugo
  */
 @Entity
-@Table(name="beca_evaluaciones")
+@Table(name = "beca_evaluaciones")
 public class Evaluaciones implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,9 +41,6 @@ public class Evaluaciones implements Serializable {
     private float calificacionEnNumeros;
     @Lob
     private String observaciones;
-     
-    
-    
 
     public Long getId() {
         return id;
@@ -65,6 +66,7 @@ public class Evaluaciones implements Serializable {
         this.calificacionEnNumeros = calificacionEnNumeros;
     }
 
+    @XmlTransient
     public PostulacionBeca getPostulacionBeca() {
         return postulacionBeca;
     }
@@ -73,9 +75,6 @@ public class Evaluaciones implements Serializable {
         this.postulacionBeca = postulacionBeca;
     }
 
-       
-    
-
     public EvaluacionEstado getEvaluacionEstado() {
         return evaluacionEstado;
     }
@@ -83,13 +82,19 @@ public class Evaluaciones implements Serializable {
     public void setEvaluacionEstado(EvaluacionEstado evaluacionEstado) {
         this.evaluacionEstado = evaluacionEstado;
     }
-    
+
+    @XmlTransient
     public Investigador getEvaluador() {
         return evaluador;
     }
 
     public void setEvaluador(Investigador evaluador) {
         this.evaluador = evaluador;
+    }
+
+    @XmlElement(name = "evaluador")
+    public Long getEvaluadorForREST() {
+        return evaluador.getId();
     }
 
     public Date getFecha() {
@@ -115,7 +120,7 @@ public class Evaluaciones implements Serializable {
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -140,5 +145,5 @@ public class Evaluaciones implements Serializable {
     public String toString() {
         return "entidades.becas.Evaluaciones[ id=" + id + " ]";
     }
-    
+
 }

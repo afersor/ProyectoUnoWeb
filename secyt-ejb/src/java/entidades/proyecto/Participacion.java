@@ -20,6 +20,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -85,6 +87,7 @@ public class Participacion implements Serializable {
         this.id = id;
     }
 
+    @XmlTransient
     public Investigador getInvestigador() {
         return investigador;
     }
@@ -93,8 +96,27 @@ public class Participacion implements Serializable {
         this.investigador = investigador;
     }
 
+    @XmlTransient
     public Proyecto getProyecto() {
         return proyecto;
+    }
+
+    @XmlElement(name = "proyecto")
+    public Long getProyectoFromRest() {
+        try {
+            return proyecto.getId();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @XmlElement(name = "proyectoNombre")
+    public String getProyectoNombreFromRest() {
+        try {
+            return proyecto.toString();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public void setProyecto(Proyecto proyecto) {

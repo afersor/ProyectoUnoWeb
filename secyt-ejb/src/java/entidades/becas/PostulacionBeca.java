@@ -9,6 +9,7 @@ import entidades.persona.investigador.Investigador;
 import entidades.proyecto.Proyecto;
 import entidades.usuario.Usuario;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
@@ -23,6 +24,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,9 +36,9 @@ import javax.persistence.Temporal;
 @NamedQueries({
     @NamedQuery(name = "PostulacionBeca.finByPostulanteAcreditado", query = "SELECT p FROM PostulacionBeca p WHERE p.postulante.id = :idPostulante ORDER BY p.fechaalta"),
     @NamedQuery(name = "PostulacionBeca.finByDirectorProyecto",
-    query = "SELECT p FROM PostulacionBeca p, IN (p.proyecto.participaciones) par "
-    + "WHERE par.investigador.id = :idPostulante AND par.rol.id = 1 "
-    + "AND (par.fechaHasta IS NULL OR par.fechaHasta > :fecha OR p.proyecto.fechaFinalizacion < :fecha)  ORDER BY p.fechaalta")
+            query = "SELECT p FROM PostulacionBeca p, IN (p.proyecto.participaciones) par "
+            + "WHERE par.investigador.id = :idPostulante AND par.rol.id = 1 "
+            + "AND (par.fechaHasta IS NULL OR par.fechaHasta > :fecha OR p.proyecto.fechaFinalizacion < :fecha)  ORDER BY p.fechaalta")
 })
 public class PostulacionBeca implements Serializable {
 
@@ -157,8 +160,18 @@ public class PostulacionBeca implements Serializable {
         this.documentacion = documentacion;
     }
 
+    @XmlTransient
     public List<Investigador> getAsesores() {
         return asesores;
+    }
+
+    @XmlElement(name = "asesores")
+    public List<Long> getAsesoresForREST() {
+        List<Long> asesoresForRest = new ArrayList<Long>();
+        for (Investigador i : asesores) {
+            asesoresForRest.add(i.getId());
+        }
+        return asesoresForRest;
     }
 
     public void setAsesores(List<Investigador> asesores) {
@@ -197,22 +210,35 @@ public class PostulacionBeca implements Serializable {
         this.fechaalta = fechaalta;
     }
 
+    @XmlTransient
     public Investigador getPostulante() {
         return postulante;
+    }
+
+    @XmlElement(name = "postulante")
+    public Long getPostulanteForREST() {
+        return postulante.getId();
     }
 
     public void setPostulante(Investigador postulante) {
         this.postulante = postulante;
     }
 
+    @XmlTransient
     public Proyecto getProyecto() {
         return proyecto;
+    }
+
+    @XmlElement(name = "proyecto")
+    public Long getProyectoForREST() {
+        return proyecto.getId();
     }
 
     public void setProyecto(Proyecto proyecto) {
         this.proyecto = proyecto;
     }
 
+    @XmlTransient
     public Usuario getUsuario() {
         return usuario;
     }
