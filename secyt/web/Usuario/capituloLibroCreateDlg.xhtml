@@ -24,27 +24,30 @@ and open the template in the editor.
         </f:facet>
       
         <p:panel id="pDlgCapituloCreate">
+            <h:panelGrid columns="2" cellpadding="2">
+          
+           
             <h:inputHidden value="#{investigadorProduccionBean.proyecto.id}"/>
             <h:inputHidden value="#{investigadorProduccionBean.capituloLibro.id}"/>
-            <h:panelGrid columns="2" cellpadding="2">
+            
 
 
                 <h:outputText value="Proyecto: "    />
                 <h:outputText value="#{investigadorProduccionBean.proyecto.titulo}"/> 
               
-                <h:outputText value="Libro:"/>
-                            <p:selectOneMenu id="somCarrera"
+               <!-- <h:outputText value="Libro:"/>
+                            <p:selectOneMenu id="somLibro"
                                              converter="ConversorGenerico"
                                              filter="true" filterMatchMode="contains" panelStyle="width:280px" style="width:560px"
-                                             value="#{investigadorProduccionBean.capituloLibro.libro}"
+                                             value="#5{investigadorProduccionBean.capituloLibro.libro}"
                                             
                                             >
                                 <f:selectItem itemLabel="Seleccione un Valor..."/>
                                 <f:selectItems 
-                                    value="#{librosLstBean.lstSILibros}"/>
+                                    value="#5{librosLstBean.lstSILibros}"/>
 
                             </p:selectOneMenu>
-
+              -->
                 <h:outputText value="Titulo Capitulo: "/>
                 <p:inputTextarea  value="#{investigadorProduccionBean.capituloLibro.titulo}" autoResize="true" cols="50" rows="2"/>
 

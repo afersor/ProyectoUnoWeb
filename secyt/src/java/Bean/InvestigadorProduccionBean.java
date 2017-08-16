@@ -817,38 +817,29 @@ this.getLibrosLstBean().cargar_libros();
      //0 crea
      //1: edit
      //2 delete
-
      //activo el boton
      this.getCbAction().setDisabled(false);
-
      if (btnSelect.getId().equals("cbCreate") || btnSelect.getId().equals("cbNuevoUsers")) {
      this.getListaAlumnoBean().setiActionBtnSelect(0);
      System.out.println("he si estoy aca" + this.getListaAlumnoBean().getiActionBtnSelect());
-
      this.getCbAction().setValue("Guardar");
      //campos requeridos
      //this.setbCamposRequeridos(true);
-
      } else if (btnSelect.getId().equals("cbEdit")) {
      this.getCbAction().setValue("Modificar");
             
      this.getListaAlumnoBean().setiActionBtnSelect(1);
-
      //campos requeridos
      //this.setbCamposRequeridos(true);
      } else if (btnSelect.getId().equals("cbDeshabilitado")) {
      this.getListaAlumnoBean().setiActionBtnSelect(2);
      this.setbCamposEditables(true);
      this.getCbAction().setValue("Desactivar");
-
      } else if (btnSelect.getId().equals("cbHabilitado")) {
-
      this.getListaAlumnoBean().setiActionBtnSelect(3);
      this.setbCamposEditables(true);
      this.getCbAction().setValue("Reactivar");
-
      }
-
      //fin else
      }
      */
@@ -967,7 +958,7 @@ this.getLibrosLstBean().cargar_libros();
             if (this.getPublicacionLstBean().getNombreClasePublicacion().equals("CapituloLibro")) {
                 capituloLibro.setProyectosVinculacion(null);
                 capituloLibro.setInvestigadores(pickListView.getInvestigadorDualListModel().getTarget());
-                System.out.println("el libro seleccionado es" + capituloLibro.getLibro().getTitulo());
+               // System.out.println("el libro seleccionado es" + capituloLibro.getLibro().getTitulo());
                 publicacionRNLocal.create(capituloLibro, this.getPublicacionLstBean().getNombreClasePublicacion());
                 this.getPublicacionLstBean().getLstPublicacion().add(this.capituloLibro);
                 context.execute("PF('dlgCapituloCreateDlg').hide();");
@@ -1335,7 +1326,6 @@ this.getLibrosLstBean().cargar_libros();
      String sMensaje = "";
      FacesMessage fm;
      FacesMessage.Severity severity = null;
-
      try {
      if (this.getPublicacionLstBean().getNombreClasePublicacion().equals("ArticuloRevista")) {
      publicacionRNLocal.activate(this.getArticuloRevista(), bEstado);
@@ -1344,13 +1334,11 @@ this.getLibrosLstBean().cargar_libros();
      //elimino el organismo de la lista
      //int iPos = this.getListaAlumnoBean().getLstAlumno()).indexOf(this.getAlumno());
      int iPos = this.getPublicacionLstBean().getLstPublicacion().indexOf(this.getArticuloRevista());
-
      this.setArticuloRevista((ArticuloRevista) this.getPublicacionLstBean().getLstPublicacion().get(iPos));
      this.getArticuloRevista().setActive(bEstado);
             
      this.getPublicacionLstBean().getLstPublicacion().remove(iPos);
      this.getPublicacionLstBean().getLstPublicacion().add(iPos, this.getArticuloRevista());
-
      }
      if (!bEstado) {
      sMensaje = "Producción desactivada con éxito";
@@ -1360,17 +1348,13 @@ this.getLibrosLstBean().cargar_libros();
             
             
      severity = FacesMessage.SEVERITY_INFO;
-
      this.getCbAction().setDisabled(true);
-
      //limíar campos
             
      //this.setbCamposRequeridos(false);
-
      } catch (Exception ex) {
      severity = FacesMessage.SEVERITY_ERROR;
      sMensaje = "An error ocurred during activation: " + ex.getMessage();
-
      } finally {
      fm = new FacesMessage(severity, sMensaje, null);
      FacesContext fc = FacesContext.getCurrentInstance();
@@ -1388,7 +1372,7 @@ this.getLibrosLstBean().cargar_libros();
     }
 
     public void limpiarObjetos() {
-        System.out.println("entro limpiar objetos" + this.proyecto.getTitulo());
+        //System.out.println("entro limpiar objetos" + this.proyecto.getTitulo());
         System.out.println("entro limpiar objetos -proyecto en session ->" + this.publicacionLstBean.getProyecto().getTitulo());
 
         articuloRevista = new ArticuloRevista();
@@ -1396,7 +1380,7 @@ this.getLibrosLstBean().cargar_libros();
         propiedadIndustrial = new Industrial();
         propiedadIntelectual = new Intelectual();
         congreso = new Congreso();
-        capituloLibro = new CapituloLibro();
+        //capituloLibro = new CapituloLibro();
         contrato = new Contrato();
     }
 /*
@@ -1405,7 +1389,6 @@ this.getLibrosLstBean().cargar_libros();
         FacesMessage fm;
         FacesMessage.Severity severity = null;
         try {
-
             this.getLibrosLstBean().setLstLibros(publicacionFacadeLocal.getLibros());
         } catch (Exception e) {
             severity = FacesMessage.SEVERITY_ERROR;
@@ -1414,36 +1397,29 @@ this.getLibrosLstBean().cargar_libros();
             // RequestContext.getCurrentInstance().update("dMensaje");
             // RequestContext.getCurrentInstance().execute("dlgMensaje.show()");
         }
-
     }
-
     public void devolverAlumno() {
-
         RequestContext.getCurrentInstance().update("frmUser:capitulos:otAlumno4");//outPutText cobros generales
-
     }
-
     public void abrirDlgFindLibro() {
         // btnSelect = (CommandButton) e.getSource();
-
         //RequestContext.getCurrentInstance().update("dFindTurnoExamen");
         this.getLibrosLstBean().setLstLibros(new ArrayList<Libro>());
         this.getLibrosLstBean().setLibroSelect(new Libro());
         RequestContext.getCurrentInstance().execute("PF('dlgFindLibro').show();");
     }
-
     public void cargarLibrosSelect(SelectEvent event) {
      System.out.println(" entra a cargarlibrosSelect: " + this.getCapituloLibro().getLibro());
         System.out.println(" entra a cargarlibrosSelect: " + event.getObject());
        
         this.getCapituloLibro().setLibro((Libro) event.getObject());
         System.out.println(" capitulo Libro: " + this.getCapituloLibro().getLibro());
-
     }
-
     public void seleccionLista() {
         Libro lib = (Libro) dataTableLibro.getRowData();
         System.out.println(" Libro: " + lib);
     }
 */
 }//FIN CLASE
+
+ 
