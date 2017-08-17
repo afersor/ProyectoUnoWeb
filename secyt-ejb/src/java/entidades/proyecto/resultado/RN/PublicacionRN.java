@@ -32,15 +32,20 @@ public class PublicacionRN implements PublicacionRNLocal {
 
     @Override
     public void create(Publicacion publicacion, String clase) throws Exception {
-        this.validar(publicacion, 0, clase);
-        this.publicacionFacadeLocal.create(publicacion);
+        if(!"CapituloLibro".equals(clase)){
+        this.validar(publicacion, 0, clase);       
+        }
+         this.publicacionFacadeLocal.create(publicacion);
+        
     }
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     @Override
     public void edit(Publicacion publicacion, String clase) throws Exception {
-        this.validar(publicacion, 0, clase);
+       if(!"CapituloLibro".equals(clase)){
+        this.validar(publicacion, 0, clase);       
+        }
         this.publicacionFacadeLocal.edit(publicacion);
     }
 
