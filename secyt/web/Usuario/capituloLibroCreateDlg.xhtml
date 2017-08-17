@@ -1,58 +1,44 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    
-    <h:body>
-        <p:dialog id="dCapituloCreateDlg" 
+<ui:component id="revistas"  
+              xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:f="http://java.sun.com/jsf/core"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:cc="http://java.sun.com/jsf/composite"
+
+              xmlns:p="http://primefaces.org/ui">
+    <p:dialog id="dCapituloCreateDlg" 
               widgetVar="dlgCapituloCreateDlg"
               modal="true"
-              width="900"
+              width="900" 
+
               height="600"
               position="top"
-              style="margin-top: 30px;"
+
               resizable="false">
         <f:facet name="header">
-            <h:outputText value="Nuevo Capitulo Libro" styleClass="subTitulo"/>
+            <h:outputText value="Nuevo Capítulo Libro" styleClass="subTitulo"/>
         </f:facet>
-      
+
         <p:panel id="pDlgCapituloCreate">
+
+
             <h:panelGrid columns="2" cellpadding="2">
-          
-           
-            <h:inputHidden value="#{investigadorProduccionBean.proyecto.id}"/>
-            <h:inputHidden value="#{investigadorProduccionBean.capituloLibro.id}"/>
-            
 
-
+                <h:inputHidden value="#{investigadorProduccionBean.proyecto.id}"/>
+                <h:inputHidden value="#{investigadorProduccionBean.capituloLibro.id}"/>
                 <h:outputText value="Proyecto: "    />
-                <h:outputText value="#{investigadorProduccionBean.proyecto.titulo}"/> 
-              
-               <!-- <h:outputText value="Libro:"/>
-                            <p:selectOneMenu id="somLibro"
-                                             converter="ConversorGenerico"
-                                             filter="true" filterMatchMode="contains" panelStyle="width:280px" style="width:560px"
-                                             value="#5{investigadorProduccionBean.capituloLibro.libro}"
-                                            
-                                            >
-                                <f:selectItem itemLabel="Seleccione un Valor..."/>
-                                <f:selectItems 
-                                    value="#5{librosLstBean.lstSILibros}"/>
+                <h:outputText value="#{publicacionLstBean.proyecto.titulo}"/> 
 
-                            </p:selectOneMenu>
-              -->
-                <h:outputText value="Titulo Capitulo: "/>
-                <p:inputTextarea  value="#{investigadorProduccionBean.capituloLibro.titulo}" autoResize="true" cols="50" rows="2"/>
+                <h:outputText value="Título  del Capítulo: "/>
+                <p:inputTextarea  value="#{investigadorProduccionBean.capituloLibro.titulo}" 
+                                  autoResize="true" cols="50" rows="2"
+                                  />
 
                 <h:outputText value="Editor: "/>
-                <p:inputTextarea  value="#{investigadorProduccionBean.capituloLibro.editor}" autoResize="true" cols="50" rows="2"/>
+                <p:inputTextarea  value="#{investigadorProduccionBean.capituloLibro.editor}" 
+                                  autoResize="true" cols="50" rows="2"
+                                  
+                                  />
 
             </h:panelGrid>
         </p:panel>
@@ -92,37 +78,45 @@ and open the template in the editor.
                 <h:outputText value="Enviado"/>
                 <p:calendar id="Enviado"
                             value="#{investigadorProduccionBean.capituloLibro.fechaEnviado}"
-                            pattern="dd/MM/yyyy"
+                            
                             /> 
-                <h:outputText value="Acepatado"/>
-                <p:calendar id="Acepatado"
+                <h:outputText value="Aceptado"/>
+                <p:calendar id="Aceptado"
                             value="#{investigadorProduccionBean.capituloLibro.fechaAceptado}"
-                            pattern="dd/MM/yyyy"
+                            
                             /> 
                 <h:outputText value="Publicado"/>
                 <p:calendar id="Publicado"
                             value="#{investigadorProduccionBean.capituloLibro.fechaPublicado}"
-                            pattern="dd/MM/yyyy"
+                           
                             /> 
 
                 <h:outputText value="Edicion: "/>
                 <h:selectOneMenu id="somEdicion"
                                  converter="ConversorGenerico"
                                  value="#{investigadorProduccionBean.capituloLibro.tipoEdicion}"
+                                 
                                  >
-                    <f:selectItem itemLabel="Seleccione un Valor..."/>
+                    <f:selectItem itemLabel="Seleccionar..."/>
                     <f:selectItems value="#{investigadorProduccionBean.tipoEdicion}"/>
 
                 </h:selectOneMenu>
                 <h:outputText value="Código ISBN/ISSN (Ej: 8559871432295): "/>
-                <p:inputText  value="#{investigadorProduccionBean.capituloLibro.ISBN}"/>
+                <p:inputMask  value="#{investigadorProduccionBean.capituloLibro.ISBN}"
+                              
+                               mask="9999999999999"
+                                 />
 
-               
+
                 <p:outputLabel for="anioPublicacion" value="año: "/>
-                <p:inputMask id="anioPublicacion" value="#{investigadorProduccionBean.capituloLibro.anioPublicacion}" mask="9999"
+                <p:inputMask id="anioPublicacion" 
+                             value="#{investigadorProduccionBean.capituloLibro.anioPublicacion}" 
+                             mask="9999"
                              />
                 <h:outputText value="Lugar: "/>
-                <p:inputTextarea  value="#{investigadorProduccionBean.capituloLibro.lugarPublicacion}" autoResize="true" cols="50" rows="2"/>
+                <p:inputTextarea  value="#{investigadorProduccionBean.capituloLibro.lugarPublicacion}" 
+                                  autoResize="true" cols="25" rows="2"
+                                  />
 
             </h:panelGrid>
 
@@ -170,5 +164,4 @@ and open the template in the editor.
 
 
     </p:dialog>
-    </h:body>
-</html>
+</ui:component>

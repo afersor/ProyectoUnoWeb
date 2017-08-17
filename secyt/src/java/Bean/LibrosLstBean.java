@@ -93,7 +93,7 @@ private Libro libroSelect;
 
         for (Libro a : this.getLstLibros()) {
             SelectItem si = new SelectItem(a, a.getTitulo() +"-" + a.getAnioPublicacion());
-             System.out.println("carga el SI" + si);
+             
             this.getLstSILibros().add(si);
            
         }

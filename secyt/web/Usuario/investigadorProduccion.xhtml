@@ -63,6 +63,7 @@
                         value="Seleccionar. " 
                         action="#{investigadorProduccionBean.limpiar()}"
                         update=":frmUser:pgProyectoSelect, :frmUser:apProduccion, :frmUser:revistas:dArticuloRevistaCreateDlg,:frmUser:congresos:dCongresoCreateDlg,:frmUser:capitulos:dCapituloCreateDlg,:frmUser:contrato:dContratoCreateDlg"
+                     
                         style="font-size: 1.3em;">
                         <f:setPropertyActionListener value="#{pro}" target="#{investigadorProduccionBean.proyecto}"/>
                         <f:setPropertyActionListener value="#{pro}" target="#{publicacionLstBean.proyecto}"/>
@@ -219,6 +220,7 @@
             <!--CAPITULO DE LIBROS-->   
 
             <p:tab title="Capitulos de libros" id="tCapitulosDeLibros">  
+                <div  style="text-align: center;">
                 <p:commandButton value="Nuevo Capitulo Libro"
                                  id="cbCreate3"
                                  title="Nuevo Capitulo Libro"
@@ -227,6 +229,7 @@
                                  oncomplete="PF('dlgCapituloCreateDlg').show();"
 
                                  ></p:commandButton>
+                    </div>
 
                 <p:dataTable id="dtCapitulosDeLibro"
                              value="#{publicacionLstBean.lstPublicacion}"
@@ -279,19 +282,20 @@
                     <p:column style="word-wrap:break-word;"
                               width="300">
                         <f:facet name="header">
-                            <h:outputText value="Capitulo"/>
+                            <h:outputText value="Nombre del Capitulo"/>
                         </f:facet>
                         <h:outputText value="#{cl.titulo}"/>
                     </p:column>
-
+                    <!--
                     <p:column style="word-wrap:break-word;"
                               width="300">
                         <f:facet name="header">
                             <h:outputText value="Libro"/>
                         </f:facet>
 
-                        <h:outputText value="#{cl.nombreLibro}"/>
+                        <h:outputText value="#/{cl.nombreLibro}"/>
                     </p:column>
+                    -->
 
                     <p:column style="word-wrap:break-word;"
                               width="200">
@@ -322,6 +326,7 @@
 
             <!--CONGRESOS-->  
             <p:tab title="Congresos" id="tCongresos">  
+                <div  style="text-align: center;">
                 <p:commandButton value="Nuevo Congreso"
                                  id="cbCreate2"
                                  title="Nuevo Congreso"
@@ -330,13 +335,13 @@
                                  oncomplete="PF('dlgCongresoCreateDlg').show();"
 
                                  ></p:commandButton>
-
+                    </div>
 
 
                 <p:dataTable id="dtCongreso"
                              value="#{publicacionLstBean.lstPublicacion}"
                              var="con"
-                             rows="10"
+                             rows="1"
                              paginator="true"
                              scrollable="true"
 
@@ -448,7 +453,7 @@
                 <p:dataTable id="dtContratos"
                              value="#{contratoLstBean.lstContrato}"
                              var="cont"
-                             rows="10"
+                             rows="1"
                              paginator="true"
                              >
 
@@ -543,7 +548,7 @@
 
             <!--CFORMACION RRHH-->             
 
-            <p:tab title="FormaciÃ³n RRHH" id="tFormacionRRHH"> 
+            <p:tab title="Formación RRHH" id="tFormacionRRHH"> 
                 <div  style="text-align: center;">
                     <p:commandButton 
                         id="cbCreate5"
@@ -562,7 +567,7 @@
                 <p:dataTable id="dtFormacionRRHH"
                              value="#{formacionRRHHLstBean.lstFormacionRRHH}"
                              var="fr"
-                             rows="10"
+                             rows="1"
                              paginator="true"
                              >
                     <p:column width="75"  headerText="Operaciones" > 
@@ -698,7 +703,7 @@
                 <p:dataTable id="dtLibros"
                              value="#{publicacionLstBean.lstPublicacion}"
                              var="l"
-                             rows="10"
+                             rows="2"
                              paginator="true"
                              >
 
@@ -800,7 +805,7 @@
                 <p:dataTable id="dtPropiedadIndustrial"
                              value="#{propiedadLstBean.lstPropiedad}"
                              var="pr"
-                             rows="10"
+                             rows="2"
                              paginator="true"
                              >
 
@@ -927,7 +932,7 @@
                 <p:dataTable id="dtPropiedadIntelectual"
                              value="#{propiedadLstBean.lstPropiedad}"
                              var="pri"
-                             rows="10"
+                             rows="2"
                              paginator="true"
                              >
                     <p:column width="75"  headerText="Operaciones" > 
