@@ -97,11 +97,12 @@
         </div>
 
 
-
+        
         <p:accordionPanel id="apProduccion"
                           dynamic="true" 
                           cache="true"
-                          style="float: left; visibility: #{investigadorProduccionBean.sOcultarAcordinPanel}"
+                         
+                          style="float: left; visibility: #{investigadorProduccionBean.sOcultarAcordinPanel}; display: inline-block; width: 100%; "
                           >  
 
             <p:ajax event="tabChange" 
@@ -135,11 +136,11 @@
                              var="ar"
                              rows="1"
                              paginator="true"
-
+                             
                              >
 
 
-                    <p:column width="75"  headerText="Operaciones" > 
+                    <p:column  headerText="Operaciones" > 
 
 
                         <p:commandButton id="cbEdit"
@@ -218,8 +219,8 @@
             </p:tab>
 
             <!--CAPITULO DE LIBROS-->   
-
-            <p:tab title="Capitulos de libros" id="tCapitulosDeLibros">  
+            
+            <p:tab title="Capitulos de libros" id="tCapitulosDeLibros" >  
                 <div  style="text-align: center;">
                 <p:commandButton value="Nuevo Capitulo Libro"
                                  id="cbCreate3"
@@ -234,13 +235,13 @@
                 <p:dataTable id="dtCapitulosDeLibro"
                              value="#{publicacionLstBean.lstPublicacion}"
                              var="cl"
-                             rows="1"
+                             rows="1" 
                              paginator="true"
                              >
 
 
 
-                    <p:column width="75"  headerText="Operaciones" > 
+                    <p:column  headerText="Operaciones" > 
 
 
                         <p:commandButton id="cbEdit"
@@ -271,34 +272,22 @@
                         </p:commandButton>
 
                     </p:column>
-                    <p:column style="word-wrap:break-word;"
-                              width="50">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Codigo"/>
                         </f:facet>
                         <h:outputText value="#{cl.id}"/>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="300">
+                    <p:column>
                         <f:facet name="header">
                             <h:outputText value="Nombre del Capitulo"/>
                         </f:facet>
                         <h:outputText value="#{cl.titulo}"/>
                     </p:column>
-                    <!--
-                    <p:column style="word-wrap:break-word;"
-                              width="300">
-                        <f:facet name="header">
-                            <h:outputText value="Libro"/>
-                        </f:facet>
+              
 
-                        <h:outputText value="#/{cl.nombreLibro}"/>
-                    </p:column>
-                    -->
-
-                    <p:column style="word-wrap:break-word;"
-                              width="200">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Autores"/>
                         </f:facet>
@@ -312,8 +301,7 @@
                         </ul>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="200">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Editor"/>
                         </f:facet>
@@ -347,7 +335,7 @@
 
 
                              >
-                    <p:column width="75"  headerText="Operaciones" > 
+                    <p:column headerText="Operaciones" > 
 
                         <p:commandButton id="cbEdit"
 
@@ -381,8 +369,7 @@
 
 
                     </p:column>
-                    <p:column style="word-wrap:break-word;"
-                              width="50">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Codigo"/>
                         </f:facet>
@@ -390,16 +377,14 @@
                     </p:column>
 
 
-                    <p:column style="word-wrap:break-word;"
-                              width="250">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Congreso"/>
                         </f:facet>
                         <h:outputText value="#{con.titulo}"/>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="250">
+                    <p:column>
                         <f:facet name="header">
                             <h:outputText value="Nombre del evento"/>
                         </f:facet>
@@ -407,8 +392,7 @@
                         <h:outputText value="#{con.nombreEvento}"/>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="250">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Participantes"/>
                         </f:facet>
@@ -422,8 +406,7 @@
                         </ul>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="250">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Lugar"/>
                         </f:facet>
@@ -457,7 +440,7 @@
                              paginator="true"
                              >
 
-                    <p:column width="75"  headerText="Operaciones" > 
+                    <p:column   headerText="Operaciones" > 
 
 
                         <p:commandButton id="cbEdit"
@@ -492,8 +475,7 @@
 
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="50">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Codigo"/>
                         </f:facet>
@@ -501,16 +483,14 @@
                     </p:column>
 
 
-                    <p:column style="word-wrap:break-word;"
-                              width="250">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Objeto"/>
                         </f:facet>
                         <h:outputText value="#{cont.objeto}"/>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="250">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Tipo"/>
                         </f:facet>
@@ -518,16 +498,14 @@
                         <h:outputText value="#{cont.tipoContrato}"/>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="250">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Destinatarios"/>
                         </f:facet>
                         <h:outputText value="#{cont.destinatarios}"/>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="250">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Fecha"/>
                         </f:facet>
@@ -536,8 +514,7 @@
                         </h:outputText>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="250">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Monto"/>
                         </f:facet>
@@ -567,10 +544,10 @@
                 <p:dataTable id="dtFormacionRRHH"
                              value="#{formacionRRHHLstBean.lstFormacionRRHH}"
                              var="fr"
-                             rows="1"
+                             rows="1" 
                              paginator="true"
                              >
-                    <p:column width="75"  headerText="Operaciones" > 
+                    <p:column   headerText="Operaciones" > 
 
 
                         <p:commandButton id="cbEdit"
@@ -604,17 +581,15 @@
                     </p:column>
 
 
-                    <p:column style="word-wrap:break-word;"
-                              width="50">
+                    <p:column >
                         <f:facet name="header">
-                            <h:outputText value="Codigo"/>
+                            <h:outputText value="Codigo" />
                         </f:facet>
                         <h:outputText value="#{fr.id}"/>
                     </p:column>
 
 
-                    <p:column style="word-wrap:break-word;"
-                              width="250">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Fecha"/>
                         </f:facet>
@@ -623,8 +598,7 @@
                         </h:outputText>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="50">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Nro Becarios Alumnos"
                                           style="word-wrap:break-word;"/>
@@ -634,8 +608,7 @@
                     </p:column>
 
 
-                    <p:column style="word-wrap:break-word;"
-                              width="50">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Nro Becarios Guardados"
                                           style="word-wrap:break-word;"/>
@@ -643,8 +616,7 @@
                         <h:outputText value="#{fr.becariosGraduados}"/>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="50">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Nro Tesis dirigidas"
                                           style="word-wrap:break-word;"/>
@@ -652,8 +624,7 @@
                         <h:outputText value="#{fr.tesisDirigidas}"/>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="50">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Tesis aprobadas MaestrÃ­a"
                                           style="word-wrap:break-word;"/>
@@ -661,8 +632,7 @@
                         <h:outputText value="#{fr.tesisAprobadasMaestria}"/>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="50">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Tesis aprobadas Doctorado"
                                           style="word-wrap:break-word;"/>
@@ -670,8 +640,7 @@
                         <h:outputText value="#{fr.tesisAprobadasDoctorado}"/>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="50">
+                    <p:column> 
                         <f:facet name="header">
                             <h:outputText value="Tesinas de grado aprobadas"
                                           style="word-wrap:break-word;"/>
@@ -703,11 +672,11 @@
                 <p:dataTable id="dtLibros"
                              value="#{publicacionLstBean.lstPublicacion}"
                              var="l"
-                             rows="2"
+                             rows="1"
                              paginator="true"
                              >
 
-                    <p:column width="75"  headerText="Operaciones" > 
+                    <p:column   headerText="Operaciones" > 
 
 
                         <p:commandButton id="cbEdit"
@@ -744,16 +713,14 @@
                     </p:column>
 
 
-                    <p:column style="word-wrap:break-word;"
-                              width="50">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Codigo"/>
                         </f:facet>
                         <h:outputText value="#{l.id}"/>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="300">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Titulo"/>
                         </f:facet>
@@ -774,8 +741,7 @@
                         </ul>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="200">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Editor"/>
                         </f:facet>
@@ -805,11 +771,11 @@
                 <p:dataTable id="dtPropiedadIndustrial"
                              value="#{propiedadLstBean.lstPropiedad}"
                              var="pr"
-                             rows="2"
+                             rows="1"
                              paginator="true"
                              >
 
-                    <p:column width="75"  headerText="Operaciones" > 
+                    <p:column   headerText="Operaciones" > 
 
 
                         <p:commandButton id="cbEdit"
@@ -845,40 +811,35 @@
 
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="50">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Codigo"/>
                         </f:facet>
                         <h:outputText value="#{pr.id}"/>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="300">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Titulo"/>
                         </f:facet>
                         <h:outputText value="#{pr.titulo}"/>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="150">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Tipo de registro"/>
                         </f:facet>
                         <h:outputText value="#{pr.tipoRegistroIndustrial}"/>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="150">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Titulares"/>
                         </f:facet>
                         <h:outputText value="#{pr.titulares}"/>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="200">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Integrantes"/>
                         </f:facet>
@@ -892,16 +853,14 @@
                         </ul>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="150">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Pais"/>
                         </f:facet>
                         <h:outputText value="#{pr.pais}"/>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="200">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Fecha"/>
                         </f:facet>
@@ -932,10 +891,10 @@
                 <p:dataTable id="dtPropiedadIntelectual"
                              value="#{propiedadLstBean.lstPropiedad}"
                              var="pri"
-                             rows="2"
+                             rows="1"
                              paginator="true"
                              >
-                    <p:column width="75"  headerText="Operaciones" > 
+                    <p:column   headerText="Operaciones" > 
 
 
                         <p:commandButton id="cbEdit"
@@ -970,40 +929,35 @@
 
 
                     </p:column>
-                    <p:column style="word-wrap:break-word;"
-                              width="50">
+                    <p:column  >
                         <f:facet name="header">
                             <h:outputText value="Codigo"/>
                         </f:facet>
                         <h:outputText value="#{pri.id}"/>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="300">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Titulo"/>
                         </f:facet>
                         <h:outputText value="#{pri.titulo}"/>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="150">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Tipo de registro"/>
                         </f:facet>
                         <h:outputText value="#{pri.tipoRegistroIntelectual}"/>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="150">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Titulares"/>
                         </f:facet>
                         <h:outputText value="#{pri.titulares}"/>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="200">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Integrantes"/>
                         </f:facet>
@@ -1017,16 +971,14 @@
                         </ul>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="150">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Pais"/>
                         </f:facet>
                         <h:outputText value="#{pri.pais}"/>
                     </p:column>
 
-                    <p:column style="word-wrap:break-word;"
-                              width="200">
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Fecha"/>
                         </f:facet>

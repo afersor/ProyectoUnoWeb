@@ -661,9 +661,9 @@ this.getLibrosLstBean().cargar_libros();
                     this.getInvestigadorLoginBean().getInvestigador().getId(), this.getcTipoDeDato());
         }
 
-        RequestContext context = RequestContext.getCurrentInstance();
+       // RequestContext context = RequestContext.getCurrentInstance();
 
-        context.update("InvestigadorProduccion");
+       // context.update("InvestigadorProduccion");
     }
 
     private void limpiarBoolean() {

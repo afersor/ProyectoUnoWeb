@@ -16,19 +16,20 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.model.SelectItem;
 
+
 /**
  *
  * @author alumno
  */
 @ManagedBean
 @SessionScoped
-public class LibrosLstBean implements Serializable {
+public class LibrosLstBean {
 private List<Libro> lstLibros;
 private Libro libroSelect;
  private List<SelectItem> lstSILibros;
      private int iActionBtnSelect;
 
- @EJB
+    @EJB
     private PublicacionFacadeLocal publicacionFacadeLocal;
     /**
      * Creates a new instance of LibrosLstBean
@@ -81,7 +82,7 @@ private Libro libroSelect;
       public void cargar_libros() {
         try {
               this.setLstLibros(publicacionFacadeLocal.getLibros());
-              System.out.println("trae libros" + lstLibros);
+             
         } catch (Exception ex) {
             System.out.println("Error al cargar Libros " + ex.toString());
         }
@@ -92,7 +93,7 @@ private Libro libroSelect;
         this.setLstSILibros(new ArrayList<SelectItem>());
 
         for (Libro a : this.getLstLibros()) {
-            SelectItem si = new SelectItem(a, a.getTitulo() +"-" + a.getAnioPublicacion());
+            SelectItem si = new SelectItem(a, a.getTitulo());
              
             this.getLstSILibros().add(si);
            

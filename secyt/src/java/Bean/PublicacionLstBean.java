@@ -112,14 +112,13 @@ public class PublicacionLstBean {
      
     public void cargarPublicacionesByInvestigador(Long idProyecto, Long idInvestigador, Class tipo){
         
-        System.out.println("Entro al cargar por investigador");
+       
          try {
              
             this.setLstPublicacion(publicacionRNLocal.findByInvestigador(idProyecto,
                     idInvestigador, tipo));
             
-            System.out.println("Litado de publicaciones: " + this.getLstPublicacion());
-            
+                        
             
         } catch (Exception ex) {
             System.out.println("Error: " + ex.getMessage() + " ex " + ex.getCause());

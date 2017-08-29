@@ -29,6 +29,19 @@
                 <h:outputText value="Proyecto: "    />
                 <h:outputText value="#{publicacionLstBean.proyecto.titulo}"/> 
 
+                  <h:outputText value="Libro:"/>
+                           <p:selectOneMenu id="somLibro"
+                                               converter="ConversorGenerico"
+                                               filter="true" filterMatchMode="contains" panelStyle="width:280px" style="width:560px"
+ 
+                                            value="#{investigadorProduccionBean.capituloLibro.libro}"                                           
+                                              >
+                                  <f:selectItem itemLabel="Seleccionar..."/>
+                                  <f:selectItems  
+                                      value="#{librosLstBean.lstSILibros}"/>
+  
+                           </p:selectOneMenu>
+
                 <h:outputText value="Título  del Capítulo: "/>
                 <p:inputTextarea  value="#{investigadorProduccionBean.capituloLibro.titulo}" 
                                   autoResize="true" cols="50" rows="2"

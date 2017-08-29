@@ -35,30 +35,7 @@ and open the template in the editor.
                     <h:outputText value="Proyecto: "    />
                     <h:outputText value="#{publicacionLstBean.proyecto.titulo}"/> 
 
-                   <p:commandButton 
-                        id="cbbuscar"
-                        title="Nuevo Libro"
-                        icon="ui-icon-plus" 
-                        value="Nuevo Libro"
-
-                        actionListener="#{investigadorProduccionBean.buscarLibros()}"
-
-                        update=":frmUser:libros:somCarrera"
-                        
-                        >
-                </p:commandButton>
-                <h:outputText value="Libro:"/>
-                            <p:selectOneMenu id="somCarrera"
-                                             converter="ConversorGenerico"
-                                           
-                                             value="#8{investigadorProduccionBean.capituloLibro.libro}"
-                                             filter="true" filterMatchMode="startsWith"
-                                            >
-                                <f:selectItem itemLabel="Seleccione un Valor..."/>
-                                <f:selectItems 
-                                    value="#{librosLstBean.lstSILibros}"/>
-
-                            </p:selectOneMenu>
+              
 
                     <h:outputText value="Título: "/>
                     <p:inputTextarea  value="#{investigadorProduccionBean.libro.titulo}" autoResize="true" cols="50" rows="2"/>
