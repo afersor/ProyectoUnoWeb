@@ -444,7 +444,7 @@ public class InvestigadorProduccionBean {
     }
 
     public void setLstInvestigadorTodos(List<Investigador> lstInvestigadorTodos) {
-        System.out.println("ENTROOOOOOOOOO A CARGAR INVESTIGDOREEEESSS ");
+      
         this.lstInvestigadorTodos = lstInvestigadorTodos;
     }
 
@@ -453,7 +453,7 @@ public class InvestigadorProduccionBean {
     }
 
     public void setLstInvestigadorParticipantes(List<Investigador> lstInvestigadorParticipantes) throws Exception {
-        System.out.println("ENTROOOOOOOOOO A CARGAR PARTICIPANTEEEESSSS ");
+      
         this.lstInvestigadorParticipantes = lstInvestigadorParticipantes;
     }
 
@@ -536,7 +536,7 @@ public class InvestigadorProduccionBean {
     public void setLstLibro(List<Libro> lstLibro) {
         this.lstLibro = lstLibro;
     }
-
+/*
     public DualListModel<Investigador> getPickListInvestigadores() {
         if (investigadores == null) {
             investigadores = new DualListModel<>();
@@ -545,7 +545,7 @@ public class InvestigadorProduccionBean {
         investigadores.setTarget(cargarLstInvestigadorParticipantes());
         return investigadores;
 
-    }
+    }*/
 
     public TipoReferato[] getTipoReferato() {
         return TipoReferato.values();
@@ -598,6 +598,7 @@ public class InvestigadorProduccionBean {
     public void setPropiedadIntelectual(Intelectual propiedadIntelectual) {
         this.propiedadIntelectual = propiedadIntelectual;
     }
+    
 public void buscarLibros(){
 this.getLibrosLstBean().cargar_libros();
 }
@@ -605,6 +606,7 @@ this.getLibrosLstBean().cargar_libros();
         // FacesMessage msg = new FacesMessage("Tab Changed", "Active Tab:" + event.getTab().getId());  
         System.out.println("ENTRO AL onTabChange >>>>");
         this.limpiarBoolean();
+       
 
         Object tabSelect = event.getTab().getId();
 
@@ -636,6 +638,7 @@ this.getLibrosLstBean().cargar_libros();
         this.getPublicacionLstBean().setNombreClasePublicacion(cTipoDeDato.getSimpleName());
 
         if (iSelect < 3) {
+            System.out.println("entro al menor de 3: ");
             this.getPublicacionLstBean().cargarPublicacionesByInvestigador(this.getProyecto().getId(),
                     this.getInvestigadorLoginBean().getInvestigador().getId(), this.getcTipoDeDato());
             this.getLibrosLstBean().cargar_libros();
@@ -1372,9 +1375,7 @@ this.getLibrosLstBean().cargar_libros();
     }
 
     public void limpiarObjetos() {
-        //System.out.println("entro limpiar objetos" + this.proyecto.getTitulo());
-        System.out.println("entro limpiar objetos -proyecto en session ->" + this.publicacionLstBean.getProyecto().getTitulo());
-
+    
         articuloRevista = new ArticuloRevista();
         libro = new Libro();
         propiedadIndustrial = new Industrial();
@@ -1382,6 +1383,9 @@ this.getLibrosLstBean().cargar_libros();
         congreso = new Congreso();
         //capituloLibro = new CapituloLibro();
         contrato = new Contrato();
+        proyecto = new Proyecto();
+        
+        
     }
 /*
     public void buscarLibros() {

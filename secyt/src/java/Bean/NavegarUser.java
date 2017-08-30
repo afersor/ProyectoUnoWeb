@@ -39,6 +39,8 @@ public class NavegarUser {
     
     @ManagedProperty(value="#{investigadorDatosPersonalesPagBean}")
     private InvestigadorDatosPersonalesPagBean investigadorDatosPersonalesPagBean;
+    @ManagedProperty(value="#{investigadorProduccionBean}")
+    private InvestigadorProduccionBean investigadorProduccionBean;
     @EJB
     private InvestigadorRNLocal investigadorRNLocal;
     
@@ -92,6 +94,14 @@ public class NavegarUser {
     public void setProyectoLstBean(ProyectoLstBean proyectoLstBean) {
         this.proyectoLstBean = proyectoLstBean;
     }
+
+    public InvestigadorProduccionBean getInvestigadorProduccionBean() {
+        return investigadorProduccionBean;
+    }
+
+    public void setInvestigadorProduccionBean(InvestigadorProduccionBean investigadorProduccionBean) {
+        this.investigadorProduccionBean = investigadorProduccionBean;
+    }
     
     public String pInvestigadorDatosPersonales(){
       return "investigadorDatosPersonales.xhtml?faces-redirect=true";
@@ -142,6 +152,7 @@ public class NavegarUser {
     public String pInvestigadorProduccion(){
         
         //this.getPublicacionLstBean().cargarPublicacionesByInvestigador();
+     //   this.getInvestigadorProduccionBean().limpiarObjetos();
         this.getProyectoLstBean().cargarProyectosByPublicacionYInvestigador();
         return "investigadorProduccion.xhtml";
     }//fin pInvestigadorProduccion

@@ -37,7 +37,7 @@ import org.primefaces.model.DualListModel;
 @ViewScoped
 public class PickListView {
 
-     @EJB
+    @EJB
     private InvestigadorFacadeLocal investigadorFacadeLocal;
     @EJB
     private ProyectoFacadeLocal proyectoFacadeLocal;
@@ -100,49 +100,48 @@ public class PickListView {
 
     @PostConstruct
     public void init() {
-            this.source = this.investigadorFacadeLocal.findAll(); // return all my users in database
-            this.target = new ArrayList<>();
-            
-            this.investigadorDualListModel = new DualListModel<>(this.source, this.target);
-       
+        this.source = this.investigadorFacadeLocal.findAll(); // return all my users in database
+        this.target = new ArrayList<>();
+
+        this.investigadorDualListModel = new DualListModel<>(this.source, this.target);
+
     }
 
-  
     public void submit(Proyecto proyecto) {
-         System.out.println("ENTROOO AL SUBMIT PICKLISTVIEW ::!:!:!:");
+        System.out.println("ENTROOO AL SUBMIT PICKLISTVIEW ::!:!:!:");
         try {
             this.setTarget(this.proyectoFacadeLocal.getTodosIntegrantes(proyecto));
             this.investigadorDualListModel = new DualListModel<>(this.source, this.target);
         } catch (Exception ex) {
             Logger.getLogger(PickListView.class.getName()).log(Level.SEVERE, null, ex);
         }
-           
+
     }
-    
+
     public void cargarTargetDePublicacion(Publicacion publicacion) {
-         System.out.println("ENTROOO AL SUBMIT de pickList publicacionnnn ::!:!:!:");
+        System.out.println("ENTROOO AL SUBMIT de pickList publicacionnnn ::!:!:!:");
         try {
-            
+
             this.setTarget(publicacion.getInvestigadores());
             this.investigadorDualListModel.setTarget(target);
         } catch (Exception ex) {
             Logger.getLogger(PickListView.class.getName()).log(Level.SEVERE, null, ex);
         }
-           
+
     }
-    
-     public void cargarTargetDePropiedad(Propiedad propiedad) {
-         System.out.println("ENTROOO AL cargarTargetDePropiedad de  propiedad ::!:!:!:");
+
+    public void cargarTargetDePropiedad(Propiedad propiedad) {
+        System.out.println("ENTROOO AL cargarTargetDePropiedad de  propiedad ::!:!:!:");
         try {
-            
+
             this.setTarget(propiedad.getInvestigadores());
             this.investigadorDualListModel.setTarget(target);
         } catch (Exception ex) {
             Logger.getLogger(PickListView.class.getName()).log(Level.SEVERE, null, ex);
         }
-           
+
     }
-     
+
     /*
      public void displayTargetList() {
      System.out.println("Entering function");
@@ -152,7 +151,6 @@ public class PickListView {
      System.out.println(u.getLogin());
      }
      }*/
-
     public void onTransfer(TransferEvent event) {
         StringBuilder builder = new StringBuilder();
         for (Object item : event.getItems()) {
@@ -180,5 +178,13 @@ public class PickListView {
     public void onReorder() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "List Reordered", null));
+    }
+
+    public void limpiar() {
+             
+        source = new ArrayList<>();
+        target = new ArrayList<>();
+        investigadorDualListModel = new DualListModel<>();
+        
     }
 }

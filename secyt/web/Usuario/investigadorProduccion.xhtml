@@ -108,8 +108,11 @@
             <p:ajax event="tabChange" 
                     listener="#{investigadorProduccionBean.onTabChange}" 
                     process="@this, :frmUser:pgProyectoSelect"
-                    update="dtArticulosRevistas, dtCapitulosDeLibro, dtCongreso, 
-                    dtContratos, dtFormacionRRHH, dtLibros, dtPropiedadIndustrial, dtPropiedadIntelectual"/>  
+                    />  
+                   <!-- update="dtArticulosRevistas, dtCapitulosDeLibro, dtCongreso, 
+                    dtContratos, dtFormacionRRHH, dtLibros, dtPropiedadIndustrial, dtPropiedadIntelectual" 
+                   -->
+                   
 
             <!--ARTICULOS DE REVISTAS-->     
 
@@ -964,7 +967,7 @@
                         <ul>
                             <ui:repeat value="#{pri.investigadores}"
                                        var="inv">
-                                <li>
+                                <li style="text-align: left">
                                     <h:outputText value="#{inv.persona.getApellido()} #{inv.persona.getNombre()}"/>
                                 </li>
                             </ui:repeat>
