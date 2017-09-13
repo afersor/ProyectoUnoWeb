@@ -1,0 +1,163 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../templates/userTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="content">
+
+        <ui:include src="/recursos/mensajesDlg.xhtml"/>
+
+        <ui:include src="becasEvaluacionWebDlg.xhtml"/>
+
+        <!--<ui:include src="formularioEvaluacionVistaPreviaDlg.xhtml"/>-->
+
+
+        <p:dialog id="dDetalleBeca"
+                  widgetVar="dlgDetalleBeca"
+                  modal="true"
+                  width="600"
+                  height="400"
+                  closable="false">
+
+            <f:facet name="header">
+                <h:outputText value="Identificación del Becas" style="font-size: 1.5em; font-weight: bold;"/>
+            </f:facet>
+            <h:panelGrid columns="2" styleClass="tablaDetalle">
+                <h:outputText value="Beca:"/>
+                <h:outputText value="#{becasEvaluacionWebLstBean.becasEvaluacionWebSelect.postulacionBeca.beca.descripcion}" title="Beca"/>
+                
+                <h:outputText value="Codigo:"/>
+                <h:outputText value="#{becasEvaluacionWebLstBean.becasEvaluacionWebSelect.postulacionBeca.beca.codigobeca}" title="Codigo"/>
+                
+                
+                <h:outputText value="Fecha de Inicio:" rendered="#{becasEvaluacionWebLstBean.becasEvaluacionWebSelect.postulacionBeca.beca.fechainicio != null}"/>
+                <h:outputText value="#{becasEvaluacionWebLstBean.becasEvaluacionWebSelect.postulacionBeca.beca.fechainicio}" 
+                              rendered="#{becasEvaluacionWebLstBean.becasEvaluacionWebSelect.postulacionBeca.beca.fechainicio!= null}" title="Fecha de Inicio">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+                <h:outputText value="Fecha de Finalización:" rendered="#{becasEvaluacionWebLstBean.becasEvaluacionWebSelect.postulacionBeca.beca.fechafinalizacion!= null }"/>
+                <h:outputText value="#{becasEvaluacionWebLstBean.becasEvaluacionWebSelect.postulacionBeca.beca.fechafinalizacion}" 
+                              rendered="#{becasEvaluacionWebLstBean.becasEvaluacionWebSelect.postulacionBeca.beca.fechafinalizacion!= null }" title="Fecha de Finalización">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+                
+                <h:outputText value="Duración:"/>
+                <h:outputText value="#{becasEvaluacionWebLstBean.becasEvaluacionWebSelect.postulacionBeca.beca.duracion}" title="Duración"/>
+                
+                <h:outputText value="Cantidad de pagos:"/>
+                <h:outputText value="#{becasEvaluacionWebLstBean.becasEvaluacionWebSelect.postulacionBeca.beca.cantidadpagos}" title="Cantidad de pagos"/>
+                
+                <h:outputText value="Monto por pago:"/>
+                <h:outputText value="#{becasEvaluacionWebLstBean.becasEvaluacionWebSelect.postulacionBeca.beca.montoporpago}" title="Monto por pago"/>
+                
+                <h:outputText value="Beneficiarios:"/>
+                <h:outputText value="#{becasEvaluacionWebLstBean.becasEvaluacionWebSelect.postulacionBeca.beca.cantidadbeneficiarios}" title="Beneficiarios"/>
+
+            </h:panelGrid>
+            <br/>
+
+            <center>
+                <p:commandButton value="Salir"
+                                 process="@this"
+                                 oncomplete="dlgDetalleBeca.hide();"/>
+            </center><br/>
+           
+        </p:dialog>
+
+
+        <div style="clear: both"/>
+
+        <p:dataTable id="dtBeca"
+                     value="#{becasEvaluacionWebLstBean.lstBecasEvaluacionWeb}"
+                     paginator="true" 
+                     rows="20" 
+                     filterEvent="enter"
+                     var="e"
+                     filteredValue="#{becaLstBean.becasFiltrados}"
+                     >
+
+            <!-->    <f:facet name="header">
+                     <h:outputText value="(Puede buscar ingresando parte del código o nombre del beca y presionando la tecla enter)"/>
+                 </f:facet>  <-->
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Código "
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                <h:outputText value="#{e.postulacionBeca.beca.codigobeca}"
+                              styleClass="textoValue" />
+            </p:column>
+
+            <p:column >
+                <f:facet name="header">
+                    <h:outputText value="Beca"
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                <h:outputText value="#{e.postulacionBeca.beca.descripcion}"
+                              styleClass="textoValue"/>
+            </p:column>
+
+            <p:column >
+                <f:facet name="header">
+                    <h:outputText value="Detalle"
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                <p:commandButton actionListener="#{becasEvaluacionWebLstBean.setBecasEvaluacionWebSelect(e)}"
+                                 oncomplete="dlgDetalleBeca.show()" 
+                                 value="Ver" 
+                                 styleClass="textoValue"
+                                 update=":frmUser:dDetalleBeca"
+                                 process="@this"/>
+
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Evaluar"
+                                  styleClass="textoEtiqueta"/>
+                </f:facet>
+                
+                <p:commandButton actionListener="#{becasEvaluacionPagBean.entrar(e)}"
+                                 oncomplete="dlgBecasEvaluacionWebDlg.show()" 
+                                 value="Evaluar" 
+                                 styleClass="textoValue"
+                                 process="@this"
+                                 update=":frmUser:dBecasEvaluacionWebDlg"
+                                 rendered="#{e.fechaFinalizacion == null}"/>
+                
+                
+                
+                <!--<p:commandButton actionListener="{formularioBecasEvaluacionPagBean.entrar(e)}"
+                                 oncomplete="dlgFormularioBecasEvaluacion.show()" 
+                                 value="Evaluar" 
+                                 styleClass="textoValue"
+                                 process="@this"
+                                 update=":frmUser:dFormularioBecasEvaluacion"
+                                 rendered="{e.fechaFinalizacion != null}"/>-->
+                <p:commandButton 
+                    action="#{becasEvaluacionPagBean.generarReporte(1)}"
+                                 value="Imprimir" 
+                                 styleClass="textoValue"
+                                 rendered="#{e.fechaFinalizacion != null}"
+                                 ajax="false">
+                    
+                </p:commandButton>
+                
+                <!--<p:commandButton action="{formularioBecasEvaluacionPagBean.generarReporte(1)}"
+                                 value="Imprimir" 
+                                 styleClass="textoValue"
+                                 rendered="{e.fechaFinalizacion == null}"
+                                 ajax="false">
+                    <f:setPropertyActionListener value={e}" target="{formularioBecasEvaluacionPagLstBean.becasEvaluacionWebSelect}"/>
+                </p:commandButton>-->
+
+            </p:column>
+
+        </p:dataTable>
+    </ui:define>
+
+</ui:composition>

@@ -290,3 +290,7 @@ a:link:hover, a:visited:hover  {
     }
 }
 
+.selector td{
+     width: 25px;
+}
+

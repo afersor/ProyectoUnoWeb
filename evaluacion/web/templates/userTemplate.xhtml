@@ -165,6 +165,12 @@
 
                         <p:submenu label="Evaluación - Dictaminar"
                                    styleClass="menu">
+                            
+                            <p:menuitem value="Becas"    
+                                        action="#{navegarBean.pEvaluacionBecas()}"
+                                        styleClass="menuContenido"
+                                        process="@this"
+                                        />
 
                             <p:menuitem value="Proyecto de Investigación"    
                                         action="#{navegarBean.pEvaluacionWeb()}"

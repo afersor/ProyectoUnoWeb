@@ -22,6 +22,9 @@ public class NavegarBean {
     @ManagedProperty("#{evaluacionWebLstBean}")
     private EvaluacionWebLstBean evaluacionWebLstBean;
     
+    @ManagedProperty("#{becasEvaluacionWebLstBean}")
+    private BecasEvaluacionWebLstBean becasEvaluacionWebLstBean;
+    
     @ManagedProperty("#{bloqueEvaluadoLstBean}")
     private BloqueEvaluadoLstBean bloqueEvaluadoLstBean;
   
@@ -48,6 +51,15 @@ public class NavegarBean {
     
     public NavegarBean() {
     }
+
+    public BecasEvaluacionWebLstBean getBecasEvaluacionWebLstBean() {
+        return becasEvaluacionWebLstBean;
+    }
+
+    public void setBecasEvaluacionWebLstBean(BecasEvaluacionWebLstBean becasEvaluacionWebLstBean) {
+        this.becasEvaluacionWebLstBean = becasEvaluacionWebLstBean;
+    }
+    
     public InvestigadorRNLocal getInvestigadorRNLocal() {
         return investigadorRNLocal;
     }
@@ -155,6 +167,17 @@ public class NavegarBean {
         }
         return "investigadorCategorizacion.xhtml?faces-redirect=true";
     }//fin pInvestigadorCategorizacion
+    
+     public String pEvaluacionBecas(){
+        try {
+            this.getBecasEvaluacionWebLstBean().findAllByEvaluador(
+                    this.getEvaluadorLoginBean().getEvaluador().getId());
+            
+        } catch (Exception ex) {
+
+        }
+        return "becasEvaluacionWeb.xhtml?faces-redirect=true";
+    }
     
     
     public String pEvaluacionWeb(){

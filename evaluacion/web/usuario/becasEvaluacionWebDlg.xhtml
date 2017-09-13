@@ -1,0 +1,164 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+        <p:dialog id="dBecasEvaluacionWebDlg" 
+              widgetVar="dlgBecasEvaluacionWebDlg"
+              modal="true"
+              width="600"
+              height="400"
+              position="top"
+              style="margin-top: 30px;"
+              resizable="true"
+              
+              header="Formulario de Evaluación"
+              >
+            <div style="margin: 20px 5px 20px 5px;">
+                <h:inputHidden id ="ihIdBecasEvaluacionWeb" value="#{becasEvaluacionWebLstBean.becasEvaluacionWebSelect.id}"/>
+               
+                
+                <h:outputText value="#{becasEvaluacionWebLstBean.becasEvaluacionWebSelect.postulacionBeca.beca.descripcion}"
+                              style="font-size: 1.5em; font-weight: bold;"/>
+            </div>
+            
+        <div style="margin: 5px 5px 5px 5px;">
+            <p:accordionPanel id ="apForEva" 
+                              >  
+
+                <p:tab  title="Items">
+
+                    
+                    <div style="margin-top: 10px;">
+                
+                <table border="2" id="tabla">
+                    <tr>
+                        <td align="right"  >
+                            
+                            <h:outputText value="Calificación" 
+                                          style="font-size: 1.2em; font-weight: bold;"/>
+                            
+                        </td>
+                        
+                        <td>
+                            <table style="margin-left: 10px;" cellspacing="3">                                                         
+                                <ui:repeat value="#{becasItemCalificacionLstBean.lstSIBecasItemCalificacion}" var="cal">
+                                    <td width="52">
+                                        <h:outputText value=" #{cal.value}" style="font-size: 1.2em; font-weight: bold;"/> 
+                                    </td>
+                                </ui:repeat>
+                            </table>
+                        </td>
+                        
+                    </tr>
+                    
+                   
+                    
+                    <ui:repeat value="#{becasEvaluacionWebLstBean.becasEvaluacionWebSelect.becasEvaluacionWebBecasItemEvaluar}" 
+                               var="bi">
+                        <tr>
+                            <td>
+                               
+                                <h:outputText value="#{bi.becasItemEvaluar.descripcion}"/>
+   
+                            </td>
+
+                            <td>
+
+
+                                <p:selectOneRadio id="sorCalificacion"                     
+                                                  value="#{bi.becasItemCalificacion}"
+                                                  valueChangeListener="#{becasEvaluacionPagBean.eventChange}"
+                                                  converter="ConversorGenerico"
+                                                  style="margin-left: 7px;"
+                                                  styleClass="selector"> 
+                                    <f:selectItems value="#{becasItemCalificacionLstBean.lstSIBecasItemCalificacion}"/>  
+
+
+                                    <p:ajax event="change" 
+                                            process="@form,   
+                                             sorCalificacion"/>
+
+                                </p:selectOneRadio>
+
+                            </td>
+                                    
+                           
+                                
+                            
+                        </tr>
+                    </ui:repeat>
+                    
+                    <tr>
+                        <td>
+                            <h:outputText value="Calificación general"/>
+                        </td>
+
+                        <td>
+                            
+                            <p:selectOneRadio id="sorCalificacionGlobal"                     
+                                              value="#{becasEvaluacionWebLstBean.becasEvaluacionWebSelect.becasCalificacionGlobal}"
+                                                  valueChangeListener="#{becasEvaluacionPagBean.eventChange}"
+                                                  converter="ConversorGenerico"
+                                                  style="margin-left: 7px;"
+                                                  styleClass="selector"> 
+                                <f:selectItems value="#{becasCalificacionGlobalLstBean.lstSIBecasCalificacionGlobal}"/>  
+
+
+                                    <p:ajax event="change" 
+                                            process="@form,   
+                                             sorCalificacionGlobal"/>
+
+                                </p:selectOneRadio>
+                            
+                                
+                                
+                        </td>
+
+                    </tr>
+                </table>
+                    </div>
+                    
+                    <div style="margin-top: 10px;">
+                    <h:outputText value="Sugerencias"/><br/>
+                    <p:inputTextarea value="#{becasEvaluacionWebLstBean.becasEvaluacionWebSelect.sugerencias}"
+                                     cols="10" rows="10"/>
+                    </div>
+                    
+        
+
+
+        
+                
+
+            </p:tab>
+                
+                
+            
+
+        </p:accordionPanel>
+            
+            <div align="center" style="margin: 15px 5px 5px 5px;">
+            <p:commandButton value="Guardar"
+                             style="margin-left: 15px;"
+                             actionListener="#{becasEvaluacionPagBean.guardar(false)}"/>
+            
+            <p:commandButton value="Guardar y Finalizar"
+                             actionListener="#{becasEvaluacionPagBean.guardar(true)}"/>
+            
+            <p:commandButton value="Vista Previa"
+                             actionListener="#{becasEvaluacionPagBean.generarReporte(0)}"
+                             ajax="false"/>
+
+        </div>
+        </div>
+        
+        
+
+        </p:dialog>
+</html>
+
