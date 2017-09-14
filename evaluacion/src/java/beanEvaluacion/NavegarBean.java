@@ -136,7 +136,7 @@ public class NavegarBean {
     
     
     public String entrarPagPri(){
-        return "usuario/evaluacion.xhtml?faces-redirect=true"; //?faces-redirect=true
+        return "Usuario/evaluacion.xhtml?faces-redirect=true"; //?faces-redirect=true
     }
     
     public String pInvestigadorDatosPersonales(){
